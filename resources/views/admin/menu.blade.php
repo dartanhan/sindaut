@@ -20,12 +20,12 @@
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{route('admin.noticia')}}">
+                        <a href="{{route('noticia.index')}}">
                             <i class="bi bi-circle"></i><span>Criar Notícia</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('admin.galeria')}}">
+                        <a href="{{route('upload.index')}}">
                             <i class="bi bi-circle"></i><span>Galeria de Imagens</span>
                         </a>
                     </li>

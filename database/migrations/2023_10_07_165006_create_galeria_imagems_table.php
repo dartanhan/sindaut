@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNoticiasTable extends Migration
+class CreateGaleriaImagemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateNoticiasTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_sindaut_noticias', function (Blueprint $table) {
+        Schema::create('tbl_sindaut_galeria_imagemstbl_sindaut_galeria_imagems', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->timestamp('data');
-            $table->string('titulo');
-            $table->text('conteudo');
-            $table->integer('imagem_id');
-            $table->boolean('status');
+            $table->string('path',255);
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateNoticiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_sindaut_noticias2');
+        Schema::dropIfExists('galeria_imagems');
     }
 }

@@ -8,7 +8,7 @@
     <title>Dashboard - NiceAdmin Bootstrap Template</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicons -->
     <link href="{{URL::asset('/admin/assets/img/favicon.png')}}" rel="icon">
     <link href="{{URL::asset('/admin/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
@@ -29,6 +29,11 @@
     <!-- Template Main CSS File -->
     <link href="{{URL::asset('/admin/assets/css/style.css')}}" rel="stylesheet">
 
+    <link href="{{URL::asset('/admin/assets/filepond/dist/filepond.css')}}" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+
+
+    @stack("styles")
     <!-- =======================================================
     * Template Name: NiceAdmin
     * Updated: Aug 30 2023 with Bootstrap v5.3.1
@@ -294,6 +299,9 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{URL::asset('/admin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/vendor/chart.js/chart.umd.js')}}"></script>
@@ -303,10 +311,18 @@
 <script src="{{URL::asset('/admin/assets/vendor/tinymce/tinymce.min.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/vendor/php-email-form/validate.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/langs/pt_BR.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 <!-- Template Main JS File -->
 <script src="{{URL::asset('/admin/assets/js/main.js')}}"></script>
+
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="{{URL::asset('/admin/assets/filepond/dist/filepond.js')}}"></script>
+
+
+@stack("scripts")
 
 </body>
 
