@@ -23,9 +23,6 @@ use App\Http\Livewire\PostManager;
 //Route::get('/', function () {
 //    return view('site.home');
 //})->name('home');
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('admin.register');
 
 Route::get('/',[SiteController::class,'index'])->name('site.home');
 Route::get('/contato',[SiteController::class,'contato'])->name('site.contato');
@@ -47,7 +44,9 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::get('/logout',[AuthController::class,'logout'])->name('admin.logout');
     Route::get('/dashboard',[AuthController::class,'dashboard'])->name('admin.dashboard');
 
-
+    Route::get('/register', function () {
+        return view('auth.register');
+    })->name('admin.register');
 
 
     Route::post('/noticia/atualizar-status', [NoticiaController::class, 'atualizarStatus'])->name('atualizar-status');
