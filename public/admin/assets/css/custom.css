@@ -98,3 +98,17 @@
      background-color: #343a40;
      color: #ffffff;
  }
+.modal-conteudo{
+    height: 420px;
+    overflow-y: auto;
+}
+.img-thumbnail{
+    /*display: none;*/
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    text-align: center;
+}
+.img-thumbnail-none{
+    display: none;
+}

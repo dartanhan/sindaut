@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard - NiceAdmin Bootstrap Template</title>
+    <title>Dashboard - Sindaut</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -51,7 +51,7 @@
     <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
             <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">NiceAdmin</span>
+            <span class="d-none d-lg-block">SindautAdmin</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -66,18 +66,18 @@
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 
-            <li class="nav-item d-block d-lg-none">
+            <!-- li class="nav-item d-block d-lg-none">
                 <a class="nav-link nav-icon search-bar-toggle " href="#">
                     <i class="bi bi-search"></i>
                 </a>
-            </li><!-- End Search Icon-->
+            </li>< !-- End Search Icon-- >
 
             <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-bell"></i>
                     <span class="badge bg-primary badge-number">4</span>
-                </a><!-- End Notification Icon -->
+                </a>< !-- End Notification Icon -- >
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                     <li class="dropdown-header">
@@ -143,16 +143,16 @@
                         <a href="#">Show all notifications</a>
                     </li>
 
-                </ul><!-- End Notification Dropdown Items -->
+                </ul>< !-- End Notification Dropdown Items -- >
 
-            </li><!-- End Notification Nav -->
+            </li>< !-- End Notification Nav -- >
 
             <li class="nav-item dropdown">
 
                 <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                     <i class="bi bi-chat-left-text"></i>
                     <span class="badge bg-success badge-number">3</span>
-                </a><!-- End Messages Icon -->
+                </a>< !-- End Messages Icon -- >
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                     <li class="dropdown-header">
@@ -209,19 +209,19 @@
                         <a href="#">Show all messages</a>
                     </li>
 
-                </ul><!-- End Messages Dropdown Items -->
+                </ul>< !-- End Messages Dropdown Items -- >
 
-            </li><!-- End Messages Nav -->
+            </li>< !-- End Messages Nav -->
 
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+                    <!-- img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"-->
+                    <span class="d-none d-md-block dropdown-toggle ps-2">{{$user_data->name}}</span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
+                    <!-- li class="dropdown-header">
                         <h6>Kevin Anderson</h6>
                         <span>Web Designer</span>
                     </li>
@@ -257,12 +257,12 @@
                     </li>
                     <li>
                         <hr class="dropdown-divider">
-                    </li>
+                    </li-->
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#">
+                        <a class="dropdown-item d-flex align-items-center" href="{{route('admin.logout')}}">
                             <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
+                            <span>Sair</span>
                         </a>
                     </li>
 

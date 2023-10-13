@@ -30,8 +30,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="components-badges.html">
-                            <i class="bi bi-circle"></i><span>Badges</span>
+                        <a href="{{route('admin.post')}}">
+                            <i class="bi bi-circle"></i><span>Posts</span>
                         </a>
                     </li>
                     <li>

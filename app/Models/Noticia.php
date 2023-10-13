@@ -10,7 +10,12 @@ class Noticia extends Model
     use HasFactory;
 
     protected $table = 'tbl_sindaut_noticias';
-    protected $fillable = ['titulo', 'conteudo', 'subtitulo','status', 'updated_at', 'created_at'];
+    protected $fillable = ['titulo', 'conteudo', 'subtitulo','status','imagem_id', 'updated_at', 'created_at'];
+
+    public function imagens()
+    {
+        return $this->hasMany(GaleriaImagem::class,'id','imagem_id');
+    }
 
     public function getCreatedAtAttribute()
     {

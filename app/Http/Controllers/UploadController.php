@@ -67,9 +67,9 @@ class UploadController extends Controller
             ]);
             Storage::deleteDirectory('posts/tmp/'.$temp_file->folder);
             $temp_file->delete();
-            return redirect()->route('admin.galeria')->with('success','Upload efetuado com sucesso!');
+            return redirect()->route('upload.index')->with('success','Upload efetuado com sucesso!');
         }
-        return redirect()->route('admin.galeria')->with('danger','Favor informe o arquivo para upload!');
+        return redirect()->route('upload.index')->with('danger','Favor informe o arquivo para upload!');
     }
 
     public function tmpUpload(){

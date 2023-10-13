@@ -20,12 +20,24 @@
 
     <section class="section dashboard">
         <div class="row">
-
-            <!-- Left side columns -->
+                <div class="row text-center">
+                        <div class="card info-card sales-card">
+                            <div class="mt-3">
+                                <b> Bem vindo!</b>
+                            </div>
+                            <div class="mt-3">
+                                 Essa é a nova <b> Adminstração do Sindaut!</b>
+                            </div>
+                            <div class="mt-3">
+                                Estarei fazendo as devidas melhorias conforme as necessidades!
+                            </div>
+                        </div>
+                 </div>
+            <!-- Left side columns -- >
             <div class="col-lg-8">
                 <div class="row">
 
-                    <!-- Sales Card -->
+                    < !-- Sales Card -- >
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card sales-card">
 
@@ -58,9 +70,9 @@
                             </div>
 
                         </div>
-                    </div><!-- End Sales Card -->
+                    </div>< !-- End Sales Card -- >
 
-                    <!-- Revenue Card -->
+                    < !-- Revenue Card -- >
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card revenue-card">
 
@@ -93,9 +105,9 @@
                             </div>
 
                         </div>
-                    </div><!-- End Revenue Card -->
+                    </div>< !-- End Revenue Card -- >
 
-                    <!-- Customers Card -->
+                    < !-- Customers Card -- >
                     <div class="col-xxl-4 col-xl-12">
 
                         <div class="card info-card customers-card">
@@ -130,9 +142,9 @@
                             </div>
                         </div>
 
-                    </div><!-- End Customers Card -->
+                    </div>< !-- End Customers Card -- >
 
-                    <!-- Reports -->
+                    < !-- Reports -- >
                     <div class="col-12">
                         <div class="card">
 
@@ -152,7 +164,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">Reports <span>/Today</span></h5>
 
-                                <!-- Line Chart -->
+                                < !-- Line Chart -- >
                                 <div id="reportsChart"></div>
 
                                 <script>
@@ -207,14 +219,14 @@
                                         }).render();
                                     });
                                 </script>
-                                <!-- End Line Chart -->
+                                < !-- End Line Chart -- >
 
                             </div>
 
                         </div>
-                    </div><!-- End Reports -->
+                    </div>< !-- End Reports -- >
 
-                    <!-- Recent Sales -->
+                    < !-- Recent Sales -- >
                     <div class="col-12">
                         <div class="card recent-sales overflow-auto">
 
@@ -286,9 +298,9 @@
                             </div>
 
                         </div>
-                    </div><!-- End Recent Sales -->
+                    </div>< !-- End Recent Sales -- >
 
-                    <!-- Top Selling -->
+                    < !-- Top Selling -- >
                     <div class="col-12">
                         <div class="card top-selling overflow-auto">
 
@@ -360,15 +372,15 @@
                             </div>
 
                         </div>
-                    </div><!-- End Top Selling -->
+                    </div>< !-- End Top Selling -- >
 
                 </div>
-            </div><!-- End Left side columns -->
+            </div>< !-- End Left side columns -- >
 
-            <!-- Right side columns -->
+            < !-- Right side columns -- >
             <div class="col-lg-4">
 
-                <!-- Recent Activity -->
+                < !-- Recent Activity -- >
                 <div class="card">
                     <div class="filter">
                         <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -394,7 +406,7 @@
                                 <div class="activity-content">
                                     Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a> beatae
                                 </div>
-                            </div><!-- End activity item-->
+                            </div>< !-- End activity item-- >
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">56 min</div>
@@ -402,7 +414,7 @@
                                 <div class="activity-content">
                                     Voluptatem blanditiis blanditiis eveniet
                                 </div>
-                            </div><!-- End activity item-->
+                            </div>< !-- End activity item-- >
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">2 hrs</div>
@@ -410,7 +422,7 @@
                                 <div class="activity-content">
                                     Voluptates corrupti molestias voluptatem
                                 </div>
-                            </div><!-- End activity item-->
+                            </div>< !-- End activity item-- >
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">1 day</div>
@@ -418,7 +430,7 @@
                                 <div class="activity-content">
                                     Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a> tempore
                                 </div>
-                            </div><!-- End activity item-->
+                            </div>< !-- End activity item-- >
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">2 days</div>
@@ -426,7 +438,7 @@
                                 <div class="activity-content">
                                     Est sit eum reiciendis exercitationem
                                 </div>
-                            </div><!-- End activity item-->
+                            </div>< !-- End activity item-- >
 
                             <div class="activity-item d-flex">
                                 <div class="activite-label">4 weeks</div>
@@ -434,14 +446,14 @@
                                 <div class="activity-content">
                                     Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
                                 </div>
-                            </div><!-- End activity item-->
+                            </div>< !-- End activity item-- >
 
                         </div>
 
                     </div>
-                </div><!-- End Recent Activity -->
+                </div>< !-- End Recent Activity -- >
 
-                <!-- Budget Report -->
+                < !-- Budget Report -- >
                 <div class="card">
                     <div class="filter">
                         <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -513,9 +525,9 @@
                         </script>
 
                     </div>
-                </div><!-- End Budget Report -->
+                </div>< !-- End Budget Report -- >
 
-                <!-- Website Traffic -->
+                < !-- Website Traffic -- >
                 <div class="card">
                     <div class="filter">
                         <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -591,9 +603,9 @@
                         </script>
 
                     </div>
-                </div><!-- End Website Traffic -->
+                </div>< !-- End Website Traffic -- >
 
-                <!-- News & Updates Traffic -->
+                < !-- News & Updates Traffic -- >
                 <div class="card">
                     <div class="filter">
                         <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -642,12 +654,12 @@
                                 <p>Odit ut eveniet modi reiciendis. Atque cupiditate libero beatae dignissimos eius...</p>
                             </div>
 
-                        </div><!-- End sidebar recent posts-->
+                        </div>< !-- End sidebar recent posts-- >
 
                     </div>
-                </div><!-- End News & Updates -->
+                </div>< !-- End News & Updates -- >
 
-            </div><!-- End Right side columns -->
+            </div>< !-- End Right side columns -->
 
         </div>
     </section>

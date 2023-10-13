@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use ReCaptcha\ReCaptcha;
@@ -13,7 +14,9 @@ class AuthController extends Controller
     public function dashboard() {
 
         if(Auth::check() === true){
-            view('admin.dashboard');
+            $user_data = User::where("id",auth()->user()->id)->first();
+
+            return view('admin.dashboard', compact('user_data'));
         }
         return redirect()->route('admin.login');
 
@@ -58,9 +61,9 @@ class AuthController extends Controller
     }
 
     function logout(Request $request) {
-       // Auth::logout();
+        //Auth::logout();
 
-        $this->guard->logout();
+       // $this->guard->logout();
 
         if ($request->hasSession()) {
             $request->session()->invalidate();

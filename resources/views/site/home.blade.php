@@ -10,9 +10,34 @@
 
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8">
-            <div class="left_content">
-                <div class="single_post_content">
-                    <h2><span>Business</span></h2>
+            @include('site/sliders', ['variavel' => '$valor'])
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            @include('site/ultimas-noticias', ['variavel' => '$valor'])
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <div class="left_content">
+                    <div class="single_page">
+
+                        <h1>{{$noticias[0]->titulo}}</h1>
+                        <div class="post_commentbox">
+                            <!--a href="#">
+                                <i class="fa fa-user"></i>Wpfreeware</a-->
+                            <span>
+                                <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
+                            </span>
+                            <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
+                        </div>
+                        <div class="single_page_content">
+                            {!! str_replace("../", "", $noticias[0]->conteudo) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                    <!--h2><span>Business</span></h2>
                     <div class="single_post_content_left">
                         <ul class="business_catgnav  wow fadeInDown">
                             <li>
@@ -294,5 +319,5 @@
                 </div>
             </aside>
         </div>
-    </div>
+    </div-->
 @endsection

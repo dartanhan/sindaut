@@ -8,21 +8,34 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav main_nav">
-                <li class="active"><a href="{{route('home')}}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
-                <li><a href="#">Technology</a></li>
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mobile</a>
+                <li class="active">
+                    <a href="{{route('site.home')}}">
+                        <span class="fa fa-home desktop-home"></span>
+                        <span class="mobile-show">Home</span></a>
+                </li>
+                <li><a href="#">História</a></li>
+                <li><a href="#">Homologação</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Benefícios</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Android</a></li>
-                        <li><a href="#">Samsung</a></li>
-                        <li><a href="#">Nokia</a></li>
-                        <li><a href="#">Walton Mobile</a></li>
-                        <li><a href="#">Sympony</a></li>
+                        <li><a href="#">Como Obter</a></li>
+                        <li><a href="#">Convênios</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Tablets</a></li>
-                <li><a href="pages/contact.html">Contact Us</a></li>
-                <li><a href="pages/404.html">404 Page</a></li>
+                <li><a href="#">Jornal</a></li>
+                <li><a href="#">Convenções</a></li>
+                <li><a href="#">Departamento Jurídico</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Outros</a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Balcão de Empregos</a></li>
+                        <li><a href="#">Contribuições</a></li>
+                        <li><a href="#">Enquadramento Sindical</a></li>
+                        <li><a href="#">Empresas</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Notícias</a></li>
+                <li><a href="#">Acordo Coletivo</a></li>
             </ul>
         </div>
     </nav>
