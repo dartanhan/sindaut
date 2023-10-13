@@ -13,8 +13,12 @@
             @include('site/sliders', ['variavel' => '$valor'])
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
+            @if(count($noticias) > 0)
             @include('site/ultimas-noticias', ['variavel' => '$valor'])
+            @endif
         </div>
+
+        @if(count($noticias) > 0)
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
                 <div class="left_content">
@@ -36,6 +40,8 @@
                 </div>
             </div>
         </div>
+        @endif
+
     </div>
                     <!--h2><span>Business</span></h2>
                     <div class="single_post_content_left">

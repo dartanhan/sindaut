@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 
 class UploadController extends Controller
@@ -24,10 +25,11 @@ class UploadController extends Controller
     }
     public function index(){
         if(Auth::check() === true){
+            $user_data = User::where("id",auth()->user()->id)->first();
 
             $images = $this->galeriaImagem->get();
 
-            return  view('admin.galeria',compact('images'));
+            return  view('admin.galeria',compact('images','user_data'));
         }
         return redirect()->route('admin.login');
     }

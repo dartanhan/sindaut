@@ -6,6 +6,7 @@ use App\Models\GaleriaImagem;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class NoticiaController extends Controller
 {
@@ -19,11 +20,12 @@ class NoticiaController extends Controller
     }
     public function index(){
         if(Auth::check() === true){
+            $user_data = User::where("id",auth()->user()->id)->first();
 
             $images = $this->galleryImage->get();
             $noticias = Noticia::with('imagens')->orderBy('id', 'desc')->get();
 
-            return  view('admin.noticia',compact('noticias','images'));
+            return  view('admin.noticia',compact('noticias','images','user_data'));
 
         }
         return redirect()->route('admin.login');
