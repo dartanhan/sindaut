@@ -58,4 +58,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function getCreatedAtAttribute()
+    {
+        return date('d/m/Y H:i:s', strtotime($this->attributes['created_at']));
+    }
+
+    public function getUpdatedAtAttribute()
+    {
+        return date('d/m/Y H:i:s', strtotime($this->attributes['updated_at']));
+    }
 }

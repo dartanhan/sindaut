@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use ReCaptcha\ReCaptcha;
 
 
@@ -29,18 +31,15 @@ class AuthController extends Controller
 
     function login(Request $request) {
 
-        //$secret = env('DATA_SECRET_KEY');
+        $secret = env('DATA_SECRET_KEY');
+        $recaptchaResponse = $_POST['g-recaptcha-response'];
 
-       // $response = (new ReCaptcha($secret))->verify($request->input('g-recaptcha-response'), $request->ip());
-          //  ->setExpectedHostname('127.0.0.1')
-            //->setExpectedAction('homepage')
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret&response=$recaptchaResponse");
+        $responseKeys = json_decode($response, true);
 
-
-       // if ($response->getScore()  < 0.5) {
-       //     return redirect()->back()->withInput()->withErrors(['Você é considerado um Bot / Spammer!' . $response->getScore()]);
-       // }
-
-       // if ($response->isSuccess()) {
+        if (intval($responseKeys["success"]) !== 1) {
+            return redirect()->back()->withInput()->withErrors(['Você é considerado um Bot / Spammer!']);
+        } else {
             if(!filter_var($request->input("email") , FILTER_VALIDATE_EMAIL)){
                 return redirect()->back()->withInput()->withErrors(['Login informado não é valido!']);
             }
@@ -54,10 +53,7 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard');
             }
             return redirect()->back()->withInput()->withErrors(['Dados informados são inválidos!']);
-       // } else {
-            //$errors = $response->getErrorCodes();
-       //     return redirect()->back()->withInput()->withErrors(['Parece que você é um robô!']);
-       // }
+        }
     }
 
     function logout(Request $request) {
@@ -72,4 +68,51 @@ class AuthController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+    function register(){
+        if(Auth::check() === true){
+            $usuarios = User::get();
+            $user_data = User::where("id",auth()->user()->id)->first();
+
+            return view('admin.registro', compact('user_data','usuarios'));
+        }
+        return redirect()->route('admin.login');
+
+    }
+
+    function store(Request $request){
+        if(Auth::check() === true) {
+
+            $validator = Validator::make($request->all(), [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ], [
+                'name.required' => 'O campo Nome é obrigatório.',
+                'email.required' => 'O campo Email é obrigatório.',
+                'email.email' => 'Por favor, insira um endereço de e-mail válido.',
+                'email.unique' => 'Este e-mail já está em uso.',
+                'password.required' => 'O campo Senha é obrigatório.',
+                'password.min' => 'A senha deve ter pelo menos 8 caracteres.',
+                'password.confirmed' => 'As senhas não coincidem.',
+            ]);
+
+            if ($validator->fails()) {
+                $error = $validator->errors()->first();
+                return redirect()->route('admin.register')->with('danger', $error);
+            }
+
+            $criado = User::create([
+                'name' => $request['name'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+            ]);
+
+            if ($criado)
+                return redirect()->route('admin.register')->with('success', 'Usuário registrado com sucesso.');
+        }else{
+            return redirect()->route('admin.login');
+        }
+    }
+
 }

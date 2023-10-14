@@ -18,13 +18,21 @@
                 <x-jet-label for="password" value="{{ __('Password') }}" />
                 <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
             </div>
-
+            <div class="mt-4">
+                <div class="g-recaptcha" data-sitekey="{{ env('DATA_SITE_KEY') }}"></div>
+            </div>
             <div class="flex items-center justify-end mt-4">
 
                 <x-jet-button class="ml-4">
                     {{ __('Efetuar Login') }}
                 </x-jet-button>
             </div>
+            @if(session('danger'))
+                <div class="alert alert-danger">
+                    {{ session('danger') }}
+                </div>
+            @endif
         </form>
     </x-jet-authentication-card>
 </x-app-layout>
+

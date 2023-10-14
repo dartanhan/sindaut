@@ -13,7 +13,7 @@
                         <span class="fa fa-home desktop-home"></span>
                         <span class="mobile-show">Home</span></a>
                 </li>
-                <li><a href="#">História</a></li>
+                <li><a href="{{route('site.historia.index')}}">História</a></li>
                 <li><a href="#">Homologação</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Benefícios</a>

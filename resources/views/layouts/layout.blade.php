@@ -44,8 +44,11 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div class="header_bottom">
-                    <!--div class="logo_area"><a href="{{route('site.home')}}" class="logo"><img src="{{URL::asset('assets/images/banner.jpg')}}" alt=""></a></div-->
-                    <div class="add_banner"><img src="{{URL::asset('assets/images/banner.jpg')}}" alt=""></div>
+                    <div>
+                        <a href="{{route('site.home')}}" style="display: block; width: 100%;">
+                            <img src="{{URL::asset('assets/images/banner.jpg')}}" alt="" style="width: 100%; height: auto;">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -111,6 +114,7 @@
 <script src="{{URL::asset('assets/js/jquery.newsTicker.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/jquery.fancybox.pack.js')}}"></script>
 <script src="{{URL::asset('assets/js/custom.js')}}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 @stack("scripts")
 

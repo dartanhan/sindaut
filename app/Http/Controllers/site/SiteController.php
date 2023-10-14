@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\site;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\GaleriaImagem;
+use App\Models\Historia;
 use App\Models\Noticia;
 use Illuminate\Http\Request;
 use ReCaptcha\ReCaptcha;
@@ -10,10 +13,11 @@ use Stevebauman\Purify\Facades\Purify;
 
 class SiteController extends Controller
 {
-    protected $noticia,$request;
+    protected $noticia,$request,$historia;
 
-    public function __construct(Request $request, Noticia $noticia){
+    public function __construct(Request $request, Noticia $noticia, Historia $historia){
         $this->noticia = $noticia;
+        $this->historia = $historia;
         $this->request = $request;
     }
 
@@ -65,14 +69,17 @@ class SiteController extends Controller
             $email = Purify::clean($_POST['email']);
             $message = Purify::clean($_POST['mensagem']);
 
-            $para = "dartanhan.lima@gmail.com";//sindautrj@gmail.com
+            $para = "sindautrj@gmail.com";//
             $assunto = "Fale Conosco - Sindaut ";
-            $mensagem = "Nome:" . $name . "<br>" .  "Email:" . $email . "<br>". $message;
+            $mensagem = "Nome: " . $name . "<br>" .  "Email: " . $email . "<br><br>". $message;
 
             // Cabeçalhos do e-mail
-            $headers = "From: sindaut@sindaut.org.br\r\n";
+            $headers = 'From: SINDAUT <sindaut@sindaut.org.br>' . "\r\n";
+            $headers .= 'Bcc: dartanhan.lima@gmail.com' . "\r\n";
            // $headers .= "Reply-To: remetente@example.com\r\n";
             $headers .= "Content-type: text/html; charset=utf-8\r\n";
+            $headers  .= 'MIME-Version: 1.0' . "\r\n";
+
 
             // Envia o e-mail
             $enviado = mail($para, $assunto, $mensagem, $headers);
