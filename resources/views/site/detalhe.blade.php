@@ -27,7 +27,7 @@
                             <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
                         </div>
                         <div class="single_page_content">
-                            {!! $noticiaDetalhe->conteudo !!}
+                            {!! str_replace("../", "../../", $noticiaDetalhe->conteudo) !!}
                         </div>
                         <div class="social_link">
                             <ul class="sociallink_nav">
@@ -62,7 +62,8 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 right-column">
-                    @include('site/ultimas-noticias', ['variavel' => '$valor'])
+                @include('site/ultimas-noticias', ['variavel' => '$valor'])
+                @include('site/popular-post', ['variavel' => '$valor'])
             </div>
         </div>
 

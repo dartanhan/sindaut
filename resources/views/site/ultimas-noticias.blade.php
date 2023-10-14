@@ -12,8 +12,9 @@
                         </a>
                     @endforeach
                     <div class="media-body">
-                        <a href="{{route('site.detalhe-noticia',$noticia->id)}}" class="catg_title"><i class="fa fa-volume-up"></i> {{$noticia->titulo}} </a>
-                        <div >
+                        <a href="{{route('site.detalhe-noticia',$noticia->id)}}" class="catg_title">
+                            <i class="fa fa-volume-up"></i> {{$noticia->titulo}} </a>
+                        <div>
                             <span><i class="fa fa-calendar"></i> {{$noticia->created_at}}</span>
                         </div>
                     </div>

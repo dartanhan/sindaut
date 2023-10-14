@@ -8,41 +8,47 @@
 
 @section('content')
 
+
     <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8">
-            @include('site/sliders', ['variavel' => '$valor'])
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
-            @if(count($noticias) > 0)
-            @include('site/ultimas-noticias', ['variavel' => '$valor'])
-            @endif
-        </div>
+        <div class="col-lg-8 col-md-8 col-sm-6 left-column">
+            <div class="row">
+                @include('site/sliders', ['variavel' => '$valor'])
+            </div>
+            <div class="row">
+                @if(count($noticias) > 0)
+                    <div class="col-lg-12 col-md-8 col-sm-8">
+                        <div class="left_content">
+                            <div class="single_page">
 
-        @if(count($noticias) > 0)
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-8">
-                <div class="left_content">
-                    <div class="single_page">
-
-                        <h1>{{$noticias[0]->titulo}}</h1>
-                        <div class="post_commentbox">
-                            <!--a href="#">
-                                <i class="fa fa-user"></i>Wpfreeware</a-->
-                            <span>
-                                <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
-                            </span>
-                            <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
-                        </div>
-                        <div class="single_page_content">
-                            {!! str_replace("../", "", $noticias[0]->conteudo) !!}
+                                <h1>{{$noticias[0]->titulo}}</h1>
+                                <div class="post_commentbox">
+                                    <!--a href="#">
+                                        <i class="fa fa-user"></i>Wpfreeware</a-->
+                                    <span>
+                            <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
+                        </span>
+                                    <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
+                                </div>
+                                <div class="single_page_content">
+                                    {!! str_replace("../", "", $noticias[0]->conteudo) !!}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
-        @endif
-
+        <div class="col-lg-4 col-md-4 col-sm-4 right-column">
+            @if(count($noticias) > 0)
+                @include('site/ultimas-noticias', ['variavel' => '$valor'])
+            @endif
+            @include('site/popular-post', ['variavel' => '$valor'])
+        </div>
     </div>
+
+
+
+
                     <!--h2><span>Business</span></h2>
                     <div class="single_post_content_left">
                         <ul class="business_catgnav  wow fadeInDown">
