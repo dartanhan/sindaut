@@ -69,28 +69,30 @@
                                 </div>
                             </div>
                             <!-- Modal -->
-                            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
-                                    <form method="POST" action="{{route('historia.update',$historia->id)}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
-                                        @csrf
-                                        @method('put')
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title" id="exampleModalLabel">Editando História</h5>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-row">
-                                                    <textarea class="tinymce_editor" name="tinymce_editor" id="tinymce_editor">{!! $historia->conteudo !!}</textarea>
+                            @if(!empty($historia))
+                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
+                                        <form method="POST" action="{{route('historia.update',$historia->id)}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('put')
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-primary text-white">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Editando História</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-row">
+                                                        <textarea class="tinymce_editor" name="tinymce_editor" id="tinymce_editor">{!! $historia->conteudo !!}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                                    <button type="submit" class="btn btn-primary">Salvar</button>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn-primary">Salvar</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
 
                     </div>
@@ -108,7 +110,9 @@
                               <b>HISTÓRIA</b>
                             </div>
                             <div class="card-body mt-3">
-                                {!! $historia->conteudo !!}
+                                @if(!empty($historia))
+                                    {!! $historia->conteudo !!}
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,9 @@
                 </ol>
                 <div class="left_content">
                     <div class="contact_area">
-                        {!! $historia->conteudo !!}
+                        @if(!empty($historia))
+                            {!! $historia->conteudo !!}
+                        @endif
                     </div>
                 </div>
             </div>

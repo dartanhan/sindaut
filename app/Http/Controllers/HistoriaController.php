@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HistoriaController extends Controller
 {
@@ -50,11 +51,22 @@ class HistoriaController extends Controller
      */
     public function store()
     {
+        $validator = Validator::make($this->request->all(), [
+            'tinymce_editor' => ['required', 'string'],
+        ], [
+            'tinymce_editor.required' => 'A história é obrigatória.'
+        ]);
+
+        if ($validator->fails()) {
+            $error = $validator->errors()->first();
+            return redirect()->route('historia.index')->with('danger', $error);
+        }
+
         $historia = $this->historia->create([
             'conteudo' => $this->request->input('tinymce_editor')
         ]);
 
-        if(!$historia){
+        if(empty($historia)){
             return redirect()->route('historia.index')->with('danger','Não foi possível salvar a história.');
         }
         return redirect()->route('historia.index')->with('success','História criada com sucesso.');
