@@ -25,12 +25,12 @@
                                     <!--a href="#">
                                         <i class="fa fa-user"></i>Wpfreeware</a-->
                                     <span>
-                            <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
-                        </span>
+                                        <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
+                                    </span>
                                     <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
                                 </div>
                                 <div class="single_page_content">
-                                    {!! str_replace("../", "", $noticias[0]->conteudo) !!}
+                                    {!! str_replace("../../", "", $noticias[0]->conteudo) !!}
                                 </div>
                             </div>
                         </div>
