@@ -197,7 +197,7 @@
                                 <th scope="col">Titulo</th>
                                 <th scope="col">SubTitulo</th>
                                 <th scope="col">Conteudo</th>
-                                <th scope="col">Ativo/Inativo</th>
+                                <th scope="col">Inativo/Ativo</th>
                                 <th scope="col">Destaque</th>
                                 <th scope="col">Criado em:</th>
                                 <th scope="col">Atualizado em:</th>
