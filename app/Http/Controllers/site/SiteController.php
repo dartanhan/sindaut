@@ -25,7 +25,7 @@ class SiteController extends Controller
         //$noticias =$this->noticia->where('status',1)->orderBy('id', 'desc')->get();
         $noticias = $this->noticia->with('imagens')
             ->where('status',1)
-            ->orderBy('id', 'desc')->skip(0)->take(6)->get();
+            ->orderBy('id', 'desc')->get();
 
         return view('site.home',compact('noticias'));
     }
