@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConvencaoController;
+use App\Http\Controllers\ConvencaoSiteController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\site\SiteController;
@@ -35,6 +37,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/contato',[SiteController::class,'contato'])->name('site.contato');
     Route::get('/detalhe-noticia/{id}',[SiteController::class,'detalheNoticia'])->name('site.detalhe-noticia');
     Route::get('historia',[HistoriaSiteController::class,'index'])->name('site.historia.index');
+    Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
 });
@@ -60,4 +63,5 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::delete('/upload/tmp-delete', [UploadController::class, 'tmpDelete'])->name('tmpDelete');
 
     Route::resource('historia',HistoriaController::class);
+    Route::resource('convencao',ConvencaoController::class);
 });

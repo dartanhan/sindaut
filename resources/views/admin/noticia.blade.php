@@ -53,7 +53,7 @@
                                                 <h5 class="modal-title" id="exampleModalLabel">Criar Notícia</h5>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="form-grou" style="text-align: left;">
+                                                <div class="form-group" style="text-align: left;">
                                                     <label for="titulo"><strong>Máximo de 80 Caracteres</strong></label>
                                                     <input type="text" name="titulo" id="titulo"
                                                            class="form-control"
