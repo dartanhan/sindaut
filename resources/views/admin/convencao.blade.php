@@ -35,10 +35,10 @@
                             </div>
                         @endif
                         <div class="container text-center ">
-                            <!-- Botão para abrir o modal -->
+                            <!-- Botão para abrir o modal 
                             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
                                 Cadastrar Convenção
-                            </button>
+                            </button-->
                             
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
