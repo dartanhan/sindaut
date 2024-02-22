@@ -3,12 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConvencaoController;
-use App\Http\Controllers\ConvencaoSiteController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\site\SiteController;
-use App\Http\Livewire\PostManager;
 use App\Http\Controllers\HistoriaController;
+use App\Http\Controllers\site\ConvencaoSiteController as SiteConvencaoSiteController;
 use App\Http\Controllers\site\HistoriaSiteController;
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +36,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/contato',[SiteController::class,'contato'])->name('site.contato');
     Route::get('/detalhe-noticia/{id}',[SiteController::class,'detalheNoticia'])->name('site.detalhe-noticia');
     Route::get('historia',[HistoriaSiteController::class,'index'])->name('site.historia.index');
-    Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
+    Route::get('convencao',[SiteConvencaoSiteController::class,'index'])->name('site.convencao.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
 });

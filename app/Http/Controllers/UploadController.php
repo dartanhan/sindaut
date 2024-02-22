@@ -39,7 +39,7 @@ class UploadController extends Controller
         $dados = $this->request->all();
 
         $this->request->validate([
-            'file' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Adicione as validações necessárias
+            'file' => 'image|mimes:jpeg,png,jpg,gif,pdf|max:2048', // Adicione as validações necessárias
         ]);
 
         // Filtra o conteúdo usando o HTMLPurifier
@@ -98,5 +98,13 @@ class UploadController extends Controller
             $temp_file->delete();
             return response('');
         }
+    }
+
+    public function show(){
+        $this->tmpDelete();
+    }
+
+    public function destroy(){
+        $this->tmpDelete();
     }
 }

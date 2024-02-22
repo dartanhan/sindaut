@@ -13,9 +13,11 @@ class CreateGaleriaImagemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_sindaut_galeria_imagemstbl_sindaut_galeria_imagems', function (Blueprint $table) {
+        Schema::create('tbl_sindaut_galeria_imagens', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('path',255);
+            $table->unsignedBigInteger('file_id');           
+            $table->foreign('file_id')->references('id')->on('tbl_sindaut_convencao');
             $table->timestamps();
         });
     }

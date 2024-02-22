@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as Middleware;
+
+class HandleCsrfTokenError extends Middleware
+{
+    public function handle($request, Closure $next)
+    {
+        try {
+            return parent::handle($request, $next);
+        } catch (TokenMismatchException $e) {
+            // Se o erro for 419, redirecione para a rota de login
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'CSRF token expirado'], 419);
+            }
+            return Redirect::route('admin.login')->with('error', 'Sua sessão expirou. Por favor, faça login novamente.');
+        }
+    }
+}
+

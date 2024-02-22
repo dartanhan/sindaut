@@ -46,10 +46,10 @@ const pond = FilePond.create(inputElement, {
     imageValidateSizeLabelExpectedMinResolution: 'Resolução mínima permitida: {minResolution}',
     imageValidateSizeLabelExpectedMaxResolution: 'Resolução máxima permitida: {maxResolution}',
     plugins: [FilePondPluginImagePreview],
-    acceptedFileTypes: ['image/png', 'image/jpeg'],
+    acceptedFileTypes: ['image/png','image/jpeg','application/pdf'],
     fileValidateTypeDetectType: (source, type) =>
         new Promise((resolve, reject) => {
-            const tiposAceitos = ['image/png', 'image/jpeg'];
+            const tiposAceitos = ['image/png','image/jpeg','application/pdf'];
 
             if (tiposAceitos.includes(type)) {
                 resolve(type);

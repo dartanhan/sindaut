@@ -35,15 +35,15 @@
                             </div>
                         @endif
                         <div class="container text-center ">
-                            <!-- Botão para abrir o modal 
+                            <!-- Botão para abrir o modal -->
                             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
                                 Cadastrar Convenção
-                            </button-->
+                            </button>
                             
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
-                                    <form method="POST" action="{{route('historia.store')}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
+                                    <form method="POST" action="{{route('convencao.store')}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
                                     @csrf
                                         <div class="modal-content">
                                             <div class="modal-header bg-primary text-white">
@@ -72,12 +72,15 @@
                                                     <label><strong>Descrição da CCT</strong></label>
                                                     <textarea type="text" name="descricao_cct" id="descricao_cct"
                                                               class="form-control"
-                                                              placeholder="Descrição da CCT" 
+                                                              placeholder="Opcional! Descrição da CCT caso queira informar algo aos usuários." 
                                                               data-toggle="tooltip"
                                                               data-placement="top"
-                                                              title="Subtítulo no slider principal"></textarea>
+                                                              title="Descrição da CCT"></textarea>
                                                 </div>
-                                                <!-- div class="form-group  mt-3">
+                                                <div class="form-group mt-3">
+                                                        <input type="file" name="image" id="image" class="filepond"/>
+                                                </div>
+                                               <!-- div class="form-group  mt-3">
                                                     <textarea class="tinymce_editor" name="tinymce_editor" id="tinymce_editor"></textarea>
                                                 </div-->
                                             </div>
@@ -99,39 +102,73 @@
         <div class="col-lg-12">
             <div class="card">
                 <section>
-                    <div class="container mt-3">
-                        <div class="card">
-                            <div class="card-header text-center bg-primary text-white">
-                              <b>CONVENÇÕES COLETIVAS</b>
-                            </div>
-                            <div class="card-body mt-3">
-                                <table class="table datatable text-center">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Descrição:</th>
-                                            <th scope="col">Titulo:</th>
-                                            <th scope="col">Data CCT:</th>
-                                            <th scope="col">Arquivo:</th>
-                                            <th scope="col">Criado em:</th>
-                                            <th scope="col">Atualizado em:</th>
-                                            <th scope="col" colspan="2">Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-center"></tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="card-header text-center bg-primary text-white">
+                        <b>CONVENÇÕES COLETIVAS</b>
+                    </div>
+                    <div class="card-body mt-3">
+                        <table class="table datatable text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Descrição:</th>
+                                    <th scope="col">Titulo:</th>
+                                    <th scope="col">Data CCT:</th>
+                                    <th scope="col">Arquivo:</th>
+                                    <th scope="col">Criado em:</th>
+                                    <th scope="col">Atualizado em:</th>
+                                    <th scope="col" colspan="2">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+
+                                @foreach($convencoes as $convencao)
+                                    @foreach($convencao['files'] as $key => $file)
+                                        @php
+                                            /** @var TYPE_NAME $imagem */
+                                            $filePath = $file->path;
+                                        @endphp
+                                    @endforeach
+                                <tr>
+                                    <td>{{$convencao->descricao_cct}}</td>
+                                    <td>{{$convencao->titulo_cct}}</td>
+                                    <td>{{$convencao->data_cct}}</td>
+                                    <td>
+                                        <a href="../public/storage/posts/files/{{$filePath}}" target="_blank"  
+                                            data-toggle="tooltip"
+                                            data-placement="top" title="Visualizar arquivo">
+                                            <img border="0" alt="" src="../public/images/jornal.png" width="100" height="100">
+                                        </a>
+                                    </td>
+                                    <td>{{$convencao->created_at}}</td>
+                                    <td>{{$convencao->updated_at}}</td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <i class="bi bi-trash custom-icon-size text-danger btn-excluir" style="cursor: pointer"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Excluir Convenção"
+                                                data-rota="{{route('convencao.destroy',$convencao->id)}}">
+                                            </i>
+                                            <i class="bi bi-pencil-square custom-icon-size text-info btn-editar" style="cursor: pointer"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                title="Editar Convenção"
+                                                data-rota="{{route('convencao.edit',$convencao->id,'/edit')}}"
+                                                data-rota-update="{{route('convencao.update',$convencao->id)}}">
+                                            </i>
+                                        </div>
+                                    </td>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </section>
             </div>
         </div>
     </div>
-
-
 @endsection
 @push("styles")
     <link rel="stylesheet" type="text/css" href="{{URL::asset('admin/assets/css/custom.css')}}">
 @endpush
 @push("scripts")
-    
+    <script src="{{URL::asset('admin/assets/js/file-pond.js')}}"></script>
 @endpush
