@@ -1,6 +1,6 @@
 <div class="latest_post">
     <h2><span>Últimas Notícias</span></h2>
-    <div class="latest_post_container">
+    <div class="latest_post_container" style="max-height: 400px;overflow-y: hidden;">
         <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
         <ul class="latest_postnav">
             @foreach($noticias as $key => $noticia)
