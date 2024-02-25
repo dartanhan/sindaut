@@ -190,7 +190,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <section>
-                    <table class="table datatable text-center">
+                    <table class="table datatable text-center ">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -201,7 +201,7 @@
                                 <th scope="col">Destaque</th>
                                 <th scope="col">Criado em:</th>
                                 <th scope="col">Atualizado em:</th>
-                                <th scope="col" colspan="2">Ações</th>
+                                <th scope="col" colspan="2" width="250px">Ações</th>
                             </tr>
                         </thead>
                         <tbody>

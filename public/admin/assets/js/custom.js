@@ -1,5 +1,5 @@
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip();
 
     // Manipula o clique em uma imagem dentro do modal
 
@@ -85,48 +85,52 @@ $('.ler-mais').on('click', function(e) {
 /***
  * Salva a notícia
  * */
-document.getElementById('noticiaForm').addEventListener('submit', function(event) {
-    // Evita o envio padrão do formulário
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    let noticiaForm = document.getElementById('noticiaForm');
+    if (noticiaForm) {
+        noticiaForm.addEventListener('submit', function (event) {
+            // Evita o envio padrão do formulário
+            event.preventDefault();
 
-    // Realize aqui suas verificações de validação
-    const titulo = document.getElementById('titulo').value;
+            // Realize aqui suas verificações de validação
+            const titulo = document.getElementById('titulo').value;
 
-    if (titulo.trim() === "") {
-        Swal.fire({
-            title: 'Atenção!',
-            text: 'O Título da noticia deve ser informado!',
-            icon: 'info',
-            confirmButtonText: 'OK'
-        })
-        return;
+            if (titulo.trim() === "") {
+                Swal.fire({
+                    title: 'Atenção!',
+                    text: 'O Título da noticia deve ser informado!',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                })
+                return;
+            }
+
+            if ($('#destaque').is(':checked') && $("#imagemDestaque").val() === "") {
+                Swal.fire({
+                    title: 'Atenção!',
+                    text: 'Para colcoar a Notícia em destaque é necessário uma Imagem!',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                })
+                return;
+            }
+
+            const tinymceContent = tinymce.get('tinymce_editor').getContent();
+            if (tinymceContent.trim() === "") {
+                Swal.fire({
+                    title: 'Atenção!',
+                    text: 'O Conteúdo da Notícia está está vazio!',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                })
+                return;
+            }
+
+            // Se a validação passar, submeta o formulário
+            this.submit();
+        });
     }
-
-    if ($('#destaque').is(':checked') && $("#imagemDestaque").val() === "") {
-        Swal.fire({
-            title: 'Atenção!',
-            text: 'Para colcoar a Notícia em destaque é necessário uma Imagem!',
-            icon: 'info',
-            confirmButtonText: 'OK'
-        })
-        return;
-    }
-
-    const tinymceContent = tinymce.get('tinymce_editor').getContent();
-    if (tinymceContent.trim() === "") {
-        Swal.fire({
-            title: 'Atenção!',
-            text: 'O Conteúdo da Notícia está está vazio!',
-            icon: 'info',
-            confirmButtonText: 'OK'
-        })
-        return;
-    }
-
-    // Se a validação passar, submeta o formulário
-    this.submit();
 });
-
 
 
 /*$('#noticiaForm').submit(function(e){
@@ -199,7 +203,7 @@ document.querySelectorAll('.btn-excluir').forEach(btn => {
 
     Swal.fire({
         title: 'Atenção?',
-        text: "Deseja mesmo deleter esta notícia?",
+        text: "Deseja mesmo deleter esta informação?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -418,18 +422,104 @@ document.querySelectorAll('.btn-editar').forEach(btn => {
     });
 });
 
-// Adicione um ouvinte de eventos para o switch
-document.getElementById('destaque').addEventListener('change', function() {
-    var editorContainer = document.getElementById('editorContainer');
+/***
+ *
+ * */
+document.querySelectorAll('.btn-editar-convencao').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
 
-    // Verifique se o switch está marcado
-    if (this.checked) {
-        editorContainer.style.display = 'block'; // Exiba o campo de texto
-    } else {
-        editorContainer.style.display = 'none'; // Oculte o campo de texto
-        $("#caminhoImagem").val('');
-        $('#previewImagem').attr('src', '');
-        var previewImagem = document.getElementById('previewImagem');
-        previewImagem.style.display = 'none';
+        const rota = $(this).data('rota');
+        const fileId = $(this).data('file-id');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
+        fetch(rota, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+            }
+        })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response);
+               // return;
+
+                if (response.success) {
+
+                    // Preencher os campos do modal com os dados obtidos
+                    document.getElementById('titulo').value = response.data.titulo_cct;
+                    document.getElementById('data_cct').value = response.data.data_cct;
+                    //  document.getElementById('descricao_cct').value = response.data.descricao_cct;
+                    tinymce.activeEditor.setContent(response.data.descricao_cct.descricao);
+
+
+                    let meuFormulario = document.getElementById('uploadForm');
+                    meuFormulario.action = $(this).data('rota-update'); // pega a url de update que está no objeto clicado
+
+                    let hiddenMethodInput = document.createElement('input');
+                    hiddenMethodInput.type = 'hidden';
+                    hiddenMethodInput.name = '_method';
+                    hiddenMethodInput.value = 'PUT';
+                    meuFormulario.appendChild(hiddenMethodInput);
+
+                    hiddenMethodInput = document.createElement('input');
+                    hiddenMethodInput.type = 'hidden';
+                    hiddenMethodInput.name = 'convencao-id';
+                    hiddenMethodInput.value = response.data.descricao_cct.id;
+                    meuFormulario.appendChild(hiddenMethodInput);
+
+                    hiddenMethodInput = document.createElement('input');
+                    hiddenMethodInput.type = 'hidden';
+                    hiddenMethodInput.name = 'convencao_descricao_id';
+                    hiddenMethodInput.value = response.data.descricao_cct.id;
+                    meuFormulario.appendChild(hiddenMethodInput);
+
+                    hiddenMethodInput = document.createElement('input');
+                    hiddenMethodInput.type = 'hidden';
+                    hiddenMethodInput.name = 'file_id';
+                    hiddenMethodInput.value = fileId;
+                    meuFormulario.appendChild(hiddenMethodInput);
+
+                    // Abrir o modal
+                    $('#convencaoModal').modal('show');
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        icon: 'error',
+                        html: response.message,
+                        showConfirmButton: true
+                    });
+                }
+            })
+            .catch(error => Swal.fire({
+                    title: 'Error!',
+                    icon: 'error',
+                    html: error,
+                    showConfirmButton: true
+                })
+            );
+    });
+});
+
+// Adicione um ouvinte de eventos para o switch
+document.addEventListener('DOMContentLoaded', function() {
+    let destaque = document.getElementById('destaque');
+    if (destaque) {
+        destaque.addEventListener('change', function (event) {
+            let editorContainer = document.getElementById('editorContainer');
+
+            // Verifique se o switch está marcado
+            if (this.checked) {
+                editorContainer.style.display = 'block'; // Exiba o campo de texto
+            } else {
+                editorContainer.style.display = 'none'; // Oculte o campo de texto
+                $("#caminhoImagem").val('');
+                $('#previewImagem').attr('src', '');
+                let previewImagem = document.getElementById('previewImagem');
+                previewImagem.style.display = 'none';
+            }
+        });
     }
 });

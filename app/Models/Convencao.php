@@ -10,7 +10,7 @@ class Convencao extends Model
     use HasFactory;
 
     protected $table = 'tbl_sindaut_convencao';
-    protected $fillable = ['titulo_cct', 'data_cct', 'descricao_cct','file_id', 'updated_at', 'created_at'];
+    protected $fillable = ['titulo_cct', 'data_cct', 'descricao_cct','file_id','status', 'updated_at', 'created_at'];
 
     public function files()
     {

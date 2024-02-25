@@ -36,12 +36,12 @@
                         @endif
                         <div class="container text-center ">
                             <!-- Botão para abrir o modal -->
-                            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
+                            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#convencaoModal">
                                 Cadastrar Convenção
                             </button>
-                            
+
                             <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="convencaoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
                                     <form method="POST" action="{{route('convencao.store')}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
                                     @csrf
@@ -71,8 +71,8 @@
                                                 <div class="form-group  mt-3"  style="text-align: left;">
                                                     <label><strong>Descrição da CCT</strong></label>
                                                     <textarea type="text" name="descricao_cct" id="descricao_cct"
-                                                              class="form-control"
-                                                              placeholder="Opcional! Descrição da CCT caso queira informar algo aos usuários." 
+                                                              class="tinymce_editor"
+                                                              placeholder="Opcional! Descrição da CCT caso queira informar algo aos usuários."
                                                               data-toggle="tooltip"
                                                               data-placement="top"
                                                               title="Descrição da CCT"></textarea>
@@ -85,7 +85,7 @@
                                                 </div-->
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                                 <button type="submit" class="btn btn-primary">Salvar</button>
                                             </div>
                                         </div>
@@ -109,7 +109,6 @@
                         <table class="table datatable text-center">
                             <thead>
                                 <tr>
-                                    <th scope="col">Descrição:</th>
                                     <th scope="col">Titulo:</th>
                                     <th scope="col">Data CCT:</th>
                                     <th scope="col">Arquivo:</th>
@@ -123,37 +122,48 @@
                                 @foreach($convencoes as $convencao)
                                     @foreach($convencao['files'] as $key => $file)
                                         @php
-                                            /** @var TYPE_NAME $imagem */
+                                            /** @var TYPE_NAME $file */
                                             $filePath = $file->path;
+                                            $fileId = $file->id;
                                         @endphp
                                     @endforeach
                                 <tr>
-                                    <td>{{$convencao->descricao_cct}}</td>
                                     <td>{{$convencao->titulo_cct}}</td>
                                     <td>{{$convencao->data_cct}}</td>
                                     <td>
-                                        <a href="../public/storage/posts/files/{{$filePath}}" target="_blank"  
+                                        <a href="../public/storage/posts/files/{{$filePath}}" target="_blank"
                                             data-toggle="tooltip"
                                             data-placement="top" title="Visualizar arquivo">
-                                            <img border="0" alt="" src="../public/images/jornal.png" width="100" height="100">
+                                            <img border="0" alt="" src="../public/images/pdf.png" width="40">
                                         </a>
                                     </td>
                                     <td>{{$convencao->created_at}}</td>
                                     <td>{{$convencao->updated_at}}</td>
                                     <td>
                                         <div class="d-flex">
+                                            <div class="form-check form-switch mt-2" style="display: inline-block; vertical-align: middle;cursor: pointer">
+                                            <input class="form-check-input statusSwitch" style="text-align: center;cursor: pointer"
+                                                   type="checkbox"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top"
+                                                   title="{{$convencao->status == 0 ? "Bloqueado, sem visualização no site." : "Liberado, para visualização no site."}}"
+                                                   data-id="{{$convencao->id}}"
+                                                   data-rota="{{route('convencao.status')}}"
+                                                {{$convencao->status == 0 ? "" : "checked"}}>
+                                            </div>
                                             <i class="bi bi-trash custom-icon-size text-danger btn-excluir" style="cursor: pointer"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Excluir Convenção"
                                                 data-rota="{{route('convencao.destroy',$convencao->id)}}">
                                             </i>
-                                            <i class="bi bi-pencil-square custom-icon-size text-info btn-editar" style="cursor: pointer"
+                                            <i class="bi bi-pencil-square custom-icon-size text-info btn-editar-convencao" style="cursor: pointer"
                                                 data-toggle="tooltip"
                                                 data-placement="top"
                                                 title="Editar Convenção"
                                                 data-rota="{{route('convencao.edit',$convencao->id,'/edit')}}"
-                                                data-rota-update="{{route('convencao.update',$convencao->id)}}">
+                                                data-rota-update="{{route('convencao.update',$convencao->id)}}"
+                                                data-file-id = "{{$fileId}}">
                                             </i>
                                         </div>
                                     </td>
@@ -171,4 +181,5 @@
 @endpush
 @push("scripts")
     <script src="{{URL::asset('admin/assets/js/file-pond.js')}}"></script>
+    <script src="{{URL::asset('admin/assets/js/custom.js')}}"></script>
 @endpush

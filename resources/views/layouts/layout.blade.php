@@ -18,7 +18,7 @@
     <script src="{{URL::asset('assets/js/html5shiv.min.js')}}"></script>
     <script src="{{URL::asset('assets/js/respond.min.js')}}"></script>
     <![endif]-->
-
+    @stack("styles")
 </head>
 <body>
 <div id="preloader">

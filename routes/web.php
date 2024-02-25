@@ -62,5 +62,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::delete('/upload/tmp-delete', [UploadController::class, 'tmpDelete'])->name('tmpDelete');
 
     Route::resource('historia',HistoriaController::class);
+
     Route::resource('convencao',ConvencaoController::class);
+    Route::post('/convencao/status', [ConvencaoController::class, 'status'])->name('convencao.status');
 });

@@ -187,9 +187,8 @@
 
   tinymce.init({
     selector: 'textarea.tinymce_editor',
-   // plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
-      plugins:'code',
-      editimage_cors_hosts: ['picsum.photos'],
+    plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+    editimage_cors_hosts: ['picsum.photos'],
     menubar: 'file edit view insert format tools table help',
     toolbar: 'undo redo | bold italic underline strikethrough table emoticons| fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
     toolbar_sticky: true,
@@ -281,7 +280,18 @@
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
   });
 
-  /**
+    /**
+     * https://stackoverflow.com/questions/18111582/tinymce-4-links-plugin-modal-in-not-editable
+     * */
+    $(document).on('focusin', function(e) {
+        if ($(e.target).closest(".tox-tinymce-aux, .moxman-window, .tam-assetmanager-root, .tox-dialog").length) {
+            $('.tox-dialog').css('z-index', '2003');
+            e.stopImmediatePropagation();
+        }
+    });
+
+
+    /**
    * Initiate Bootstrap validation check
    */
   var needsValidation = document.querySelectorAll('.needs-validation')

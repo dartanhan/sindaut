@@ -23,7 +23,7 @@
                     </ul>
                 </li>
                 <li><a href="#">Jornal</a></li>
-                <li><a href="#">Convenções</a></li>
+                <li><a href="{{route('site.convencao.index')}}">Convenções</a></li>
                 <li><a href="#">Departamento Jurídico</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Outros</a>
