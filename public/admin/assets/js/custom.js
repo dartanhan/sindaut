@@ -444,7 +444,6 @@ document.querySelectorAll('.btn-editar-convencao').forEach(btn => {
             .then(response => response.json())
             .then(response => {
                 console.log(response);
-               // return;
 
                 if (response.success) {
 
@@ -452,7 +451,7 @@ document.querySelectorAll('.btn-editar-convencao').forEach(btn => {
                     document.getElementById('titulo').value = response.data.titulo_cct;
                     document.getElementById('data_cct').value = response.data.data_cct;
                     //  document.getElementById('descricao_cct').value = response.data.descricao_cct;
-                    tinymce.activeEditor.setContent(response.data.descricao_cct.descricao);
+                    tinymce.activeEditor.setContent(response.data.descricao_cct !== null ? response.data.descricao_cct.descricao : '');
 
 
                     let meuFormulario = document.getElementById('uploadForm');
@@ -464,18 +463,23 @@ document.querySelectorAll('.btn-editar-convencao').forEach(btn => {
                     hiddenMethodInput.value = 'PUT';
                     meuFormulario.appendChild(hiddenMethodInput);
 
+                    //id da tabela convenção
                     hiddenMethodInput = document.createElement('input');
                     hiddenMethodInput.type = 'hidden';
                     hiddenMethodInput.name = 'convencao-id';
-                    hiddenMethodInput.value = response.data.descricao_cct.id;
+                    hiddenMethodInput.value = response.data.id;
                     meuFormulario.appendChild(hiddenMethodInput);
 
-                    hiddenMethodInput = document.createElement('input');
-                    hiddenMethodInput.type = 'hidden';
-                    hiddenMethodInput.name = 'convencao_descricao_id';
-                    hiddenMethodInput.value = response.data.descricao_cct.id;
-                    meuFormulario.appendChild(hiddenMethodInput);
+                    //id data table de descrição da convenção
+                    if(response.data.descricao_cct !== null){
+                        hiddenMethodInput = document.createElement('input');
+                        hiddenMethodInput.type = 'hidden';
+                        hiddenMethodInput.name = 'convencao_descricao_id';
+                        hiddenMethodInput.value = response.data.descricao_cct.id;
+                        meuFormulario.appendChild(hiddenMethodInput);
+                    }
 
+                    //id do arquivo
                     hiddenMethodInput = document.createElement('input');
                     hiddenMethodInput.type = 'hidden';
                     hiddenMethodInput.name = 'file_id';

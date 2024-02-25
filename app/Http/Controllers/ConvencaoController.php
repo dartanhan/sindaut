@@ -78,9 +78,6 @@ class ConvencaoController extends Controller
         $convencao = Convencao::with('files')->find($id);
         $convencaoDescricao = ConvencaoDescricao::first();
 
-        if (!$convencao) {
-            abort(404); // Retorna um erro 404 se a notícia não for encontrada
-        }
         $convencao['descricao_cct'] = $convencaoDescricao;
 
         return response()->json(['success' => true, 'data' => $convencao]);
@@ -111,15 +108,20 @@ class ConvencaoController extends Controller
         try {
             $convencao = Convencao::find($id);
 
+            //atualiza a convenção
             $convencao->titulo_cct = $this->request->input('titulo');
             $convencao->data_cct =  $this->request->input('data_cct');
-
             $convencao->update();
 
-            $convencao = ConvencaoDescricao::find($this->request->input('convencao_descricao_id'));
-            $convencao->descricao = $this->request->input('descricao_cct');
-            $convencao->update();
+            // Atualiza ou cria o registro a descrição da convenção
+            if($this->request->input('descricao_cct') !== null){
+                ConvencaoDescricao::updateOrCreate(
+                    ['id' => $this->request->input('convencao_descricao_id')], // Condição de busca
+                    ['descricao' => $this->request->input('descricao_cct')] // Valores a serem atualizados ou criados
+                );
+            }
 
+            //se tiver imagem , atualiza
             if($this->request->image){
                 $temp_file = TemporaryFile::where('folder',$this->request->image)->first();
 
@@ -140,7 +142,6 @@ class ConvencaoController extends Controller
                     Storage::deleteDirectory('posts/tmp/' . $temp_file->folder);
                     $temp_file->delete();
                 }
-
             }
 
             return redirect()->route('convencao.index')->with('success','Convenção atualizada com sucesso.');
@@ -149,6 +150,7 @@ class ConvencaoController extends Controller
             return redirect()->route('convencao.index')->with('danger','Erro ao atualizar Convenção.');
         }
     }
+
     /***
      * Atualiza o status para ativo e inativo
      * */
