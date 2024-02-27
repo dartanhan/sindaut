@@ -56,7 +56,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4">
                 <aside class="right_content">
                     @include('site/ultimas-noticias', ['variavel' => '$valor'])
-                    @include('site/popular-post', ['variavel' => '$valor'])
+                    <!--@include('site/popular-post', ['variavel' => '$valor'])-->
                 </aside>
             </div>
         </div>

@@ -17,12 +17,11 @@
                 <li><a href="#">Homologação</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Benefícios</a>
-                    <ul class="dropdown-menu" role="menu">
+                    <!--ul class="dropdown-menu" role="menu">
                         <li><a href="#">Como Obter</a></li>
                         <li><a href="#">Convênios</a></li>
-                    </ul>
+                    </ul-->
                 </li>
-                <li><a href="#">Jornal</a></li>
                 <li><a href="{{route('site.convencao.index')}}">Convenções</a></li>
                 <li><a href="#">Departamento Jurídico</a></li>
                 <li class="dropdown">
@@ -35,7 +34,6 @@
                     </ul>
                 </li>
                 <li><a href="#">Notícias</a></li>
-                <li><a href="#">Acordo Coletivo</a></li>
             </ul>
         </div>
     </nav>
