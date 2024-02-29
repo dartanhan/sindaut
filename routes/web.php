@@ -7,8 +7,11 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\site\SiteController;
 use App\Http\Controllers\HistoriaController;
-use App\Http\Controllers\site\ConvencaoSiteController as SiteConvencaoSiteController;
+use App\Http\Controllers\HomologacaoController;
+use App\Http\Controllers\site\ConvencaoSiteController as ConvencaoSiteController;
 use App\Http\Controllers\site\HistoriaSiteController;
+use App\Http\Controllers\site\HomologacaoSiteController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +39,8 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('/contato',[SiteController::class,'contato'])->name('site.contato');
     Route::get('/detalhe-noticia/{id}',[SiteController::class,'detalheNoticia'])->name('site.detalhe-noticia');
     Route::get('historia',[HistoriaSiteController::class,'index'])->name('site.historia.index');
-    Route::get('convencao',[SiteConvencaoSiteController::class,'index'])->name('site.convencao.index');
+    Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
+    Route::get('homologacao',[HomologacaoSiteController::class,'index'])->name('site.homologacao.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
 });
@@ -65,4 +69,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
 
     Route::resource('convencao',ConvencaoController::class);
     Route::post('/convencao/status', [ConvencaoController::class, 'status'])->name('convencao.status');
+
+    Route::resource('homologacao',HomologacaoController::class);
+    Route::post('homologacao/status',[HomologacaoController::class,'status'])->name('homologacao.status');
 });

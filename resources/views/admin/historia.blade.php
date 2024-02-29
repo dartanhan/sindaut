@@ -13,8 +13,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item">Noticas</li>
-                <li class="breadcrumb-item active">Galeria de Imagens </li>
+                <li class="breadcrumb-item active">História</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->

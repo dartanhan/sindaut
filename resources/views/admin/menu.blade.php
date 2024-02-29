@@ -104,6 +104,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('homologacao.index')}}">
+                    <i class="bi bi-tools"></i>
+                    <span>Homologação</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('admin.register')}}">
                     <i class="bi bi-card-list"></i>
                     <span>Registro</span>

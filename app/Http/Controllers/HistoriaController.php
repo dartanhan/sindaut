@@ -108,11 +108,11 @@ class HistoriaController extends Controller
 
         $atualizacaoBemSucedida = $historia->update();
 
-        if ($atualizacaoBemSucedida) {
-            return redirect()->route('historia.index')->with('success','História atualizada com sucesso.');
-        } else {
+        if (!$atualizacaoBemSucedida) {
             return redirect()->route('historia.index')->with('danger','Erro ao atualizar a Hitória.');
         }
+        
+        return redirect()->route('historia.index')->with('success','História atualizada com sucesso.');
     }
 
     /**
