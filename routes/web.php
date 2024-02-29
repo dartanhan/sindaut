@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BeneficiosController;
 use App\Http\Controllers\ConvencaoController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\site\SiteController;
 use App\Http\Controllers\HistoriaController;
 use App\Http\Controllers\HomologacaoController;
+use App\Http\Controllers\site\BeneficioSiteController;
 use App\Http\Controllers\site\ConvencaoSiteController as ConvencaoSiteController;
 use App\Http\Controllers\site\HistoriaSiteController;
 use App\Http\Controllers\site\HomologacaoSiteController;
@@ -41,6 +43,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('historia',[HistoriaSiteController::class,'index'])->name('site.historia.index');
     Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
     Route::get('homologacao',[HomologacaoSiteController::class,'index'])->name('site.homologacao.index');
+    Route::get('beneficio',[BeneficioSiteController::class,'index'])->name('site.beneficio.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
 });
@@ -72,4 +75,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
 
     Route::resource('homologacao',HomologacaoController::class);
     Route::post('homologacao/status',[HomologacaoController::class,'status'])->name('homologacao.status');
+
+    Route::resource('beneficio',BeneficiosController::class);
+    Route::post('beneficio/status',[BeneficiosController::class,'status'])->name('beneficio.status');
 });

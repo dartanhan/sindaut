@@ -21,12 +21,13 @@
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{route('noticia.index')}}">
-                            <i class="bi bi-circle"></i><span>Criar Notícia</span>
+                            <i class="bi bi-newspaper"></i>
+                            <span>Criar Notícia</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{route('upload.index')}}">
-                            <i class="bi bi-circle"></i><span>Galeria de Imagens</span>
+                            <i class="bi bi-images"></i><span>Galeria de Imagens</span>
                         </a>
                     </li>
                     <!--li>
@@ -93,13 +94,13 @@
             </li><!-- End Components Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('historia.index')}}">
-                    <i class="bi bi-person"></i>
+                    <i class="bi bi-book"></i>
                     <span>História</span>
                 </a>
             </li><!-- End Profile Page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('convencao.index')}}">
-                    <i class="bi bi-person-workspace"></i>
+                    <i class="bi bi-people"></i>
                     <span>Convenção Coleteiva</span>
                 </a>
             </li>
@@ -110,8 +111,14 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('beneficio.index')}}">
+                    <i class="bi bi-gift"></i>
+                    <span>Benefícios</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('admin.register')}}">
-                    <i class="bi bi-card-list"></i>
+                    <i class="bi bi-person-plus"></i>
                     <span>Registro</span>
                 </a>
             </li><!-- End Register Page Nav -->
