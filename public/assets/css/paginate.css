@@ -1,0 +1,93 @@
+.media-site {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex; /* Usar flexbox para organizar os elementos na horizontal */
+    align-items: center; /* Alinhar os itens verticalmente ao centro */
+}
+
+/* Estilo para a imagem */
+.media-left-site img {
+    width: 180px; /* Largura da imagem */
+    height: 150px; /* Altura automática para manter a proporção */
+    margin-right: 20px; /* Espaçamento à direita da imagem */
+}
+
+/* Estilo para a cada notícia */
+.media-site {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex; /* Usar flexbox para organizar os elementos na horizontal */
+    align-items: center; /* Alinhar os itens verticalmente ao centro */
+}
+/* Estilo para o conteúdo ao lado da imagem */
+.media-body-site {
+    flex: 1; /* Ocupar todo o espaço disponível */
+}
+
+/* Estilo para o título */
+.catg_title_site {
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.catg_title_site:hover {
+    color: #007bff;
+}
+
+/* Estilo para a data */
+.media-body-site span {
+    color: #666;
+    font-size: 14px;
+    display: block; /* Fazer com que a data seja exibida em uma nova linha */
+}
+
+/* Estilo para o ícone de calendário */
+.media-body-site span i.fa-calendar {
+    margin-right: 5px;
+}
+
+/* Estilo para o ícone de volume */
+.media-body-site a i.fa-volume-up {
+    margin-right: 5px;
+}
+
+/* Estilizando a paginação */
+.pagination {
+    margin-top: 5px; /* Espaçamento na parte superior da paginação */
+}
+
+/* Estilizando os links da paginação */
+.pagination .page-link {
+    color: #333; /* Cor dos links */
+    background-color: #fff; /* Cor de fundo dos links */
+    border: 1px solid #ccc; /* Borda dos links */
+    padding: 6px 12px; /* Espaçamento interno dos links */
+    margin-right: 5px; /* Espaçamento à direita entre os links */
+    border-radius: 3px; /* Borda arredondada dos links */
+}
+
+/* Estilizando o link ativo */
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Cor de fundo do link ativo */
+    border-color: #007bff; /* Cor da borda do link ativo */
+    color: #fff; /* Cor do texto do link ativo */
+}
+
+/* Estilizando os links de navegação (anterior e próximo) */
+.pagination .page-item.disabled .page-link {
+    color: #999; /* Cor dos links de navegação desativados */
+    cursor: not-allowed; /* Cursor desativado */
+}
+
+/* Estilizando o link de navegação anterior */
+.pagination .page-item.prev .page-link::before {
+    content: "\00AB"; /* Símbolo de seta para a esquerda */
+    margin-right: 3px; /* Espaçamento à direita do símbolo */
+}
+
+/* Estilizando o link de navegação próximo */
+.pagination .page-item.next .page-link::after {
+    content: "\00BB"; /* Símbolo de seta para a direita */
+    margin-left: 3px; /* Espaçamento à esquerda do símbolo */
+}

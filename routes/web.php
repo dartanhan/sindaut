@@ -13,6 +13,8 @@ use App\Http\Controllers\site\BeneficioSiteController;
 use App\Http\Controllers\site\ConvencaoSiteController as ConvencaoSiteController;
 use App\Http\Controllers\site\HistoriaSiteController;
 use App\Http\Controllers\site\HomologacaoSiteController;
+use App\Http\Controllers\site\NoticiaSiteController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +46,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
     Route::get('homologacao',[HomologacaoSiteController::class,'index'])->name('site.homologacao.index');
     Route::get('beneficio',[BeneficioSiteController::class,'index'])->name('site.beneficio.index');
+    Route::get('noticia',[NoticiaSiteController::class,'index'])->name('site.noticia.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
 });

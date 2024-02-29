@@ -34,7 +34,7 @@
                         <li><a href="#">Empresas</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Notícias</a></li>
+                <li><a href="{{route('site.noticia.index')}}">Notícias</a></li>
             </ul>
         </div>
     </nav>

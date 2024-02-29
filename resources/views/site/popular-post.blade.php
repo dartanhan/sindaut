@@ -1,5 +1,5 @@
 <div class="single_sidebar mt-3">
-    <h2><span>Jornal</span></h2>
+    <!--h2><span>Jornal</span></h2>
     <ul class="spost_nav">
         <li>
             <div class="media wow fadeInDown">
@@ -38,5 +38,5 @@
                 <a href="{{URL::asset('storage/posts/files/41f2fbf1d20a958513e3b6b8c61d3e13.pdf')}}" target="_blank"  class="catg_title"> JORNAL DO SINDAUT 43</a>
             </div>
         </div>
-    </ul>
+    </ul-->
 </div>

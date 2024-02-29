@@ -42,7 +42,7 @@
             @if(count($noticias) > 0)
                 @include('site/ultimas-noticias', ['variavel' => '$valor'])
             @endif
-           <!-- @include('site/popular-post', ['variavel' => '$valor'])-->
+            @include('site/popular-post', ['variavel' => '$valor'])
         </div>
     </div>
 

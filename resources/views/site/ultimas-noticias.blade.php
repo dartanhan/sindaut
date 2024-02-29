@@ -6,11 +6,23 @@
             @foreach($noticias as $key => $noticia)
             <li>
                 <div class="media">
+                    @php $imagemEncontrada = false; @endphp
                     @foreach($noticia['imagens'] as $key => $imagem)
-                        <a href="{{route('site.detalhe-noticia',$noticia->id)}}" class="media-left">
-                            <img alt="" src="{{URL::asset("storage/posts/files/".$imagem->path)}}">
-                        </a>
+                        @if(!empty($imagem) && strlen($imagem->path) > 0)
+                            <a href="{{ route('site.detalhe-noticia', $noticia->id) }}" class="media-left">
+                                <img alt="" src="{{ URL::asset("storage/posts/files/".$imagem->path) }}">
+                            </a>
+                            @php $imagemEncontrada = true; @endphp
+                            @break
+                        @endif
                     @endforeach
+
+                    @if(!$imagemEncontrada)
+                        <a href="{{ route('site.detalhe-noticia', $noticia->id) }}" class="media-left">
+                            <img alt="" src="{{ URL::asset("images/volume.png") }}">
+                        </a>
+                    @endif
+
                     <div class="media-body">
                         <a href="{{route('site.detalhe-noticia',$noticia->id)}}" class="catg_title">
                             <i class="fa fa-volume-up"></i> {{$noticia->titulo}} </a>

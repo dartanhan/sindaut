@@ -63,7 +63,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 right-column">
                 @include('site/ultimas-noticias', ['variavel' => '$valor'])
-               <!-- @include('site/popular-post', ['variavel' => '$valor'])-->
+                @include('site/popular-post', ['variavel' => '$valor'])
             </div>
         </div>
 
