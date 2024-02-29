@@ -126,7 +126,7 @@
                 <form method="POST" action="{{route('homologacao.store')}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
                 @csrf
                     <div class="modal-content">
-                        <div class="modal-header bg-primaryext-white">
+                        <div class="modal-header bg-primary text-white">
                             <h5 class="modal-title" id="exampleModalLabel">Homologação</h5>
                         </div>
                         <div class="modal-body">
