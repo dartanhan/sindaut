@@ -27,15 +27,10 @@ class NoticiaSiteController extends Controller
      */
     public function index()
     {
-        if(Auth::check() === true){
-            $user_data = User::where("id",auth()->user()->id)->first();
-
             $noticias = $this->noticia->with('imagens')->where('status',1)->orderBy('id', 'desc')->get();
 
             $noticias_site = $this->noticia->with('imagens')->where('status',1)->orderBy('id', 'desc')->paginate(10);
 
-                return view('site.noticias', compact('user_data','noticias','noticias_site'));
-        }
-        return redirect()->route('admin.login');
+            return view('site.noticias', compact('noticias','noticias_site'));
     }
 }
