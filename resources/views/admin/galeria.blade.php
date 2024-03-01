@@ -79,11 +79,11 @@
                     
                         // Mapeamento das extensões para tipos de arquivo
                         $fileTypes = [
-                            'pdf' => 'PDF',
-                            'doc' => 'Microsoft Word',
-                            'docx' => 'Microsoft Word',
-                            'xls' => 'Microsoft Excel',
-                            'xlsx' => 'Microsoft Excel',
+                            'pdf' => 'pdf',
+                            'doc' => 'doc',
+                            'docx' => 'docx',
+                            'xls' => 'xls',
+                            'xlsx' => 'xlsx',
                             // Adicione outras extensões conforme necessário
                         ];
                     @endphp
