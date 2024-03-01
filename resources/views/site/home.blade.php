@@ -8,7 +8,7 @@
 
 @section('content')
 
-
+<section id="contentSection">
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-6 left-column">
             <div class="row">
@@ -45,7 +45,7 @@
             @include('site/popular-post', ['variavel' => '$valor'])
         </div>
     </div>
-
+    </section>
 
 
 
