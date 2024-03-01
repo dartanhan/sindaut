@@ -12,8 +12,37 @@
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
-
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('beneficio.index')}}">
+                    <i class="bi bi-gift"></i>
+                    <span>Benefícios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('convencao.index')}}">
+                    <i class="bi bi-people"></i>
+                    <span>Convenção Coleteiva</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('depjuridico.index')}}">
+                    <i class="bi bi-briefcase-fill"></i>
+                    <span>Departamento Jurídico</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('historia.index')}}">
+                    <i class="bi bi-book"></i>
+                    <span>História</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{route('homologacao.index')}}">
+                    <i class="bi bi-tools"></i>
+                    <span>Homologação</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Noticias</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -91,31 +120,7 @@
                         </a>
                     </li-->
                 </ul>
-            </li><!-- End Components Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('historia.index')}}">
-                    <i class="bi bi-book"></i>
-                    <span>História</span>
-                </a>
-            </li><!-- End Profile Page Nav -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('convencao.index')}}">
-                    <i class="bi bi-people"></i>
-                    <span>Convenção Coleteiva</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('homologacao.index')}}">
-                    <i class="bi bi-tools"></i>
-                    <span>Homologação</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('beneficio.index')}}">
-                    <i class="bi bi-gift"></i>
-                    <span>Benefícios</span>
-                </a>
-            </li>
+            </li><!-- End Components Nav -->          
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{route('admin.register')}}">
                     <i class="bi bi-person-plus"></i>

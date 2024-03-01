@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BeneficiosController;
 use App\Http\Controllers\ConvencaoController;
+use App\Http\Controllers\DepJuridicoController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\site\SiteController;
@@ -11,10 +12,11 @@ use App\Http\Controllers\HistoriaController;
 use App\Http\Controllers\HomologacaoController;
 use App\Http\Controllers\site\BeneficioSiteController;
 use App\Http\Controllers\site\ConvencaoSiteController as ConvencaoSiteController;
+use App\Http\Controllers\site\DepJuridicoSiteController;
 use App\Http\Controllers\site\HistoriaSiteController;
 use App\Http\Controllers\site\HomologacaoSiteController;
 use App\Http\Controllers\site\NoticiaSiteController;
-
+use App\Models\DepJuridico;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('homologacao',[HomologacaoSiteController::class,'index'])->name('site.homologacao.index');
     Route::get('beneficio',[BeneficioSiteController::class,'index'])->name('site.beneficio.index');
     Route::get('noticia',[NoticiaSiteController::class,'index'])->name('site.noticia.index');
+    Route::get('depjuridico',[DepJuridicoSiteController::class,'index'])->name('site.depjuridico.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
 });
@@ -81,4 +84,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
 
     Route::resource('beneficio',BeneficiosController::class);
     Route::post('beneficio/status',[BeneficiosController::class,'status'])->name('beneficio.status');
+
+    Route::resource('depjuridico',DepJuridicoController::class);
+    Route::post('depjuridico/status',[DepJuridicoController::class,'status'])->name('depjuridico.status');
 });

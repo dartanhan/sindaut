@@ -24,7 +24,12 @@
                     </ul>
                 </li-->
                 <li><a href="{{route('site.convencao.index')}}">Convenções</a></li>
-                <li><a href="#">Departamento Jurídico</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Departamento Jurídico</a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{route('site.depjuridico.index')}}">Documentos Necessários</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Outros</a>
                     <ul class="dropdown-menu" role="menu">
