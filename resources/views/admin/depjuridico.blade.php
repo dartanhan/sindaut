@@ -17,7 +17,6 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
-
    
     <div class="row">
         <div class="col-lg-12">

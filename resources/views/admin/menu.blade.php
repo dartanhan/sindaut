@@ -267,5 +267,4 @@
         </ul>
 
     </aside><!-- End Sidebar-->
-
 @endsection
