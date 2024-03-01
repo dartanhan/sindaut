@@ -71,14 +71,40 @@
         </div>
     </section>
     <div class="card">
-        <section class="product-list">
-            @foreach($images as $image)
-                <div class="product-card">
-                    <img src="{{URL::asset('storage/posts/files/'.$image->path)}}" class="resize-image">
-                    <button class="btn btn-xs btn-danger" title="Remover Image">Deletar</button>
-                </div>
-            @endforeach
-        </section>
+        <div class="row">
+            <section class="product-list">
+                @foreach($images as $image)
+                    @php
+                        $extension = pathinfo($image->path, PATHINFO_EXTENSION);
+                    
+                        // Mapeamento das extensões para tipos de arquivo
+                        $fileTypes = [
+                            'pdf' => 'PDF',
+                            'doc' => 'Microsoft Word',
+                            'docx' => 'Microsoft Word',
+                            'xls' => 'Microsoft Excel',
+                            'xlsx' => 'Microsoft Excel',
+                            // Adicione outras extensões conforme necessário
+                        ];
+                    @endphp
+                    
+                    @if(isset($fileTypes[$extension]))
+                        <div class="product-card">
+                            <img src="{{URL::asset('images/'.$fileTypes[$extension].'.png')}}" class="resize-image">
+                            <button class="btn btn-xs btn-danger" title="Remover Image">Deletar</button>
+                        </div>
+                    @else
+                        <div class="product-card">
+                            <img src="{{URL::asset('storage/posts/files/'.$image->path)}}" class="resize-image">
+                            <button class="btn btn-xs btn-danger" title="Remover Image">Deletar</button>
+                        </div>
+                    @endif
+                @endforeach
+            </section>
+        </div>
+        <div class="row justify-content-center">
+            {{ $images->links() }}
+        </div>
     </div>
 
 @endsection

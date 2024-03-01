@@ -27,7 +27,7 @@ class UploadController extends Controller
         if(Auth::check() === true){
             $user_data = User::where("id",auth()->user()->id)->first();
 
-            $images = $this->galeriaImagem->get();
+            $images = $this->galeriaImagem->orderBy('id','desc')->paginate(10);
 
             return  view('admin.galeria',compact('images','user_data'));
         }
