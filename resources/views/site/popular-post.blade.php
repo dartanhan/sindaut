@@ -1,11 +1,10 @@
 <div class="single_sidebar" style="margin-top:10px">
-     <h2><span>Vídeos</span></h2>
+     <!--h2><span>Vídeos</span></h2>
         <div class="latest_post_container" style="max-height: auto;overflow-y: hidden;">
             <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
             <div class="media wow fadeInDown video-gallery">
                 <ul class="latest_postnav">
                     <li>
-                        <!-- Video 1 -->
                         <div class="media-body">
                                 <a href="{{route('site.detalhe-noticia',1)}}" class="catg_title">
                                     <i class="fa fa-volume-up"></i> Video 1 </a>
@@ -18,7 +17,6 @@
                             </div>
                     </li>
                     <li>
-                        <!-- Video 2 -->
                         <div class="media-body">
                                 <a href="{{route('site.detalhe-noticia',1)}}" class="catg_title">
                                     <i class="fa fa-volume-up"></i> Video 2 </a>
@@ -31,7 +29,6 @@
                         </div>
                     </li>
                     <li>
-                        <!-- Video 3 -->
                         <div class="media-body">
                                 <a href="{{route('site.detalhe-noticia',1)}}" class="catg_title">
                                     <i class="fa fa-volume-up"></i> Video 3 </a>
@@ -46,7 +43,7 @@
                 </ul>
             </div>
             <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
-        </div>
+        </div-->
         <!--ul class="spost_nav">
             <li>
                 <div class="media wow fadeInDown video-gallery">
@@ -85,7 +82,7 @@
             </div>
         </ul-->
 </div>
-<style>
+<!--style>
         .video-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -105,4 +102,4 @@
             width: 100%;
             height: 100%;
         }
-    </style>
+    </style-->
