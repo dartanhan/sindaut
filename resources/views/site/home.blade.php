@@ -25,7 +25,13 @@
                                     <!--a href="#">
                                         <i class="fa fa-user"></i>Wpfreeware</a-->
                                     <span>
-                                        <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
+                                        <span title="criado em:" data-toggle="tooltip" data-placement="top">
+                                            <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
+                                        </span>
+                                        &nbsp;
+                                        <span title="atualizado em:"  data-toggle="tooltip" data-placement="top">
+                                            <i class="fa fa-clock-o"></i> {{$noticias[0]->updated_at}}
+                                        </span>
                                     </span>
                                     <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
                                 </div>
