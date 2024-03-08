@@ -17,7 +17,7 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
-   
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -40,7 +40,7 @@
                             </div>
                             <div class="card-body mt-3">
                                  <!-- Botão para abrir o modal -->
-                                @if(empty($homologacao))
+                                @if(empty($depjuridico))
                                     <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
                                         Cadastrar
                                     </button>
@@ -65,7 +65,7 @@
                                             </td>
                                             <td>{{$depjuridico->created_at}}</td>
                                             <td>{{$depjuridico->updated_at}}</td>
-                                            <td> 
+                                            <td>
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <div class="form-check form-switch mt-2"  style="display: inline-block; vertical-align: middle;cursor: pointer">
@@ -159,9 +159,9 @@
             </div>
         </div>
     </div>
-   
+
         <!-- Modal -->
-        
+
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
                     <form method="POST" action="{{route('depjuridico.update',$depjuridico->id)}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
