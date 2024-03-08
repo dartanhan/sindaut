@@ -42,10 +42,10 @@ $(function () {
                     }
                 }
             },
-            "order": [[2, "desc"]],
+            "order": [[0, "desc"]],
             "columnDefs": [
                 {
-                    "targets": [2],
+                    "targets": [3],
                     "visible": false,
                     "searchable": false
                 }

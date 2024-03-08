@@ -25,6 +25,7 @@
                             <table class="table text-center table-striped table-bordered" id="dataTableConvencao">
                                 <thead class="bg-primary">
                                     <tr>
+                                        <th width="10px">#</th>
                                         <th width="350px">Convenção</th>
                                         <th width="100px">Período</th>
                                         <th width="50px">Data</th>
@@ -34,6 +35,7 @@
                                 <tbody>
                                     @foreach($convencoes as $key => $convencao)
                                         <tr>
+                                            <td>{{$convencao->id}}</td>
                                             <td>{{$convencao->titulo_cct}}</td>
                                             <td>{{$convencao->data_cct}}</td>
                                             <td>{{$convencao->created_at}}</td>
