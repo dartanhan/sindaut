@@ -96,14 +96,15 @@
                                                     </div>
                                                     <div class="col-md-1">
                                                         <div>
-                                                            <i class="bi bi-pencil-square custom-icon-size text-info" style="cursor: pointer"
-                                                                data-toggle="modal"
-                                                                data-target="#editModal"
-                                                                data-placement="top"
-                                                                title="Editar"
-                                                                data-rota="{{route('depjuridico.edit',$depjuridico->id,'/edit')}}"
-                                                                data-rota-update="{{route('depjuridico.update',$depjuridico->id)}}">
-                                                            </i>
+                                                            <span data-toggle="modal" data-target="#editModal">
+                                                                <i class="bi bi-pencil-square custom-icon-size text-info" style="cursor: pointer"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    title="Editar"
+                                                                    data-rota="{{route('depjuridico.edit',$depjuridico->id,'/edit')}}"
+                                                                    data-rota-update="{{route('depjuridico.update',$depjuridico->id)}}">
+                                                                </i>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>

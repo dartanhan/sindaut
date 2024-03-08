@@ -18,7 +18,7 @@
         </nav>
     </div><!-- End Page Title -->
 
-   
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -66,7 +66,7 @@
                                             </td>
                                             <td>{{$homologacao->created_at}}</td>
                                             <td>{{$homologacao->updated_at}}</td>
-                                            <td> 
+                                            <td>
                                                 <div class="row">
                                                     <div class="col-md-2">
                                                         <div class="form-check form-switch mt-2"  style="display: inline-block; vertical-align: middle;cursor: pointer">
@@ -97,14 +97,15 @@
                                                     </div>
                                                     <div class="col-md-1">
                                                         <div>
-                                                            <i class="bi bi-pencil-square custom-icon-size text-info" style="cursor: pointer"
-                                                                data-toggle="modal"
-                                                                data-target="#editModal"
-                                                                data-placement="top"
-                                                                title="Editar"
-                                                                data-rota="{{route('homologacao.edit',$homologacao->id,'/edit')}}"
-                                                                data-rota-update="{{route('homologacao.update',$homologacao->id)}}">
-                                                            </i>
+                                                            <span data-toggle="modal" data-target="#editModal">
+                                                                <i class="bi bi-pencil-square custom-icon-size text-info" style="cursor: pointer"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    title="Editar"
+                                                                    data-rota="{{route('homologacao.edit',$homologacao->id,'/edit')}}"
+                                                                    data-rota-update="{{route('homologacao.update',$homologacao->id)}}">
+                                                                </i>
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -160,9 +161,9 @@
             </div>
         </div>
     </div>
-   
+
         <!-- Modal -->
-        
+
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
                     <form method="POST" action="{{route('homologacao.update',$homologacao->id)}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
