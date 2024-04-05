@@ -27,7 +27,7 @@ class ConvencaoController extends Controller
         if(Auth::check() === true){
             $user_data = User::where("id",auth()->user()->id)->first();
 
-            $convencoes = Convencao::with('files')->orderBy('id', 'desc')->get();
+            $convencoes = Convencao::with('files')->orderBy('id', 'asc')->get();
 
             return view('admin.convencao',compact('user_data','convencoes'));
         }
