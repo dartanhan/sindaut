@@ -74,8 +74,10 @@ class ConvencaoController extends Controller
 
     public function edit($id)
     {
+
         //$noticia = Noticia::find($id);
         $convencao = Convencao::with('files')->find($id);
+
         $convencaoDescricao = ConvencaoDescricao::first();
 
         $convencao['descricao_cct'] = $convencaoDescricao;
@@ -103,7 +105,7 @@ class ConvencaoController extends Controller
      * @return RedirectResponse
      */
     public function update(int $id){
-       //dd($this->request);
+      // dd($this->request);
         //dd($id);
         try {
             $convencao = Convencao::find($id);
@@ -114,12 +116,12 @@ class ConvencaoController extends Controller
             $convencao->update();
 
             // Atualiza ou cria o registro a descrição da convenção
-            if($this->request->input('descricao_cct') !== null){
+            //if($this->request->input('descricao_cct') !== null){
                 ConvencaoDescricao::updateOrCreate(
                     ['id' => $this->request->input('convencao_descricao_id')], // Condição de busca
-                    ['descricao' => $this->request->input('descricao_cct')] // Valores a serem atualizados ou criados
+                    ['descricao' => $this->request->input('descricao_cct') !== null ? $this->request->input('descricao_cct') : ""] // Valores a serem atualizados ou criados
                 );
-            }
+           // }
 
             //se tiver imagem , atualiza
             if($this->request->image){
