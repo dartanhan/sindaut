@@ -16,7 +16,7 @@ use App\Http\Controllers\site\DepJuridicoSiteController;
 use App\Http\Controllers\site\HistoriaSiteController;
 use App\Http\Controllers\site\HomologacaoSiteController;
 use App\Http\Controllers\site\NoticiaSiteController;
-use App\Models\DepJuridico;
+use App\Http\Controllers\FileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +52,7 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('depjuridico',[DepJuridicoSiteController::class,'index'])->name('site.depjuridico.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
+    Route::get('/download/{id}', [FileController::class, 'download'])->name('file.download');
 });
 
 

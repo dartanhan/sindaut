@@ -40,11 +40,10 @@
                                             <td>{{$convencao->data_cct}}</td>
                                             <td>{{$convencao->created_at}}</td>
                                             <td>
-
-                                                <a href="../public/storage/posts/files/{{$convencoes[$key]->files[0]->path}}" target="_blank"
+                                                <a href="{{route('file.download', ['id' => $convencoes[$key]->files[0]->id])}}" target="_blank"
                                                    data-toggle="tooltip"
                                                    data-placement="top" title="Visualizar">
-                                                    <img border="0" alt="" src="../public/images/pdf.png" width="35">
+                                                    <img border="0" alt="" src="{{asset('images/pdf.png')}}" width="35">
                                                 </a>
                                             </td>
                                         </tr>
