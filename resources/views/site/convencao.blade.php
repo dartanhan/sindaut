@@ -18,7 +18,7 @@
                 </ol>
                 <div class="left_content">
                     <div class="contact_area">
-                        @if(!empty($convencoes))
+                        @if(!$convencoes->isEmpty())
                             <div>
                                 {!!$convencao_descricao->descricao!!}
                             </div>
