@@ -104,7 +104,25 @@ class UploadController extends Controller
         $this->tmpDelete();
     }
 
-    public function destroy(){
-        $this->tmpDelete();
+    public function destroy($id){
+       // $this->tmpDelete();
+       if(Auth::check() === true){
+        $file = GaleriaImagem::find($id);
+
+        if (!$file) {
+            return response()->json(['success' => false, 'message' => 'Falha ao deletar! Contact o suporte!.'], 404);
+        }
+
+        // Remove o arquivo do storage
+        $filePath = 'posts/files/' . $file->path;
+
+        if (Storage::disk('public')->exists($filePath)) {
+            Storage::disk('public')->delete($filePath);
+        }
+        // Remove do banco de dados
+        $file->delete();
+
+        return response()->json(['success' => true, 'message' => 'Arquivo deletado com sucesso!']);
+        }
     }
 }

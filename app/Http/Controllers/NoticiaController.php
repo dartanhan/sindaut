@@ -7,6 +7,7 @@ use App\Models\Noticia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Carbon\Carbon;
 
 class NoticiaController extends Controller
 {
@@ -33,12 +34,17 @@ class NoticiaController extends Controller
 
     public function store(){
 
+        $dataCadastro = $this->request->input('data_cadastro') 
+        ? Carbon::parse($this->request->input('data_cadastro')) 
+        : Carbon::now(); // Se não for informada, usa a data e hora atual
+
         $noticia = $this->noticia->create([
             'titulo' => $this->request->input('titulo'),
             'subtitulo' => $this->request->input('subtitulo'),
             'imagem_id' => $this->request->input('idImagemDestaque'),
             'conteudo' => $this->request->input('tinymce_editor'),
-            'status' => false
+            'status' => false,
+           'created_at' => $dataCadastro, // Grava a data de cadastro
         ]);
 
         if(!$noticia){

@@ -71,6 +71,12 @@
                                                               data-placement="top"
                                                               title="Subtítulo no slider principal"></textarea>
                                                 </div>
+                                                
+                                                <div class="form-group mt-3" style="text-align: left; width: 250px;">
+                                                    <label for="data_cadastro"><strong>Data de Cadastro (Opcional)</strong></label>
+                                                    <input type="datetime-local" name="data_cadastro" id="data_cadastro" class="form-control" data-toggle="tooltip" data-placement="top" title="Selecione a data e hora de cadastro">
+                                                </div>
+
                                                 <div class="form-check form-switch mt-3 text-start">
                                                     <label class="form-check-label" style="cursor: pointer">
                                                         <input class="form-check-input" type="checkbox" id="destaque" name="destaque" style="cursor: pointer">

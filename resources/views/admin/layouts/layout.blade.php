@@ -308,7 +308,9 @@
 <script src="{{URL::asset('/admin/assets/vendor/echarts/echarts.min.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/vendor/quill/quill.min.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
-<script src="{{URL::asset('/admin/assets/vendor/tinymce/tinymce.min.js')}}"></script>
+<!-- <script src="{{URL::asset('/admin/assets/vendor/tinymce/tinymce.min.js')}}"></script> -->
+<script src="https://cdn.tiny.cloud/1/op59c4spowh6qvoqd3swhyqb20pm5ixuql7rq6ir09186kp0/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
 <script src="{{URL::asset('/admin/assets/vendor/php-email-form/validate.js')}}"></script>
 <script src="{{URL::asset('/admin/assets/langs/pt_BR.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>

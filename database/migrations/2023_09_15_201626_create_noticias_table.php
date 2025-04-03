@@ -15,11 +15,12 @@ class CreateNoticiasTable extends Migration
     {
         Schema::create('tbl_sindaut_noticias', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->timestamp('data');
             $table->string('titulo');
+            $table->string('subtitulo');
             $table->text('conteudo');
             $table->integer('imagem_id');
             $table->boolean('status');
+            $table->timestamp('data');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateNoticiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_sindaut_noticias2');
+        Schema::dropIfExists('tbl_sindaut_noticias');
     }
 }

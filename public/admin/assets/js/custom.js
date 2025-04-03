@@ -527,3 +527,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".delete-button").forEach(button => {
+        button.addEventListener("click", function () {
+            //let imageId = this.getAttribute("data-id");
+            const rota = $(this).data('rota');
+
+            Swal.fire({
+                title: "Tem certeza?",
+                text: "Essa ação não pode ser desfeita!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Sim, deletar!",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(rota, {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire("Deletado!", "O arquivo foi removido com sucesso.", "success");
+                            location.reload(); // Atualiza a página
+                        } else {
+                            Swal.fire("Erro!", "Ocorreu um problema ao remover o arquivo.", "error");
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire("Erro!", "Erro na requisição ao servidor.", "error");
+                    });
+                }
+            });
+        });
+    });
+});
+
+document.querySelectorAll('.copy-link').forEach(button => {
+    button.addEventListener('click', function () {
+        let link = this.getAttribute('data-link');
+        navigator.clipboard.writeText(link).then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Link copiado!',
+                text: 'Agora você pode colar onde quiser.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }).catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao copiar',
+                text: 'Não foi possível copiar o link.'
+            });
+        });
+    });
+});

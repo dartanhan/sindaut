@@ -18,7 +18,7 @@ class CreateConvencaoTable extends Migration
             $table->string("titulo_cct",500);
             $table->string("data_cct",10);
             $table->unsignedBigInteger('file_id');
-            $table->foreign('file_id')->references('id')->on('tbl_sindaut_galeria_imagems');
+            $table->foreign('file_id')->references('id')->on('tbl_sindaut_galeria_imagens');
             $table->boolean("status")->default(false);
             $table->timestamps();
         });

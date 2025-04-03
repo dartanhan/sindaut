@@ -76,32 +76,45 @@
                 @foreach($images as $image)
                     @php
                         $extension = pathinfo($image->path, PATHINFO_EXTENSION);
-                    
+                        
                         // Mapeamento das extensões para tipos de arquivo
                         $fileTypes = [
-                            'pdf' => 'pdf',
                             'doc' => 'doc',
                             'docx' => 'docx',
                             'xls' => 'xls',
                             'xlsx' => 'xlsx',
-                            // Adicione outras extensões conforme necessário
                         ];
+                        $fileUrl = asset('storage/posts/files/' . $image->path); // Caminho completo do arquivo
                     @endphp
-                    
-                    @if(isset($fileTypes[$extension]))
-                        <div class="product-card">
+
+                    <div class="product-card">
+                        @if($extension === 'pdf')
+                            <!-- Exibir o preview do PDF -->
+                            <iframe src="{{ asset('storage/posts/files/' . $image->path) }}" class="pdf-preview"></iframe>
+                        @elseif(isset($fileTypes[$extension]))
+                            <!-- Ícones para outros documentos -->
                             <img src="{{URL::asset('images/'.$fileTypes[$extension].'.png')}}" class="resize-image">
-                            <button class="btn btn-xs btn-danger" title="Remover Image">Deletar</button>
-                        </div>
-                    @else
-                        <div class="product-card">
+                        @else
+                            <!-- Exibir imagens normalmente -->
                             <img src="{{URL::asset('storage/posts/files/'.$image->path)}}" class="resize-image">
-                            <button class="btn btn-xs btn-danger" title="Remover Image">Deletar</button>
+                        @endif
+
+                        <!-- Contêiner flexível para os botões -->
+                        <div class="button-group">
+                            @if($extension === 'pdf')
+                                <a href="{{ asset('storage/posts/files/' . $image->path) }}" target="_blank" class="btn btn-sm btn-primary">
+                                    Abrir PDF
+                                </a>
+                            @endif
+                            <button class="btn btn-xs btn-warning copy-link" data-link="{{ $fileUrl }}">Copiar Link</button>
+                            <button class="btn btn-xs btn-danger delete-button" data-rota="{{ route('upload.destroy',$image->id) }}">
+                                Deletar
+                            </button>
                         </div>
-                    @endif
+                    </div>
                 @endforeach
             </section>
-        </div>
+        </div>  
         <div class="row justify-content-center">
             {{ $images->links() }}
         </div>
@@ -113,5 +126,6 @@
 @endpush
 @push("scripts")
     <script src="{{URL::asset('admin/assets/js/file-pond.js')}}"></script>
+    <script src="{{URL::asset('admin/assets/js/custom.js')}}"></script>
 @endpush
 
