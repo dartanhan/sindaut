@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GaleriaImagem extends Model
 {
     use HasFactory;
-    protected $table = "tbl_sindaut_galeria_imagems";
+    protected $table = "tbl_sindaut_galeria_imagens";
     protected $fillable = ['path','file_id', 'updated_at', 'created_at'];
 
     public function noticia()

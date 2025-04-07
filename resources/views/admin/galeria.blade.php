@@ -76,7 +76,7 @@
                 @foreach($images as $image)
                     @php
                         $extension = pathinfo($image->path, PATHINFO_EXTENSION);
-                        
+
                         // Mapeamento das extensões para tipos de arquivo
                         $fileTypes = [
                             'doc' => 'doc',
@@ -114,7 +114,7 @@
                     </div>
                 @endforeach
             </section>
-        </div>  
+        </div>
         <div class="row justify-content-center">
             {{ $images->links() }}
         </div>
