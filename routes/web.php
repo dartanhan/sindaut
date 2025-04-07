@@ -89,3 +89,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::resource('depjuridico',DepJuridicoController::class);
     Route::post('depjuridico/status',[DepJuridicoController::class,'status'])->name('depjuridico.status');
 });
+
+Route::fallback(function () {
+    //return view('pages.404'); // Exibe a página de erro personalizada
+    return redirect()->route('site.home'); // Redireciona para a página inicial
+});
