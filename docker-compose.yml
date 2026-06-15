@@ -1,0 +1,55 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: sindaut-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    networks:
+      - sindaut-network
+    depends_on:
+      #  - mysql
+      - redis
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: sindaut-nginx
+    restart: unless-stopped
+    ports:
+      - "9003:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - sindaut-network
+
+  #mysql: usando na porta 3309 mysql padrão
+  #  image: mysql:8.0
+  #  container_name: sindaut-mysql
+  # restart: unless-stopped
+  # environment:
+  #   MYSQL_DATABASE: sindaut
+  ##   MYSQL_ROOT_PASSWORD: root
+  # ports:
+  #   - "3306:3306"
+  # volumes:
+  #   - mysql-data:/var/lib/mysql
+  # networks:
+  #   - sindaut-network
+
+  redis:
+    image: redis:alpine
+    container_name: sindaut-redis
+    restart: unless-stopped
+    networks:
+      - sindaut-network
+
+networks:
+  sindaut-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

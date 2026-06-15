@@ -77,6 +77,10 @@ class UploadController extends Controller
     public function tmpUpload(){
 
         if($this->request->hasFile('image')){
+            $this->request->validate([
+                'image' => 'required|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx,txt|max:5120',
+            ]);
+
             $image = $this->request->file('image');
             $nome_unico = Str::uuid() . '.' . $image->getClientOriginalExtension();
             $folder = uniqid('posts',true);
