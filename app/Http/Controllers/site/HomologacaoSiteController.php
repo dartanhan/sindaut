@@ -27,12 +27,8 @@ class HomologacaoSiteController extends Controller
      */
     public function index()
     {
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
-
         $homologacao = $this->homologacao->where('status',1)->first();
 
-        return view('site.homologacao', compact('noticias','homologacao'));
+        return view('site.homologacao', compact('homologacao'));
     }
 }

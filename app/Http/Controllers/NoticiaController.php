@@ -24,7 +24,7 @@ class NoticiaController extends Controller
             $user_data = User::where("id",auth()->user()->id)->first();
 
             $images = $this->galleryImage->get();
-            $noticias = Noticia::with('imagens')->orderBy('id', 'desc')->get();
+            $noticias = Noticia::with('imagens')->orderBy('id', 'desc')->paginate(10);
 
             return  view('admin.noticia',compact('noticias','images','user_data'));
 

@@ -27,12 +27,8 @@ class HistoriaSiteController extends Controller
      */
     public function index()
     {
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
-
         $historia = $this->historia->first();
 
-        return view('site.historia', compact('noticias','historia'));
+        return view('site.historia', compact('historia'));
     }
 }

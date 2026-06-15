@@ -27,10 +27,8 @@ class NoticiaSiteController extends Controller
      */
     public function index()
     {
-            $noticias = $this->noticia->with('imagens')->where('status',1)->orderBy('id', 'desc')->get();
-
             $noticias_site = $this->noticia->with('imagens')->where('status',1)->orderBy('id', 'desc')->paginate(10);
 
-            return view('site.noticias', compact('noticias','noticias_site'));
+            return view('site.noticias', compact('noticias_site'));
     }
 }

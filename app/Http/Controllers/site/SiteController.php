@@ -22,31 +22,26 @@ class SiteController extends Controller
     }
 
     public function index(){
-        //$noticias =$this->noticia->where('status',1)->orderBy('id', 'desc')->get();
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
+        $noticias = \Illuminate\Support\Facades\Cache::remember('site:home_noticias', 86400, function () {
+            return $this->noticia->with('imagens')
+                ->where('status',1)
+                ->orderBy('id', 'desc')
+                ->take(5)
+                ->get();
+        });
 
         return view('site.home',compact('noticias'));
     }
 
     public function contato(){
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
-
-        return view('site.contato',compact('noticias'));
+        return view('site.contato');
     }
 
     public function detalheNoticia($id){
         $noticiaDetalhe = $this->noticia->with('imagens')
-            ->where('status',1)->where('id',$id)->first();
+            ->where('status',1)->where('id',$id)->firstOrFail();
 
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
-
-        return view('site.detalhe',compact('noticias','noticiaDetalhe'));
+        return view('site.detalhe',compact('noticiaDetalhe'));
     }
 
     public function enviaContato(){

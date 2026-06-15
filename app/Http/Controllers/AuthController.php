@@ -17,8 +17,11 @@ class AuthController extends Controller
 
         if(Auth::check() === true){
             $user_data = User::where("id",auth()->user()->id)->first();
+            $noticiasAtivas = \App\Models\Noticia::where('status', 1)->count();
+            $totalUsuarios = User::count();
+            $totalConvencoes = \App\Models\Convencao::count();
 
-            return view('admin.dashboard', compact('user_data'));
+            return view('admin.dashboard', compact('user_data', 'noticiasAtivas', 'totalUsuarios', 'totalConvencoes'));
         }
         return redirect()->route('admin.login');
 

@@ -27,12 +27,8 @@ class ConvencaoSiteController extends Controller
             ->where('status',1)
             ->orderBy('id', 'desc')->get();
 
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
-
         $convencao_descricao = $this->convencaoDescricao->first();
 
-        return view('site.convencao', compact('noticias','convencoes','convencao_descricao'));
+        return view('site.convencao', compact('convencoes','convencao_descricao'));
     }
 }
