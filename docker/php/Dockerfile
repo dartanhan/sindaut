@@ -1,4 +1,4 @@
-FROM php:8.4-fpm
+FROM php:7.4-fpm
 
 # Dependências do sistema
 RUN apt-get update && apt-get install -y \
@@ -38,7 +38,7 @@ RUN docker-php-ext-install \
     pcntl
 
 # Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Configurar limites de upload do PHP
 RUN echo "upload_max_filesize=30M" > /usr/local/etc/php/conf.d/uploads.ini \
