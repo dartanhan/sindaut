@@ -13,11 +13,13 @@ class CreateHistoriaTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_sindaut_historia', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->longText('conteudo');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tbl_sindaut_historia')) {
+            Schema::create('tbl_sindaut_historia', function (Blueprint $table) {
+                $table->id()->autoIncrement();
+                $table->longText('conteudo');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

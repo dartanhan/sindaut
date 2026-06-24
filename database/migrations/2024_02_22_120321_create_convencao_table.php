@@ -13,15 +13,17 @@ class CreateConvencaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_sindaut_convencao', function (Blueprint $table) {
-            $table->id()->autoIncrement();;
-            $table->string("titulo_cct",500);
-            $table->string("data_cct",10);
-            $table->unsignedBigInteger('file_id');
-            $table->foreign('file_id')->references('id')->on('tbl_sindaut_galeria_imagens');
-            $table->boolean("status")->default(false);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tbl_sindaut_convencao')) {
+            Schema::create('tbl_sindaut_convencao', function (Blueprint $table) {
+                $table->id()->autoIncrement();;
+                $table->string("titulo_cct",500);
+                $table->string("data_cct",10);
+                $table->unsignedBigInteger('file_id');
+                $table->foreign('file_id')->references('id')->on('tbl_sindaut_galeria_imagens');
+                $table->boolean("status")->default(false);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

@@ -12,6 +12,21 @@ class Noticia extends Model
     protected $table = 'tbl_sindaut_noticias';
     protected $fillable = ['titulo', 'conteudo', 'subtitulo','status','imagem_id', 'updated_at', 'created_at'];
 
+    protected static function booted()
+    {
+        static::saved(function ($noticia) {
+            \Illuminate\Support\Facades\Cache::forget('site:sidebar_noticias');
+            \Illuminate\Support\Facades\Cache::forget('site:ticker_noticias');
+            \Illuminate\Support\Facades\Cache::forget('site:home_noticias');
+        });
+
+        static::deleted(function ($noticia) {
+            \Illuminate\Support\Facades\Cache::forget('site:sidebar_noticias');
+            \Illuminate\Support\Facades\Cache::forget('site:ticker_noticias');
+            \Illuminate\Support\Facades\Cache::forget('site:home_noticias');
+        });
+    }
+
     public function imagens()
     {
         return $this->hasMany(GaleriaImagem::class,'id','imagem_id');

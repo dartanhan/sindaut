@@ -13,12 +13,14 @@ class CreateBeneficiosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_sindaut_beneficios', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->longText("conteudo");
-            $table->boolean("status")->default(false);
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tbl_sindaut_beneficios')) {
+            Schema::create('tbl_sindaut_beneficios', function (Blueprint $table) {
+                $table->id()->autoIncrement();
+                $table->longText("conteudo");
+                $table->boolean("status")->default(false);
+                $table->timestamps();
+            });
+        }
     }
 
     /**

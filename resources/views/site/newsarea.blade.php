@@ -3,13 +3,26 @@
     <ul id="ticker01" class="news_sticker">
 
         @foreach($noticias as $key => $noticia)
-            @foreach($noticia['imagens'] as $key => $imagem)
+            @php $hasImage = false; @endphp
+            @foreach($noticia['imagens'] as $imagem)
+                @if(!empty($imagem) && strlen($imagem->path) > 0)
+                    <li>
+                        <a href="{{route('site.detalhe-noticia',$noticia->id)}}">
+                            <img alt="" src="{{URL::asset("storage/posts/files/".$imagem->path)}}">{{$noticia->titulo}}
+                        </a>
+                    </li>
+                    @php $hasImage = true; @endphp
+                    @break
+                @endif
+            @endforeach
+
+            @if(!$hasImage)
                 <li>
                     <a href="{{route('site.detalhe-noticia',$noticia->id)}}">
-                        <img alt="" src="{{URL::asset("storage/posts/files/".$imagem->path)}}">{{$noticia->titulo}}
+                        <img alt="" src="{{URL::asset("images/volume.png")}}">{{$noticia->titulo}}
                     </a>
                 </li>
-            @endforeach
+            @endif
         @endforeach
     </ul>
     <div class="social_area">

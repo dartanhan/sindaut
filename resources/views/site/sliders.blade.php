@@ -1,19 +1,29 @@
 <div class="slick_slider">
     @foreach($noticias as $key => $noticia)
-        @if($noticia->destaque)
-            <div class="single_iteam">
-                @foreach($noticia['imagens'] as $key => $imagem)
+        <div class="single_iteam">
+            @php $hasImage = false; @endphp
+            @foreach($noticia['imagens'] as $imagem)
+                @if(!empty($imagem) && strlen($imagem->path) > 0)
                     <a href="{{route('site.detalhe-noticia',$noticia->id)}}">
                         <img alt="" src="{{URL::asset("storage/posts/files/".$imagem->path)}}">
                     </a>
-                    <div class="slider_article">
-                        <h2>
-                            <a class="slider_tittle" href="{{route('site.detalhe-noticia',$noticia->id)}}">{{$noticia->titulo}}</a>
-                        </h2>
-                        <p>{{$noticia->subtitulo}}</p>
-                    </div>
-                @endforeach
+                    @php $hasImage = true; @endphp
+                    @break
+                @endif
+            @endforeach
+
+            @if(!$hasImage)
+                <a href="{{route('site.detalhe-noticia',$noticia->id)}}">
+                    <img alt="" src="{{URL::asset("images/volume.png")}}">
+                </a>
+            @endif
+
+            <div class="slider_article">
+                <h2>
+                    <a class="slider_tittle" href="{{route('site.detalhe-noticia',$noticia->id)}}">{{$noticia->titulo}}</a>
+                </h2>
+                <p>{{$noticia->subtitulo}}</p>
             </div>
-        @endif
+        </div>
     @endforeach
 </div>

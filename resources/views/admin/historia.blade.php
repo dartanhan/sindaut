@@ -1,127 +1,88 @@
-@extends('admin.layouts.layout')
+@extends('layouts.admin')
 
-@section('menu')
+@section('title', 'Gerenciar História')
+@section('header_title', 'História')
+@section('header_subtitle', 'Gerencie a página institucional de história e fundação do sindicato')
 
-    @include('admin.menu')
-
+@section('header_actions')
+<a href="{{ route('historia.create') }}" class="bg-blue-600 hover:bg-slate-900 text-white font-black px-8 py-3 rounded-2xl transition flex items-center gap-2 text-sm shadow-xl shadow-blue-600/20">
+    <i data-lucide="plus" class="w-5 h-5"></i>
+    CADASTRAR HISTÓRIA
+</a>
 @endsection
 
 @section('content')
-
-    <div class="pagetitle">
-
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item active">História</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-        <div class="row">
-            <div>
-                <div class="card">
-                    <div class="card-body mt-3">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if(session('danger'))
-                            <div class="alert alert-danger">
-                                {{ session('danger') }}
-                            </div>
-                        @endif
-                        <div class="container text-center ">
-                            <!-- Botão para abrir o modal -->
-                            @if(empty($historia))
-                            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal">
-                                Cadastrar História
-                            </button>
-                            @else
-                            <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#editModal">
-                                Editar História
-                            </button>
-                            @endif
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
-                                    <form method="POST" action="{{route('historia.store')}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
-                                    @csrf
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title" id="exampleModalLabel">História</h5>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-row">
-                                                    <textarea class="tinymce_editor" name="tinymce_editor" id="tinymce_editor"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn-primary">Salvar</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- Modal -->
-                            @if(!empty($historia))
-                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
-                                        <form method="POST" action="{{route('historia.update',$historia->id)}}" name="uploadForm" id="uploadForm" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('put')
-                                            <div class="modal-content">
-                                                <div class="modal-header bg-primary text-white">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editando História</h5>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-row">
-                                                        <textarea class="tinymce_editor" name="tinymce_editor" id="tinymce_editor">{!! $historia->conteudo !!}</textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                    <button type="submit" class="btn btn-primary">Salvar</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+<div class="space-y-8">
+    <!-- Historia Table Card -->
+    <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+        <div class="p-8 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="font-black text-lg text-slate-900 uppercase tracking-tight">Status e Ações</h2>
+            <span class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ count($historias) }} cadastrados</span>
         </div>
-    </section>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <section>
-                    <div class="container mt-3">
-                        <div class="card">
-                            <div class="card-header text-center bg-primary text-white">
-                              <b>HISTÓRIA</b>
-                            </div>
-                            <div class="card-body mt-3">
-                                @if(!empty($historia))
-                                    {!! $historia->conteudo !!}
+        
+        <div class="overflow-x-auto">
+            <table class="w-full text-left min-w-[800px]">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100">
+                        <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest">Resumo do Conteúdo</th>
+                        <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest">Criado Em</th>
+                        <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest">Atualizado Em</th>
+                        <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center">Status</th>
+                        <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($historias as $item)
+                        <tr class="hover:bg-slate-100/50 transition">
+                            <td class="p-6">
+                                <div class="text-sm font-bold text-slate-700 max-w-md truncate">
+                                    {{ html_entity_decode(strip_tags($item->conteudo)) }}
+                                </div>
+                            </td>
+                            <td class="p-6 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                {{ $item->created_at ?: '-' }}
+                            </td>
+                            <td class="p-6 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                {{ $item->updated_at ?: '-' }}
+                            </td>
+                            <td class="p-6 text-center">
+                                @if($item->status == 1)
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider">
+                                        Publicado
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-slate-100 text-slate-800 uppercase tracking-wider">
+                                        Rascunho
+                                    </span>
                                 @endif
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+                            </td>
+                            <td class="p-6">
+                                <div class="flex items-center justify-end gap-3">
+                                    <a href="{{ route('historia.edit', $item->id) }}" class="w-10 h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition shadow-sm">
+                                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+                                    </a>
+                                    <button type="button" 
+                                            class="w-10 h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-rose-600 hover:text-white hover:border-rose-600 transition shadow-sm btn-excluir"
+                                            data-rota="{{ route('historia.destroy', $item->id) }}">
+                                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="p-12 text-center text-slate-400 font-bold uppercase tracking-wider text-sm">
+                                Nenhum conteúdo cadastrado no momento.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-
-
+</div>
 @endsection
-@push("styles")
-    <link rel="stylesheet" type="text/css" href="{{URL::asset('admin/assets/css/custom.css')}}">
+
+@push("scripts")
+<script src="{{URL::asset('admin/assets/js/custom.js')}}"></script>
 @endpush

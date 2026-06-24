@@ -1,298 +1,192 @@
-@extends('admin.layouts.layout')
+@extends('layouts.admin')
 
-@section('menu')
+@section('title', 'Gerenciar Notícias')
+@section('header_title', 'Notícias')
+@section('header_subtitle', 'Gerencie as postagens e slider principal')
 
-    @include('admin.menu')
-
+@section('header_actions')
+<a href="{{ route('noticia.create') }}" class="bg-blue-600 hover:bg-slate-900 text-white font-black px-8 py-3 rounded-2xl transition flex items-center gap-2 text-sm shadow-xl shadow-blue-600/20">
+    <i data-lucide="plus" class="w-5 h-5"></i>
+    CRIAR NOTÍCIA
+</a>
 @endsection
 
 @section('content')
-
-    <div class="pagetitle">
-
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item">Notícias</li>
-                <li class="breadcrumb-item active">Criar Notícia</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-        <div class="row">
-            <div>
-                <div class="card">
-                    <div class="card-body mt-3">
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if(session('danger'))
-                            <div class="alert alert-danger">
-                                {{ session('danger') }}
-                            </div>
-                        @endif
-                        <div class="container text-center ">
-                            <!-- Botão para abrir o modal -->
-                            <button type="button" class="btn btn-primary mt-3 btnModal" data-toggle="modal"
-                                    data-target="#modalNoticia" data-rota="{{route('noticia.store')}}">
-                               Criar Notícia
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="modalNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl modal-lg modal-md" role="document">
-                                    <form method="POST" action="{{route('noticia.store')}}" name="noticiaForm" id="noticiaForm" enctype="multipart/form-data">
-                                        <input type="hidden" name="idImagemDestaque" id="idImagemDestaque">
+<div class="space-y-8">
+    <!-- News Table Card -->
+    <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
+        <div class="p-8 border-b border-slate-100 flex items-center justify-between">
+            <h2 class="font-black text-lg text-slate-900 uppercase tracking-tight">Lista de Notícias</h2>
+            <span class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ count($noticias) }} registradas</span>
+        </div>
+        
+        <div class="overflow-x-auto no-scrollbar">
+            <table class="w-full text-left min-w-[700px] lg:min-w-0">
+                <thead>
+                    <tr class="bg-slate-50 border-b border-slate-100">
+                        <th class="px-3 py-3 lg:px-6 lg:py-4 text-xs font-black text-slate-400 uppercase tracking-widest">Notícia</th>
+                        <th class="px-3 py-3 lg:px-6 lg:py-4 text-xs font-black text-slate-400 uppercase tracking-widest text-center w-36">Status</th>
+                        <th class="px-3 py-3 lg:px-6 lg:py-4 text-xs font-black text-slate-400 uppercase tracking-widest w-32">Criado Em</th>
+                        <th class="px-3 py-3 lg:px-6 lg:py-4 text-xs font-black text-slate-400 uppercase tracking-widest text-right w-28">Ações</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($noticias as $noticia)
+                        @php
+                            $imgPath = null;
+                            if (isset($noticia->imagens) && count($noticia->imagens) > 0) {
+                                $imgPath = $noticia->imagens[0]->path;
+                            }
+                        @endphp
+                        <tr class="odd:bg-white even:bg-slate-50/40 hover:bg-slate-100/50 transition">
+                            <td class="px-3 py-3 lg:px-6 lg:py-4">
+                                <div class="flex items-center gap-6">
+                                    <div class="@if($imgPath) cursor-pointer hover:scale-105 transition duration-300 @endif w-20 h-20 lg:w-24 lg:h-24 bg-slate-100 rounded-3xl overflow-hidden shadow-md flex-shrink-0 border-4 border-white"
+                                         @if($imgPath) onclick="showImagePreview('{{ asset('storage/posts/files/'.$imgPath) }}')" @endif>
+                                        @if($imgPath)
+                                            <img src="{{ asset('storage/posts/files/'.$imgPath) }}" class="w-full h-full object-cover" title="Clique para ampliar">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center text-slate-300">
+                                                <i data-lucide="image" class="w-8 h-8"></i>
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div class="space-y-1.5">
+                                        <h5 class="text-sm font-black uppercase text-slate-900 leading-tight">{{ $noticia->titulo }}</h5>
+                                        @if($noticia->subtitulo)
+                                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest line-clamp-1 italic leading-none">{{ $noticia->subtitulo }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-3 py-3 lg:px-6 lg:py-4 text-center">
+                                @if($noticia->status == 1)
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider">
+                                        Publicado
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-slate-100 text-slate-800 uppercase tracking-wider">
+                                        Rascunho
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-3 py-3 lg:px-6 lg:py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                {{ $noticia->created_at ?: '-' }}
+                            </td>
+                            <td class="px-3 py-3 lg:px-6 lg:py-4">
+                                <div class="flex items-center justify-end gap-2 lg:gap-3">
+                                    <a href="{{ route('noticia.edit', $noticia->id) }}" 
+                                       class="w-8 h-8 lg:w-10 lg:h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition shadow-sm">
+                                        <i data-lucide="edit-3" class="w-4 h-4 lg:w-5 lg:h-5"></i>
+                                    </a>
+                                    <form id="delete-form-{{ $noticia->id }}" action="{{ route('noticia.destroy', $noticia->id) }}" method="POST" class="inline">
                                         @csrf
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-primary text-white">
-                                                <h5 class="modal-title" id="exampleModalLabel">Criar Notícia</h5>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group" style="text-align: left;">
-                                                    <label for="titulo"><strong>Máximo de 80 Caracteres</strong></label>
-                                                    <input type="text" name="titulo" id="titulo"
-                                                           class="form-control"
-                                                           placeholder="Título da Notícia" maxlength="80"
-                                                           data-toggle="tooltip"
-                                                           data-placement="top"
-                                                           title="Título da Notícia">
-                                                </div>
-                                                <div class="form-group  mt-3"  style="text-align: left;">
-                                                    <label><strong>Máximo de 250 Caracteres</strong></label>
-                                                    <textarea type="text" name="subtitulo" id="subtitulo"
-                                                              class="form-control"
-                                                              placeholder="SubTítulo da Notícia" maxlength="250"
-                                                              data-toggle="tooltip"
-                                                              data-placement="top"
-                                                              title="Subtítulo no slider principal"></textarea>
-                                                </div>
-                                                
-                                                <div class="form-group mt-3" style="text-align: left; width: 250px;">
-                                                    <label for="data_cadastro"><strong>Data de Cadastro (Opcional)</strong></label>
-                                                    <input type="datetime-local" name="data_cadastro" id="data_cadastro" class="form-control" data-toggle="tooltip" data-placement="top" title="Selecione a data e hora de cadastro">
-                                                </div>
-
-                                                <div class="form-check form-switch mt-3 text-start">
-                                                    <label class="form-check-label" style="cursor: pointer">
-                                                        <input class="form-check-input" type="checkbox" id="destaque" name="destaque" style="cursor: pointer">
-                                                        <span class="badge bg-primary ms-2"
-                                                              data-toggle="tooltip"
-                                                              data-placement="top"
-                                                              title="Esta função coloca a notícia como destaque no slider principal">Colocar como Destaque?</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-group mt-3 text-start" id="editorContainer" style="display: none;">
-                                                    <button type="button" class="btn btn-primary" id="modalImage" data-toggle="tooltip"
-                                                            data-placement="top" title="Informe a imagem que deverá ser exibida no slider e na notícia">
-                                                        Selecionar Imagem
-                                                    </button>
-                                                    <div class="card">
-                                                        <div class="form-group mt-3 col-md-6 offset-md-3 text-justify">
-                                                            <img src="" alt="Preview da Imagem" id="previewImagem" class="img-thumbnail img-thumbnail-none">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card mt-3">
-                                                    <div class="card-header bg-primary text-white text-left">
-                                                        <label for="noticia"><b>Crie a Nóticia ao seu estilo!</b></label>
-                                                    </div>
-                                                    <div class="card-body mt-3">
-                                                        <textarea class="tinymce_editor" name="tinymce_editor" id="tinymce_editor"></textarea>
-                                                    </div>
-                                                </div>
-                                            <div class="modal-footer">
-                                                <span data-toggle="tooltip"
-                                                    data-placement="top"
-                                                    title="Utilize as imagens da galeria de imagens , faça upload no menu Galeria de Imagens">
-                                                <button type="button" class="btn btn-warning text-white"
-                                                        data-target="#exampleModalImage"
-                                                        data-toggle="modal"
-                                                        style="margin-right: auto;">Abrir Galeria de Imagens </button>
-                                                    </span>
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                                <button type="submit" class="btn btn-primary">Salvar</button>
-                                            </div>
-                                        </div>
-                                        </div>
+                                        @method('DELETE')
+                                        <button type="button" 
+                                                onclick="confirmDelete('delete-form-{{ $noticia->id }}')"
+                                                class="w-8 h-8 lg:w-10 lg:h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-rose-600 hover:text-white hover:border-rose-600 transition shadow-sm">
+                                            <i data-lucide="trash-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
+                                        </button>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="modal fade" id="exampleModalImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-md" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-warning  text-white">
-                                            <h5 class="modal-title" id="exampleModalLabel">Galeria</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="card" style="height: 420px;overflow-y: auto;">
-                                                    <section class="product-list-gallery">
-                                                        @foreach($images as $image)
-                                                            <div class="product-card-gallery">
-                                                                <img src="{{URL::asset('storage/posts/files/'.$image->path)}}" class="resize-image-gallery" title="Inserir Image">
-                                                            </div>
-                                                        @endforeach
-                                                    </section>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="modalConteudoNoticia" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-primary text-white">
-                                            <h5 class="modal-title" id="exampleModalLabel">Conteúdo Completo da Notícia</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body modal-conteudo" id="modal-conteudo">
-                                            <!-- O conteúdo será carregado aqui via JavaScript -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal fade" id="imagemModal" tabindex="-1" aria-labelledby="imagemModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-md">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-primary text-white">
-                                            <h5 class="modal-title" id="imagemModalLabel">Selecione uma Imagem</h5>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-row">
-                                                <div class="card" style="height: 320px;overflow-y: auto;">
-                                                    <section class="product-list-gallery">
-                                                        @foreach($images as $image)
-                                                            <div class="product-card-gallery">
-                                                                <img src="{{URL::asset('storage/posts/files/'.$image->path)}}"
-                                                                     data-id="{{$image->id}}" class="imagem-selecao" title="Inserir Image">
-                                                            </div>
-                                                        @endforeach
-                                                    </section>
-                                                </div>
-                                            </div>
-                                        </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="p-12 text-center text-slate-400 font-bold uppercase tracking-wider text-sm">
+                                Nenhuma notícia cadastrada.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        @if($noticias->hasPages())
+            <div class="px-8 py-6 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                    Exibindo {{ $noticias->firstItem() }} até {{ $noticias->lastItem() }} de {{ $noticias->total() }} notícias
+                </div>
+                <div class="flex items-center gap-2 flex-wrap justify-center">
+                    {{-- Previous Page Link --}}
+                    @if($noticias->onFirstPage())
+                        <span class="px-4 py-2 bg-slate-100 text-slate-400 rounded-xl text-xs font-black cursor-not-allowed uppercase tracking-widest border border-slate-200/50">
+                            Anterior
+                        </span>
+                    @else
+                        <a href="{{ $noticias->previousPageUrl() }}" class="px-4 py-2 bg-white hover:bg-blue-600 hover:text-white text-slate-700 rounded-xl text-xs font-black transition shadow-sm border border-slate-200 uppercase tracking-widest">
+                            Anterior
+                        </a>
+                    @endif
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{-- Page Numbers --}}
+                    @php
+                        $start = max($noticias->currentPage() - 2, 1);
+                        $end = min($start + 4, $noticias->lastPage());
+                        if ($end - $start < 4) {
+                            $start = max($end - 4, 1);
+                        }
+                    @endphp
+
+                    @if($start > 1)
+                        <a href="{{ $noticias->url(1) }}" class="w-10 h-10 bg-white hover:bg-slate-100 text-slate-700 rounded-xl flex items-center justify-center text-xs font-black transition border border-slate-200">1</a>
+                        @if($start > 2)
+                            <span class="text-slate-400 text-xs px-1 font-bold">...</span>
+                        @endif
+                    @endif
+
+                    @foreach(range($start, $end) as $page)
+                        @if($page == $noticias->currentPage())
+                            <span class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center text-xs font-black shadow-lg shadow-blue-600/20">
+                                {{ $page }}
+                            </span>
+                        @else
+                            <a href="{{ $noticias->url($page) }}" class="w-10 h-10 bg-white hover:bg-slate-100 text-slate-700 rounded-xl flex items-center justify-center text-xs font-black transition border border-slate-200">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    @endforeach
+
+                    @if($end < $noticias->lastPage())
+                        @if($end < $noticias->lastPage() - 1)
+                            <span class="text-slate-400 text-xs px-1 font-bold">...</span>
+                        @endif
+                        <a href="{{ $noticias->url($noticias->lastPage()) }}" class="w-10 h-10 bg-white hover:bg-slate-100 text-slate-700 rounded-xl flex items-center justify-center text-xs font-black transition border border-slate-200">{{ $noticias->lastPage() }}</a>
+                    @endif
+
+                    {{-- Next Page Link --}}
+                    @if($noticias->hasMorePages())
+                        <a href="{{ $noticias->nextPageUrl() }}" class="px-4 py-2 bg-white hover:bg-blue-600 hover:text-white text-slate-700 rounded-xl text-xs font-black transition shadow-sm border border-slate-200 uppercase tracking-widest">
+                            Próximo
+                        </a>
+                    @else
+                        <span class="px-4 py-2 bg-slate-100 text-slate-400 rounded-xl text-xs font-black cursor-not-allowed uppercase tracking-widest border border-slate-200/50">
+                            Próximo
+                        </span>
+                    @endif
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <section>
-                    <table class="table datatable text-center ">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Titulo</th>
-                                <th scope="col">SubTitulo</th>
-                                <th scope="col">Conteudo</th>
-                                <th scope="col">Inativo/Ativo</th>
-                                <th scope="col">Destaque</th>
-                                <th scope="col">Criado em:</th>
-                                <th scope="col">Atualizado em:</th>
-                                <th scope="col" colspan="2" width="250px">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($noticias as $noticia)
-                                @foreach($noticia['imagens'] as $key => $imagem)
-                                        @php
-                                            /** @var TYPE_NAME $imagem */
-                                            $imgPath = $imagem->path;
-                                        @endphp
-                                @endforeach
-
-                                <tr>
-                                    <th scope="row">{{$noticia->id}}</th>
-                                    <td>{{$noticia->titulo}}</td>
-                                    <td>{{$noticia->subtitulo == "" ? "-" : $noticia->subtitulo}}</td>
-                                    <td>
-                                           <a href="#" class="ler-mais"
-                                            data-toggle="modal"
-                                            data-target="#modalConteudoNoticia"
-                                            data-conteudo="{{ $noticia->conteudo }}"
-                                            data-img-destaque = "{{isset($imgPath) == true ? "../public/storage/posts/files/".$imgPath : ''}}">
-
-                                            <i class="bi bi-eye-fill custom-icon-size text-success"
-                                               data-toggle="tooltip"
-                                               data-placement="top"
-                                               title="Visualizar a Notícia">
-                                            </i>
-                                        </a>
-                                    </td>
-                                    <td class="align-middle" style="text-align: center;">
-                                        <div class="form-check form-switch mt-2"  style="display: inline-block; vertical-align: middle;cursor: pointer">
-                                            <input class="form-check-input statusSwitch" style="text-align: center;cursor: pointer"
-                                                   type="checkbox"
-                                                   data-toggle="tooltip"
-                                                   data-placement="top"
-                                                   title="{{$noticia->status == 0 ? "Bloqueado, sem visualização no site." : "Liberado, para visualização no site."}}"
-                                                   data-id="{{$noticia->id}}"
-                                                   data-rota="{{route('atualizar-status')}}"
-                                                   {{$noticia->status == 0 ? "" : "checked"}}>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-check form-switch mt-2" style="display: inline-block; vertical-align: middle;cursor: pointer">
-                                            <input class="form-check-input destaqueSwitch" style="text-align: center;cursor: pointer"
-                                                   type="checkbox"
-                                                   data-toggle="tooltip"
-                                                   data-placement="top"
-                                                   title="{{$noticia->destaque == 0 ? "Notíca não é Destaque." : "Notíca está ativa como Destaque"}}"
-                                                   data-id="{{$noticia->id}}"
-                                                   data-rota="{{route('atualizar-destaque')}}"
-                                                {{$noticia->destaque == 0 ? "" : "checked"}}>
-                                        </div>
-                                    </td>
-                                    <td>{{$noticia->created_at}}</td>
-                                    <td>{{$noticia->updated_at}}</td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <i class="bi bi-trash custom-icon-size text-danger btn-excluir" style="cursor: pointer"
-                                               data-toggle="tooltip"
-                                               data-placement="top"
-                                               title="Excluir Noticia"
-                                               data-rota="{{route('noticia.destroy',$noticia->id)}}">
-                                            </i>
-                                            <i class="bi bi-pencil-square custom-icon-size text-info btn-editar" style="cursor: pointer"
-                                               data-toggle="tooltip"
-                                               data-placement="top"
-                                               title="Editar Noticia"
-                                               data-rota="{{route('noticia.edit',$noticia->id,'/edit')}}"
-                                               data-rota-update="{{route('noticia.update',$noticia->id)}}">
-                                            </i>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </section>
-            </div>
-        </div>
+        @endif
     </div>
+</div>
+
 @endsection
-@push("styles")
-    <link rel="stylesheet" type="text/css" href="{{URL::asset('admin/assets/css/custom.css')}}">
-@endpush
+
 @push("scripts")
-    <script src="{{URL::asset('admin/assets/js/file-pond.js')}}"></script>
-    <script src="{{URL::asset('admin/assets/js/custom.js')}}"></script>
+<script src="{{ asset('admin/assets/js/custom.js') }}"></script>
+<script>
+    function showImagePreview(url) {
+        if (!url) return;
+        Swal.fire({
+            imageUrl: url,
+            imageAlt: 'Visualização da Imagem',
+            showConfirmButton: false,
+            showCloseButton: true,
+            background: 'transparent',
+            customClass: {
+                popup: 'bg-transparent shadow-none border-none',
+                image: 'rounded-[2rem] max-h-[80vh] max-w-[90vw] object-contain shadow-2xl border-4 border-white'
+            }
+        });
+    }
+</script>
 @endpush

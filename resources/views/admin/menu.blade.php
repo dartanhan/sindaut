@@ -8,125 +8,60 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="{{route('admin.dashboard')}}">
+                <a class="nav-link {{ Request::routeIs('admin.dashboard') ? '' : 'collapsed' }}" href="{{route('admin.dashboard')}}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('beneficio.index')}}">
+                <a class="nav-link {{ Request::routeIs('beneficio.*') ? '' : 'collapsed' }}" href="{{route('beneficio.index')}}">
                     <i class="bi bi-gift"></i>
                     <span>Benefícios</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('convencao.index')}}">
+                <a class="nav-link {{ Request::routeIs('convencao.*') ? '' : 'collapsed' }}" href="{{route('convencao.index')}}">
                     <i class="bi bi-people"></i>
-                    <span>Convenção Coleteiva</span>
+                    <span>Convenção Coletiva</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('depjuridico.index')}}">
+                <a class="nav-link {{ Request::routeIs('depjuridico.*') ? '' : 'collapsed' }}" href="{{route('depjuridico.index')}}">
                     <i class="bi bi-briefcase-fill"></i>
                     <span>Departamento Jurídico</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('historia.index')}}">
+                <a class="nav-link {{ Request::routeIs('historia.*') ? '' : 'collapsed' }}" href="{{route('historia.index')}}">
                     <i class="bi bi-book"></i>
                     <span>História</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('homologacao.index')}}">
+                <a class="nav-link {{ Request::routeIs('homologacao.*') ? '' : 'collapsed' }}" href="{{route('homologacao.index')}}">
                     <i class="bi bi-tools"></i>
                     <span>Homologação</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" id="noticias-menu-toggle" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Noticias</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{route('noticia.index')}}">
+                        <a href="{{route('noticia.index')}}" class="{{ Request::routeIs('noticia.*') ? 'active' : '' }}">
                             <i class="bi bi-newspaper"></i>
                             <span>Criar Notícia</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('upload.index')}}">
+                        <a href="{{route('upload.index')}}" class="{{ Request::routeIs('upload.*') ? 'active' : '' }}">
                             <i class="bi bi-images"></i><span>Galeria de Imagens</span>
                         </a>
                     </li>
-                    <!--li>
-                        <a href="{{route('historia.index')}}">
-                            <i class="bi bi-circle"></i><span>História</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-breadcrumbs.html">
-                            <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-buttons.html">
-                            <i class="bi bi-circle"></i><span>Buttons</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-cards.html">
-                            <i class="bi bi-circle"></i><span>Cards</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-carousel.html">
-                            <i class="bi bi-circle"></i><span>Carousel</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-list-group.html">
-                            <i class="bi bi-circle"></i><span>List group</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-modal.html">
-                            <i class="bi bi-circle"></i><span>Modal</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-tabs.html">
-                            <i class="bi bi-circle"></i><span>Tabs</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-pagination.html">
-                            <i class="bi bi-circle"></i><span>Pagination</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-progress.html">
-                            <i class="bi bi-circle"></i><span>Progress</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-spinners.html">
-                            <i class="bi bi-circle"></i><span>Spinners</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="components-tooltips.html">
-                            <i class="bi bi-circle"></i><span>Tooltips</span>
-                        </a>
-                    </li-->
                 </ul>
             </li><!-- End Components Nav -->          
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{route('admin.register')}}">
-                    <i class="bi bi-person-plus"></i>
-                    <span>Registro</span>
-                </a>
-            </li><!-- End Register Page Nav -->
+
             <!--li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -268,3 +203,31 @@
 
     </aside><!-- End Sidebar-->
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('noticias-menu-toggle');
+        const targetMenu = document.getElementById('components-nav');
+        
+        if (toggleBtn && targetMenu) {
+            // Force toggle collapse on click manually to bypass Bootstrap 4/5 script conflicts
+            toggleBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const isCollapsed = this.classList.contains('collapsed');
+                if (isCollapsed) {
+                    this.classList.remove('collapsed');
+                    targetMenu.classList.add('show');
+                    this.setAttribute('aria-expanded', 'true');
+                } else {
+                    this.classList.add('collapsed');
+                    targetMenu.classList.remove('show');
+                    this.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+    });
+</script>
+@endpush

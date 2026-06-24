@@ -16,7 +16,7 @@
                     <li><a>Documentos Necessários</a></li>
                 </ol>
                 <div class="left_content">
-                    <div class="contact_area">
+                    <div class="contact_area article-content">
                         @if(!empty($depjuridico))
                             {!! $depjuridico->conteudo !!}
                         @endif

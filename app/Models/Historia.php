@@ -9,5 +9,5 @@ class Historia extends Model
 {
     use HasFactory;
     protected $table = 'tbl_sindaut_historia';
-    protected $fillable = ['conteudo'];
+    protected $fillable = ['conteudo', 'status'];
 }

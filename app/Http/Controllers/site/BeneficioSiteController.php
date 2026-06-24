@@ -27,12 +27,8 @@ class BeneficioSiteController extends Controller
      */
     public function index()
     {
-        $noticias = $this->noticia->with('imagens')
-            ->where('status',1)
-            ->orderBy('id', 'desc')->get();
-
         $beneficio = $this->beneficio->where('status',1)->first();
 
-        return view('site.beneficio', compact('noticias','beneficio'));
+        return view('site.beneficio', compact('beneficio'));
     }
 }

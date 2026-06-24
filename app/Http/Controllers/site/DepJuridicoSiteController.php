@@ -22,9 +22,6 @@ class DepJuridicoSiteController extends Controller
 
         $depjuridico = $this->depjuridico->where('status',1)->first();
 
-        $noticias = $this->noticia->with('imagens')->where('status',1)->orderBy('id', 'desc')->get();
-
-
-        return view('site.depjuridico', compact('noticias','depjuridico'));
+        return view('site.depjuridico', compact('depjuridico'));
     }
 }

@@ -1,33 +1,80 @@
 $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+    if (typeof $.fn.tooltip === 'function') {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
 
-    // Manipula o clique em uma imagem dentro do modal
-
-
+    // Global listener for [data-toggle="modal"] clicks to handle Tailwind modal shim
+    $(document).on('click', '[data-toggle="modal"]', function(e) {
+        e.preventDefault();
+        var target = $(this).data('target');
+        $(target).modal('show');
+    });
 })
 $('.imagem-selecao').click(function() {
     // Obtém o caminho da imagem clicada
     let caminhoImagem = $(this).attr('src');
+    let imageId = $(this).data('id');
 
     // Preenche o input com o ID da imagem
-    $('#idImagemDestaque').val( $(this).data('id'));
+    $('#idImagemDestaque').val(imageId);
 
-    // Atualiza o preview da imagem
-    $('#previewImagem').attr('src', caminhoImagem);
+    // Limpa o input de arquivo local já que selecionamos da galeria
+    let imageInput = document.getElementById('imageInput');
+    if (imageInput) {
+        imageInput.value = '';
+    }
 
+    // Atualiza o preview da imagem (estilo modal anterior)
     var previewImagem = document.getElementById('previewImagem');
-    previewImagem.style.display = 'block';
+    if (previewImagem) {
+        $('#previewImagem').attr('src', caminhoImagem);
+        previewImagem.style.display = 'block';
+    }
+
+    // Atualiza o preview da imagem (novo estilo página)
+    var previewContainer = document.getElementById('imagePreviewContainer');
+    if (previewContainer) {
+        previewContainer.style.backgroundImage = `url('${caminhoImagem}')`;
+        previewContainer.classList.remove('border-dashed');
+        var placeholder = document.getElementById('previewPlaceholder');
+        if (placeholder) {
+            placeholder.classList.add('bg-white/80', 'p-6', 'rounded-2xl', 'backdrop-blur-sm', 'shadow-xl');
+        }
+    }
 
     // Fecha o modal
     $('#imagemModal').modal('hide');
 });
 
 $('#modalImage').click(function() {
- //   $('#previewImagem').attr('src', "");
-   // $('#destaque').prop('checked', false);
-   // $("#editorContainer").css('display','none');
     $('#imagemModal').modal('show');
 });
+
+$(document).on('click', '#btnOpenGallery', function() {
+    $('#imagemModal').modal('show');
+});
+
+window.previewImage = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Limpa o ID da galeria já que estamos subindo um arquivo local
+        $('#idImagemDestaque').val('');
+        
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('imagePreviewContainer');
+            if (output) {
+                output.style.backgroundImage = `url('${reader.result}')`;
+                output.classList.remove('border-dashed');
+                var placeholder = document.getElementById('previewPlaceholder');
+                if (placeholder) {
+                    placeholder.classList.add('bg-white/80', 'p-6', 'rounded-2xl', 'backdrop-blur-sm', 'shadow-xl');
+                }
+            }
+        }
+        reader.readAsDataURL(file);
+    }
+};
 
 
 /**
@@ -82,9 +129,27 @@ $('.ler-mais').on('click', function(e) {
     $('#modal-conteudo').html(conteudoRetorno);
 });
 
-/***
- * Salva a notícia
- * */
+function restoreSubmitButton(formId) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    const submitBtn = form.querySelector('button[type="submit"]') || document.querySelector(`button[form="${form.id}"]`);
+    if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-80', 'cursor-not-allowed', 'flex', 'items-center', 'justify-center', 'gap-3');
+        const isEdit = window.location.href.indexOf('edit') !== -1;
+        const text = isEdit ? 'SALVAR ALTERAÇÕES' : 'PUBLICAR NOTÍCIA';
+        submitBtn.innerHTML = `
+            <span id="btnText">${text}</span>
+            <div id="btnLoader" class="hidden">
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+        `;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     let noticiaForm = document.getElementById('noticiaForm');
     if (noticiaForm) {
@@ -101,17 +166,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     text: 'O Título da noticia deve ser informado!',
                     icon: 'info',
                     confirmButtonText: 'OK'
-                })
+                });
+                restoreSubmitButton('noticiaForm');
                 return;
             }
 
-            if ($('#destaque').is(':checked') && $("#imagemDestaque").val() === "") {
+            const hasDestaqueImage = $("#idImagemDestaque").val() !== "" || ($("#imageInput")[0] && $("#imageInput")[0].files && $("#imageInput")[0].files.length > 0);
+            if ($('#destaque').is(':checked') && !hasDestaqueImage) {
                 Swal.fire({
                     title: 'Atenção!',
-                    text: 'Para colcoar a Notícia em destaque é necessário uma Imagem!',
+                    text: 'Para colocar a Notícia em destaque é necessário uma Imagem!',
                     icon: 'info',
                     confirmButtonText: 'OK'
-                })
+                });
+                restoreSubmitButton('noticiaForm');
                 return;
             }
 
@@ -119,10 +187,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (tinymceContent.trim() === "") {
                 Swal.fire({
                     title: 'Atenção!',
-                    text: 'O Conteúdo da Notícia está está vazio!',
+                    text: 'O Conteúdo da Notícia está vazio!',
                     icon: 'info',
                     confirmButtonText: 'OK'
-                })
+                });
+                restoreSubmitButton('noticiaForm');
                 return;
             }
 
@@ -392,11 +461,13 @@ document.querySelectorAll('.btn-editar').forEach(btn => {
                     meuFormulario.appendChild(hiddenMethodInput);
 
                     if(imagem !== 0){
+                        $('#idImagemDestaque').val(response.data.imagem_id);
                         $('#previewImagem').attr('src', "../public/storage/posts/files/"+imagem);
                         $("#editorContainer").css('display','block');
                         $('#destaque').prop('checked', true);
                         $('#previewImagem').removeClass("img-thumbnail-none");
                     }else{
+                        $('#idImagemDestaque').val('');
                         $('#destaque').prop('checked', false);
                         $('#previewImagem').addClass("img-thumbnail-none");
                         $("#editorContainer").css('display','none');
@@ -513,16 +584,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (destaque) {
         destaque.addEventListener('change', function (event) {
             let editorContainer = document.getElementById('editorContainer');
-
-            // Verifique se o switch está marcado
-            if (this.checked) {
-                editorContainer.style.display = 'block'; // Exiba o campo de texto
-            } else {
-                editorContainer.style.display = 'none'; // Oculte o campo de texto
-                $("#caminhoImagem").val('');
-                $('#previewImagem').attr('src', '');
-                let previewImagem = document.getElementById('previewImagem');
-                previewImagem.style.display = 'none';
+            if (editorContainer) {
+                // Verifique se o switch está marcado
+                if (this.checked) {
+                    editorContainer.style.display = 'block'; // Exiba o campo de texto
+                } else {
+                    editorContainer.style.display = 'none'; // Oculte o campo de texto
+                    $("#caminhoImagem").val('');
+                    $('#previewImagem').attr('src', '');
+                    let previewImagem = document.getElementById('previewImagem');
+                    if (previewImagem) {
+                        previewImagem.style.display = 'none';
+                    }
+                }
             }
         });
     }
