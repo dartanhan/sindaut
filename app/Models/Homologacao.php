@@ -10,7 +10,7 @@ class Homologacao extends Model
     use HasFactory;
 
     protected $table = 'tbl_sindaut_homologacoes';
-    protected $fillable = [ 'conteudo', 'updated_at', 'created_at'];
+    protected $fillable = [ 'conteudo', 'status', 'updated_at', 'created_at'];
 
     public function getCreatedAtAttribute()
     {

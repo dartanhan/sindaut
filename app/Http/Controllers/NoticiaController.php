@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class NoticiaController extends Controller
 {
@@ -32,29 +33,65 @@ class NoticiaController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function store(){
+    public function store()
+    {
+        $this->request->validate([
+            'titulo' => 'required|max:80',
+            'subtitulo' => 'nullable|max:250',
+            'tinymce_editor' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+        ], [
+            'titulo.required' => 'O título é obrigatório.',
+            'titulo.max' => 'O título não pode ter mais de 80 caracteres.',
+            'subtitulo.max' => 'O subtítulo não pode ter mais de 250 caracteres.',
+            'tinymce_editor.required' => 'O conteúdo é obrigatório.',
+            'image.image' => 'O arquivo selecionado deve ser uma imagem.',
+            'image.mimes' => 'A imagem deve ser do tipo: jpeg, png, jpg, gif ou webp.',
+            'image.max' => 'A imagem não pode ser maior que 5MB.',
+        ]);
 
         $dataCadastro = $this->request->input('data_cadastro') 
-        ? Carbon::parse($this->request->input('data_cadastro')) 
-        : Carbon::now(); // Se não for informada, usa a data e hora atual
+            ? Carbon::parse($this->request->input('data_cadastro')) 
+            : Carbon::now();
+
+        $imagem_id = $this->request->input('idImagemDestaque') ?: null;
+
+        if ($this->request->hasFile('image')) {
+            $imageFile = $this->request->file('image');
+            $nome_unico = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
+            $imageFile->storeAs('posts/files', $nome_unico, 'public');
+            
+            $galeriaImagem = GaleriaImagem::create([
+                'path' => $nome_unico
+            ]);
+            
+            $imagem_id = $galeriaImagem->id;
+        }
 
         $noticia = $this->noticia->create([
             'titulo' => $this->request->input('titulo'),
             'subtitulo' => $this->request->input('subtitulo'),
-            'imagem_id' => $this->request->input('idImagemDestaque'),
+            'imagem_id' => $imagem_id,
             'conteudo' => $this->request->input('tinymce_editor'),
-            'status' => false,
-           'created_at' => $dataCadastro, // Grava a data de cadastro
+            'status' => $this->request->input('status') !== null ? (int)$this->request->input('status') : 0,
+            'destaque' => $this->request->has('destaque') ? 1 : 0,
+            'created_at' => $dataCadastro,
         ]);
 
         if(!$noticia){
-            return redirect()->route('noticia.index')->with('danger','não foi possível criar a notícia.');
+            return redirect()->route('noticia.index')->with('danger','Não foi possível criar a notícia.');
         }
         return redirect()->route('noticia.index')->with('success','Notícia criada com sucesso.');
     }
 
-    public function create(){
-
+    public function create()
+    {
+        if(Auth::check() === true){
+            $user_data = User::where("id",auth()->user()->id)->first();
+            $images = $this->galleryImage->get();
+            return view('admin.noticia_create', compact('images', 'user_data'));
+        }
+        return redirect()->route('admin.login');
     }
 
     public function destroy(int $id)
@@ -72,33 +109,74 @@ class NoticiaController extends Controller
 
     public function edit($id)
     {
-        //$noticia = Noticia::find($id);
-        $noticia = Noticia::with('imagens')->find($id);
+        if(Auth::check() === true){
+            $user_data = User::where("id",auth()->user()->id)->first();
+            $noticia = Noticia::with('imagens')->find($id);
 
-         if (!$noticia) {
-            abort(404); // Retorna um erro 404 se a notícia não for encontrada
+            if (!$noticia) {
+                abort(404);
+            }
+            $images = $this->galleryImage->get();
+            return view('admin.noticia_edit', compact('noticia', 'images', 'user_data'));
         }
-        return response()->json(['success' => true, 'data' => $noticia]);
+        return redirect()->route('admin.login');
     }
 
     public function update($id)
     {
+        $this->request->validate([
+            'titulo' => 'required|max:80',
+            'subtitulo' => 'nullable|max:250',
+            'tinymce_editor' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+        ], [
+            'titulo.required' => 'O título é obrigatório.',
+            'titulo.max' => 'O título não pode ter mais de 80 caracteres.',
+            'subtitulo.max' => 'O subtítulo não pode ter mais de 250 caracteres.',
+            'tinymce_editor.required' => 'O conteúdo é obrigatório.',
+            'image.image' => 'O arquivo selecionado deve ser uma imagem.',
+            'image.mimes' => 'A imagem deve ser do tipo: jpeg, png, jpg, gif ou webp.',
+            'image.max' => 'A imagem não pode ser maior que 5MB.',
+        ]);
+
         $noticia = Noticia::find($id);
+        if (!$noticia) {
+            return redirect()->route('noticia.index')->with('danger', 'Notícia não encontrada.');
+        }
+
+        $dataCadastro = $this->request->input('data_cadastro') 
+            ? Carbon::parse($this->request->input('data_cadastro')) 
+            : Carbon::parse($noticia->getRawOriginal('created_at'));
+
+        $imagem_id = $this->request->input('idImagemDestaque') ?: null;
+
+        if ($this->request->hasFile('image')) {
+            $imageFile = $this->request->file('image');
+            $nome_unico = Str::uuid() . '.' . $imageFile->getClientOriginalExtension();
+            $imageFile->storeAs('posts/files', $nome_unico, 'public');
+            
+            $galeriaImagem = GaleriaImagem::create([
+                'path' => $nome_unico
+            ]);
+            
+            $imagem_id = $galeriaImagem->id;
+        }
 
         $noticia->titulo = $this->request->input('titulo');
         $noticia->subtitulo =  $this->request->input('subtitulo');
         $noticia->conteudo =  $this->request->input('tinymce_editor');
+        $noticia->imagem_id = $imagem_id;
+        $noticia->status = $this->request->input('status') !== null ? (int)$this->request->input('status') : $noticia->status;
+        $noticia->destaque = $this->request->has('destaque') ? 1 : 0;
+        $noticia->created_at = $dataCadastro;
 
         $atualizacaoBemSucedida = $noticia->update();
 
         if ($atualizacaoBemSucedida) {
-           // return response()->json(['success'=> true, 'message' => 'Notícia atualizada com sucesso'], 200);
             return redirect()->route('noticia.index')->with('success','Notícia atualizada com sucesso.');
         } else {
-            //return response()->json(['success'=> false,'message' => 'Erro ao atualizar o status'], 500);
-            return redirect()->route('noticia.index')->with('danger','Erro ao atualizar o status.');
+            return redirect()->route('noticia.index')->with('danger','Erro ao atualizar a notícia.');
         }
-
     }
 
     /***

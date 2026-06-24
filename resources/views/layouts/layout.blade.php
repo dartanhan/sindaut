@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sindaut</title>
+    <title>SINDAUT-RIO</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('assets/css/animate.css')}}">
@@ -19,6 +20,78 @@
     <script src="{{URL::asset('assets/js/respond.min.js')}}"></script>
     <![endif]-->
     @stack("styles")
+    <style>
+        /* Colapso de conteudo longo */
+        .article-content.collapsible-active {
+            max-height: 500px;
+            overflow: hidden;
+            position: relative;
+            transition: max-height 0.4s ease-in-out;
+        }
+        .article-content.collapsible-active.expanded {
+            max-height: 20000px; /* Suficiente para qualquer texto longo */
+        }
+        .article-content.collapsible-active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+        .article-content.collapsible-active.expanded::after {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Botao Veja Mais */
+        .read-more-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 10;
+        }
+        .btn-read-more-toggle {
+            background-color: #0d6efd;
+            color: #fff;
+            border: none;
+            padding: 8px 24px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-read-more-toggle:hover {
+            background-color: #0b5ed7;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .btn-read-more-toggle i {
+            margin-left: 5px;
+        }
+
+        /* Sidebar Sticky */
+        @media (min-width: 992px) {
+            #contentSection .row {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .right-column, aside.right_content {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 20px;
+                height: fit-content;
+            }
+        }
+    </style>
 </head>
 <body>
 <div id="preloader">
@@ -116,7 +189,40 @@
 <script src="{{URL::asset('assets/js/custom.js')}}"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-@stack("scripts")
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var articles = document.querySelectorAll('.article-content');
+            articles.forEach(function(article) {
+                // Se a altura do conteudo for maior que 600px, adiciona o colapso
+                if (article.scrollHeight > 600) {
+                    article.classList.add('collapsible-active');
+                    
+                    var btnContainer = document.createElement('div');
+                    btnContainer.className = 'read-more-container';
+                    
+                    var btn = document.createElement('button');
+                    btn.className = 'btn-read-more-toggle';
+                    btn.innerHTML = 'Veja mais <i class="fa fa-chevron-down"></i>';
+                    
+                    btnContainer.appendChild(btn);
+                    article.parentNode.insertBefore(btnContainer, article.nextSibling);
+                    
+                    btn.addEventListener('click', function() {
+                        if (article.classList.contains('expanded')) {
+                            article.classList.remove('expanded');
+                            btn.innerHTML = 'Veja mais <i class="fa fa-chevron-down"></i>';
+                            // Rola suavemente de volta para o topo do artigo
+                            article.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        } else {
+                            article.classList.add('expanded');
+                            btn.innerHTML = 'Veja menos <i class="fa fa-chevron-up"></i>';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    @stack("scripts")
 
 </body>
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin') | SINDAUT</title>
+    <title>@yield('title', 'Admin') | SINDAUT-RIO</title>
     <link rel="shortcut icon" href="{{ asset('admin/assets/img/favicon.png') }}" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
@@ -24,6 +24,12 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        @media (min-width: 1024px) {
+            #admin-sidebar:not(:hover) #menu-noticias-dropdown {
+                display: none !important;
+            }
+        }
     </style>
     @stack('styles')
 </head>
@@ -36,13 +42,13 @@
 
     <!-- Sidebar -->
     <aside id="admin-sidebar"
-        class="w-72 bg-slate-900 text-white flex flex-col shadow-2xl fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:translate-x-0 lg:static lg:flex-shrink-0 transition-transform duration-300 ease-in-out">
-        <div class="p-8 flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+        class="group w-72 lg:w-20 lg:hover:w-72 bg-slate-900 text-white flex flex-col shadow-2xl fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:translate-x-0 lg:static lg:flex-shrink-0 transition-all duration-300 ease-in-out">
+        <div class="p-8 lg:p-5 lg:group-hover:p-8 flex items-center justify-between gap-3 transition-all duration-300">
+            <div class="flex items-center gap-3 lg:gap-0 lg:group-hover:gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
                 </div>
-                <span class="font-black tracking-tighter text-xl">SINDAUT<span class="text-blue-500">PRO</span></span>
+                <span class="font-black tracking-tighter text-xl transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">ADMIN<span class="text-blue-500">PRO</span></span>
             </div>
             <!-- Close Button for Mobile -->
             <button type="button" onclick="toggleSidebar()"
@@ -51,47 +57,47 @@
             </button>
         </div>
 
-        <nav class="flex-1 px-4 py-2 space-y-2 overflow-y-auto no-scrollbar">
+        <nav class="flex-1 px-4 py-2 space-y-2 overflow-y-auto no-scrollbar lg:px-3 lg:group-hover:px-4 transition-all duration-300">
             <!-- Dashboard -->
             <a href="{{ route('admin.dashboard') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                Dashboard
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="layout-dashboard" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Dashboard</span>
             </a>
 
             <!-- Benefícios -->
             <a href="{{ route('beneficio.index') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('beneficio.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="gift" class="w-5 h-5"></i>
-                Benefícios
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('beneficio.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="gift" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Benefícios</span>
             </a>
 
             <!-- Convenção Coletiva -->
             <a href="{{ route('convencao.index') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('convencao.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="file-signature" class="w-5 h-5"></i>
-                Convenção Coletiva
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('convencao.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="file-signature" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Convenção Coletiva</span>
             </a>
 
             <!-- Departamento Jurídico -->
             <a href="{{ route('depjuridico.index') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('depjuridico.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="gavel" class="w-5 h-5"></i>
-                Dep. Jurídico
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('depjuridico.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="gavel" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Dep. Jurídico</span>
             </a>
 
             <!-- História -->
             <a href="{{ route('historia.index') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('historia.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="book-open" class="w-5 h-5"></i>
-                História
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('historia.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="book-open" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">História</span>
             </a>
 
             <!-- Homologação -->
             <a href="{{ route('homologacao.index') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('homologacao.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="check-circle" class="w-5 h-5"></i>
-                Homologação
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('homologacao.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="check-circle" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Homologação</span>
             </a>
 
             <!-- Menu Notícias Dropdown -->
@@ -101,51 +107,41 @@
             <div class="flex flex-col">
                 <button type="button"
                     onclick="document.getElementById('menu-noticias-dropdown').classList.toggle('hidden'); document.getElementById('menu-noticias-icon').classList.toggle('rotate-180');"
-                    class="flex items-center justify-between px-6 py-4 rounded-2xl transition {{ $isNoticiasActive ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                    <div class="flex items-center gap-4">
-                        <i data-lucide="newspaper" class="w-5 h-5"></i>
-                        <span>Notícias & Mídia</span>
+                    class="flex items-center justify-between px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ $isNoticiasActive ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    <div class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4">
+                        <i data-lucide="newspaper" class="w-5 h-5 flex-shrink-0"></i>
+                        <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Notícias & Mídia</span>
                     </div>
                     <i data-lucide="chevron-down" id="menu-noticias-icon"
-                        class="w-4 h-4 transition-transform {{ $isNoticiasActive ? 'rotate-180' : '' }}"></i>
+                        class="w-4 h-4 transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto"></i>
                 </button>
                 <div id="menu-noticias-dropdown"
-                    class="flex flex-col gap-1 mt-2 pl-4 {{ $isNoticiasActive ? '' : 'hidden' }}">
+                    class="flex flex-col gap-1 mt-2 pl-4 hidden">
                     <a href="{{ route('noticia.index') }}"
-                        class="flex items-center gap-4 px-6 py-3 rounded-2xl transition {{ request()->routeIs('noticia.index') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                        <i data-lucide="list" class="w-4 h-4"></i>
-                        <span class="text-sm">Notícias</span>
+                        class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-3 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('noticia.index') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                        <i data-lucide="list" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Notícias</span>
                     </a>
                     <a href="{{ route('upload.index') }}"
-                        class="flex items-center gap-4 px-6 py-3 rounded-2xl transition {{ request()->routeIs('upload.index') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                        <i data-lucide="image" class="w-4 h-4"></i>
-                        <span class="text-sm">Galeria</span>
+                        class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-3 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('upload.index') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                        <i data-lucide="image" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Galeria</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Divider/Section for other items -->
-            <div class="pt-4 pb-2 px-6">
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Sistema</p>
-            </div>
 
-            <!-- Registro (Usuários do Painel) -->
-            <a href="{{ route('admin.register') }}"
-                class="flex items-center gap-4 px-6 py-4 rounded-2xl transition {{ request()->routeIs('admin.register') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-                <i data-lucide="users" class="w-5 h-5"></i>
-                Usuários do Painel
-            </a>
         </nav>
 
-        <div class="p-8 border-t border-slate-800 space-y-4">
-            <a href="{{ route('site.home') }}" target="_blank" class="flex items-center gap-4 text-slate-400 hover:text-white transition">
-                <i data-lucide="external-link" class="w-5 h-5"></i>
-                Ver Site
+        <div class="p-8 lg:p-4 lg:group-hover:p-8 border-t border-slate-800 space-y-4 transition-all duration-300">
+            <a href="{{ route('site.home') }}" target="_blank" class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 text-slate-400 hover:text-white transition-all duration-300">
+                <i data-lucide="external-link" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Ver Site</span>
             </a>
             <a href="{{ route('admin.logout') }}"
-                class="flex items-center gap-4 text-slate-400 hover:text-red-400 transition w-full">
-                <i data-lucide="log-out" class="w-5 h-5"></i>
-                Sair
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 text-slate-400 hover:text-red-400 transition-all duration-300 w-full">
+                <i data-lucide="log-out" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Sair</span>
             </a>
         </div>
     </aside>
@@ -214,9 +210,9 @@
         if (typeof tinymce !== 'undefined') {
             tinymce.init({
                 selector: 'textarea.tinymce_editor',
-                plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
+                plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons',
                 menubar: 'file edit view insert format tools table help',
-                toolbar: 'undo redo | bold italic underline strikethrough table emoticons| fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview save print | insertfile image media template link anchor codesample | ltr rtl',
+                toolbar: 'undo redo | bold italic underline strikethrough table emoticons| fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen preview save print | insertfile image media link anchor codesample | ltr rtl',
                 toolbar_sticky: true,
                 language: 'pt_BR',
                 height: 450,
@@ -227,7 +223,44 @@
                 contextmenu: 'link image table',
                 skin: 'oxide',
                 content_css: 'default',
-                content_style: 'body { font-family: Outfit, sans-serif; font-size: 16px }'
+                content_style: 'body { font-family: Outfit, sans-serif; font-size: 16px }',
+                file_picker_callback: function (callback, value, meta) {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    
+                    if (meta.filetype === 'image') {
+                        input.setAttribute('accept', 'image/*');
+                    } else if (meta.filetype === 'file') {
+                        input.setAttribute('accept', '.pdf,.doc,.docx,.xls,.xlsx,.txt');
+                    }
+
+                    input.onchange = function () {
+                        var file = this.files[0];
+                        
+                        var formData = new FormData();
+                        formData.append('file', file);
+                        formData.append('_token', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+                        fetch('/admin/tinymce/upload', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.location) {
+                                callback(result.location, { text: file.name, title: file.name });
+                            } else {
+                                alert('Erro no upload: ' + (result.error || 'Erro desconhecido'));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error during upload:', error);
+                            alert('Falha ao enviar o arquivo.');
+                        });
+                    };
+
+                    input.click();
+                }
             });
         }
 

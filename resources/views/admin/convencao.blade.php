@@ -5,11 +5,10 @@
 @section('header_subtitle', 'Gerencie as CCTs e descrições para os trabalhadores')
 
 @section('header_actions')
-<button type="button" class="bg-blue-600 hover:bg-slate-900 text-white font-black px-8 py-3 rounded-2xl transition flex items-center gap-2 text-sm shadow-xl shadow-blue-600/20"
-        data-toggle="modal" data-target="#convencaoModal">
+<a href="{{ route('convencao.create') }}" class="bg-blue-600 hover:bg-slate-900 text-white font-black px-8 py-3 rounded-2xl transition flex items-center gap-2 text-sm shadow-xl shadow-blue-600/20">
     <i data-lucide="plus" class="w-5 h-5"></i>
     CADASTRAR CONVENÇÃO
-</button>
+</a>
 @endsection
 
 @section('content')
@@ -25,6 +24,7 @@
             <table class="w-full text-left min-w-[800px]">
                 <thead>
                     <tr class="bg-slate-50 border-b border-slate-100">
+                        <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center w-16">Ordem</th>
                         <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest">Título</th>
                         <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center">Ano/Vigência</th>
                         <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center">Arquivo PDF</th>
@@ -34,7 +34,7 @@
                         <th class="px-8 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Ações</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-100">
+                <tbody id="convencao-table-body" class="divide-y divide-slate-100">
                     @forelse($convencoes as $convencao)
                         @php
                             $filePath = '';
@@ -44,7 +44,10 @@
                                 $fileId = $convencao['files'][0]->id;
                             }
                         @endphp
-                        <tr class="odd:bg-white even:bg-slate-50/40 hover:bg-slate-100/50 transition">
+                        <tr class="odd:bg-white even:bg-slate-50/40 hover:bg-slate-100/50 transition draggable-row" data-id="{{ $convencao->id }}">
+                            <td class="p-6 text-center cursor-move drag-handle">
+                                <i data-lucide="grip-vertical" class="w-5 h-5 text-slate-400 hover:text-slate-600 transition mx-auto"></i>
+                            </td>
                             <td class="p-6">
                                 <div class="font-black text-slate-900 text-sm uppercase leading-tight">{{ $convencao->titulo_cct }}</div>
                             </td>
@@ -67,24 +70,22 @@
                                 {{ $convencao->updated_at ?: '-' }}
                             </td>
                             <td class="p-6 text-center">
-                                <label class="relative inline-flex items-center cursor-pointer">
-                                    <input class="sr-only peer statusSwitch" 
-                                           type="checkbox"
-                                           data-id="{{ $convencao->id }}"
-                                           data-rota="{{ route('convencao.status') }}"
-                                           {{ $convencao->status == 0 ? '' : 'checked' }}>
-                                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                                </label>
+                                @if($convencao->status == 1)
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800 uppercase tracking-wider">
+                                        Publicado
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-black bg-slate-100 text-slate-800 uppercase tracking-wider">
+                                        Rascunho
+                                    </span>
+                                @endif
                             </td>
                             <td class="p-6">
                                 <div class="flex items-center justify-end gap-3">
-                                    <button type="button" 
-                                            class="w-10 h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition shadow-sm btn-editar-convencao"
-                                            data-rota="{{ route('convencao.edit', $convencao->id) }}"
-                                            data-rota-update="{{ route('convencao.update', $convencao->id) }}"
-                                            data-file-id="{{ $fileId }}">
+                                    <a href="{{ route('convencao.edit', $convencao->id) }}" 
+                                       class="w-10 h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition shadow-sm">
                                         <i data-lucide="edit-3" class="w-5 h-5"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" 
                                             class="w-10 h-10 bg-white border border-slate-100 text-slate-400 rounded-xl flex items-center justify-center hover:bg-rose-600 hover:text-white hover:border-rose-600 transition shadow-sm btn-excluir"
                                             data-rota="{{ route('convencao.destroy', $convencao->id) }}">
@@ -95,7 +96,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="p-12 text-center text-slate-400 font-bold uppercase tracking-wider text-sm">
+                            <td colspan="8" class="p-12 text-center text-slate-400 font-bold uppercase tracking-wider text-sm">
                                 Nenhuma Convenção cadastrada.
                             </td>
                         </tr>
@@ -105,126 +106,70 @@
         </div>
     </div>
 </div>
-
-<!-- ================= MODALS ================= -->
-
-<!-- Convenção Modal (Criar / Editar) -->
-<div id="convencaoModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 overflow-y-auto">
-    <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-100 max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden">
-        <form method="POST" action="{{ route('convencao.store') }}" name="uploadForm" id="uploadForm" enctype="multipart/form-data" class="flex flex-col h-full overflow-hidden">
-            @csrf
-            
-            <!-- Header -->
-            <div class="bg-slate-900 text-white px-8 py-6 flex justify-between items-center">
-                <h5 class="font-black text-lg uppercase tracking-tight" id="modalTitle">Cadastrar Convenção Coletiva (CCT)</h5>
-                <button type="button" class="text-slate-400 hover:text-white transition" onclick="$('#convencaoModal').modal('hide')">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
-            </div>
-            
-            <!-- Body -->
-            <div class="p-8 overflow-y-auto space-y-6 flex-1 text-slate-700">
-                <!-- Title Field -->
-                <div class="space-y-2">
-                    <label for="titulo" class="text-xs font-black uppercase text-slate-400 tracking-wider">Título da CCT</label>
-                    <input type="text" name="titulo" id="titulo" required
-                           class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-900 outline-none focus:border-blue-600 focus:bg-white transition"
-                           placeholder="Ex: Convenção Coletiva de Trabalho Comércio 2023/2024">
-                </div>
-
-                <!-- Date Field -->
-                <div class="space-y-2">
-                    <label for="data_cct" class="text-xs font-black uppercase text-slate-400 tracking-wider">Vigência (Ex: 2023/2024)</label>
-                    <input type="text" name="data_cct" id="data_cct" maxlength="9" required
-                           class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 text-sm font-bold text-slate-900 outline-none focus:border-blue-600 focus:bg-white transition"
-                           placeholder="Ex: 2023/2024">
-                </div>
-
-                <!-- Description Field (TinyMCE) -->
-                <div class="space-y-2">
-                    <label class="text-xs font-black uppercase text-slate-400 tracking-wider">Descrição da CCT (Opcional)</label>
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-                        <textarea class="tinymce_editor" name="descricao_cct" id="descricao_cct"></textarea>
-                    </div>
-                </div>
-
-                <!-- PDF File Upload Field -->
-                <div class="space-y-2">
-                    <label class="text-xs font-black uppercase text-slate-400 tracking-wider font-bold">Arquivo PDF da Convenção</label>
-                    <div class="border-2 border-dashed border-slate-200 rounded-3xl p-6 bg-slate-50">
-                        <input type="file" name="image" id="image" class="filepond"/>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="bg-slate-50 border-t border-slate-100 px-8 py-6 flex justify-end gap-3">
-                <button type="button" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs uppercase tracking-widest px-6 py-4 rounded-2xl transition" 
-                        onclick="$('#convencaoModal').modal('hide')">
-                    Fechar
-                </button>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-widest px-8 py-4 rounded-2xl transition shadow-lg shadow-blue-600/20">
-                    Salvar Convenção
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
 @endsection
 
-@push("styles")
-<link href="{{URL::asset('/admin/assets/filepond/dist/filepond.css')}}" rel="stylesheet">
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
-@endpush
-
 @push("scripts")
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="{{URL::asset('/admin/assets/filepond/dist/filepond.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script>
-    // Shim to support Bootstrap Modal API via jQuery using Tailwind classes
-    if (typeof jQuery !== 'undefined') {
-        jQuery.fn.modal = function(action) {
-            return this.each(function() {
-                var $el = jQuery(this);
-                if (action === 'show') {
-                    // Remove hidden and show flex
-                    jQuery('.fixed.inset-0.z-50').not($el).addClass('hidden').removeClass('flex');
-                    $el.removeClass('hidden').addClass('flex');
-                    jQuery('body').addClass('overflow-hidden');
-                } else if (action === 'hide') {
-                    $el.addClass('hidden').removeClass('flex');
-                    if (jQuery('.fixed.inset-0.z-50:not(.hidden)').length === 0) {
-                        jQuery('body').removeClass('overflow-hidden');
-                    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var el = document.getElementById('convencao-table-body');
+        if (el) {
+            var sortable = Sortable.create(el, {
+                handle: '.drag-handle',
+                animation: 150,
+                ghostClass: 'bg-blue-50/50',
+                onEnd: function(evt) {
+                    var order = [];
+                    document.querySelectorAll('#convencao-table-body tr').forEach(function(tr, index) {
+                        order.push({
+                            id: tr.getAttribute('data-id'),
+                            position: index + 1
+                        });
+                    });
+
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    fetch("{{ route('convencao.reorder') }}", {
+                        method: 'POST',
+                        body: JSON.stringify({ order: order }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true
+                            });
+                            Toast.fire({
+                                icon: 'success',
+                                title: data.message
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Erro!',
+                                text: data.message,
+                                icon: 'error'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'Erro!',
+                            text: 'Ocorreu um erro ao reordenar.',
+                            icon: 'error'
+                        });
+                    });
                 }
             });
-        };
-    }
-
-    // Modal Title customization
-    document.addEventListener('DOMContentLoaded', function() {
-        $('[data-target="#convencaoModal"]').on('click', function() {
-            $('#modalTitle').text('Cadastrar Convenção Coletiva (CCT)');
-            // Clear inputs
-            $('#titulo').val('');
-            $('#data_cct').val('');
-            if (typeof tinymce !== 'undefined' && tinymce.get('descricao_cct')) {
-                tinymce.get('descricao_cct').setContent('');
-            }
-            // Clear any previously appended hidden method overrides
-            $('#uploadForm input[name="_method"]').remove();
-            $('#uploadForm input[name="convencao-id"]').remove();
-            $('#uploadForm input[name="convencao_descricao_id"]').remove();
-            $('#uploadForm input[name="file_id"]').remove();
-            $('#uploadForm').attr('action', "{{ route('convencao.store') }}");
-        });
-        $(document).on('click', '.btn-editar-convencao', function() {
-            $('#modalTitle').text('Editar Convenção Coletiva (CCT)');
-        });
+        }
     });
 </script>
-<script src="{{URL::asset('admin/assets/js/file-pond.js')}}"></script>
 <script src="{{URL::asset('admin/assets/js/custom.js')}}"></script>
 @endpush

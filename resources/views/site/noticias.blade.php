@@ -47,8 +47,8 @@
                                             </div>
                                             <div>
                                                 <span>
-                                                    {!! substr(strip_tags($noticiasite->conteudo), 0, 150) !!} <!-- Exibe os primeiros 100 caracteres do conteúdo -->
-                                                    @if(strlen(strip_tags($noticiasite->conteudo)) > 150)
+                                                    {!! substr(strip_tags(html_entity_decode($noticiasite->conteudo)), 0, 150) !!} <!-- Exibe os primeiros 100 caracteres do conteúdo -->
+                                                    @if(strlen(strip_tags(html_entity_decode($noticiasite->conteudo))) > 150)
                                                         <a href="{{route('site.detalhe-noticia',$noticiasite->id)}}" class="catg_title_site link-info">
                                                             [...] <!-- Adicione reticências para indicar que o conteúdo foi truncado -->
                                                         </a>

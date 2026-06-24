@@ -13,11 +13,13 @@ class CreateConvencaoDescricaoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_sindaut_convencao_descricao', function (Blueprint $table) {
-            $table->id();
-            $table->longText("descricao");
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('tbl_sindaut_convencao_descricao')) {
+            Schema::create('tbl_sindaut_convencao_descricao', function (Blueprint $table) {
+                $table->id();
+                $table->longText("descricao");
+                $table->timestamps();
+            });
+        }
     }
 
     /**

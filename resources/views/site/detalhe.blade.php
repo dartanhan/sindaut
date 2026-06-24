@@ -26,7 +26,7 @@
                             </span>
                             <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
                         </div>
-                        <div class="single_page_content">
+                        <div class="single_page_content article-content">
                             {!! str_replace("../", "../../", $noticiaDetalhe->conteudo) !!}
                         </div>
                         <div class="social_link">

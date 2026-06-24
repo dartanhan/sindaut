@@ -25,7 +25,7 @@ class ConvencaoSiteController extends Controller
 
         $convencoes = $this->convencao->with('files')
             ->where('status',1)
-            ->orderBy('id', 'desc')->get();
+            ->orderBy('ordem', 'asc')->get();
 
         $convencao_descricao = $this->convencaoDescricao->first();
 

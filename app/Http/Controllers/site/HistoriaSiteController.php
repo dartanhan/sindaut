@@ -27,7 +27,7 @@ class HistoriaSiteController extends Controller
      */
     public function index()
     {
-        $historia = $this->historia->first();
+        $historia = $this->historia->where('status', 1)->first();
 
         return view('site.historia', compact('historia'));
     }

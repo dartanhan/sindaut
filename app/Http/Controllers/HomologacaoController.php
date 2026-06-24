@@ -18,25 +18,35 @@ class HomologacaoController extends Controller
         $this->homologacao = $homologacao;
     }
 
-    public function index(){
+    public function index()
+    {
         if(Auth::check() === true){
             $user_data = User::where("id",auth()->user()->id)->first();
-            $homologacao = $this->homologacao->first();
+            $homologacoes = $this->homologacao::orderBy('id', 'desc')->get();
 
-            return view('admin.homologacao', compact('user_data','homologacao'));
+            return view('admin.homologacao', compact('user_data','homologacoes'));
         }
         return redirect()->route('admin.login');
     }
 
-    /** 
-     * 
-    */
+    public function create()
+    {
+        if(Auth::check() === true){
+            $user_data = User::where("id",auth()->user()->id)->first();
+            return view('admin.homologacao_create', compact('user_data'));
+        }
+        return redirect()->route('admin.login');
+    }
+
     public function store()
     {
         $validator = Validator::make($this->request->all(), [
             'tinymce_editor' => ['required', 'string'],
+            'status' => ['required', 'in:0,1'],
         ], [
-            'tinymce_editor.required' => 'A descrição da homologação é obrigatória.'
+            'tinymce_editor.required' => 'A descrição da homologação é obrigatória.',
+            'status.required' => 'O status é obrigatório.',
+            'status.in' => 'Status inválido.',
         ]);
 
         if ($validator->fails()) {
@@ -44,27 +54,42 @@ class HomologacaoController extends Controller
             return redirect()->route('homologacao.index')->with('danger', $error);
         }
 
-        $historia = $this->homologacao->create([
-            'conteudo' => $this->request->input('tinymce_editor')
+        $homologacao = $this->homologacao->create([
+            'conteudo' => $this->request->input('tinymce_editor'),
+            'status' => (int) $this->request->input('status'),
         ]);
 
-        if(empty($historia)){
-            return redirect()->route('homologacao.index')->with('danger','Não foi possível salvar a homologacão.');
+        if(empty($homologacao)){
+            return redirect()->route('homologacao.index')->with('danger','Não foi possível salvar a homologação.');
         }
-        return redirect()->route('homologacao.index')->with('success','Homologacão criada com sucesso.');
+        return redirect()->route('homologacao.index')->with('success','Homologação criada com sucesso.');
     }
 
-     /**
-     * Update the specified resource in storage.
-     *
-     * @param int $id
-     * @return RedirectResponse
-     */
+    public function edit(int $id)
+    {
+        if(Auth::check() === true){
+            $user_data = User::where("id",auth()->user()->id)->first();
+            $homologacao = $this->homologacao::find($id);
+
+            if (!$homologacao) {
+                abort(404);
+            }
+
+            return view('admin.homologacao_edit', compact('user_data', 'homologacao'));
+        }
+        return redirect()->route('admin.login');
+    }
+
     public function update(int $id)
     {
         $homologacao = $this->homologacao::find($id);
 
+        if (!$homologacao) {
+            return redirect()->route('homologacao.index')->with('danger','Homologação não encontrada.');
+        }
+
         $homologacao->conteudo =  $this->request->input('tinymce_editor');
+        $homologacao->status = $this->request->input('status') !== null ? (int)$this->request->input('status') : $homologacao->status;
 
         $atualizacaoBemSucedida = $homologacao->update();
 
@@ -75,31 +100,19 @@ class HomologacaoController extends Controller
         return redirect()->route('homologacao.index')->with('success','Homologação atualizada com sucesso.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Historia  $historia
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Homologacao $homologacao)
+    public function destroy(int $id)
     {
-       // dd($this->homologacao);
+        $homologacao = $this->homologacao::find($id);
+
+        if (!$homologacao) {
+            return response()->json(['success' => false, 'message' => 'Homologação não encontrada'], 404);
+        }
+
+        $homologacao->delete();
+
+        return response()->json(['success' => true, 'message' => 'Homologação excluída com sucesso']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Historia  $historia
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Homologacao $homologacao)
-    {
-        //
-    }
-
-        /***
-     * Atualiza o status para ativo e inativo
-     * */
     public function status()
     {
         $id = $this->request->input('id');
@@ -117,7 +130,6 @@ class HomologacaoController extends Controller
         }
 
         return response()->json(['success'=> false,'message' => 'Erro ao atualizar o status Homologação'], 500);
-
     }
 
 }

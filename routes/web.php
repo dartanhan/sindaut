@@ -33,8 +33,8 @@ use App\Http\Controllers\FileController;
  * Login
  */
 Route::get('/admin',[AuthController::class,'dashboard'])->name('admin');
-Route::get('/admin/login',[AuthController::class,'showLoginForm'])->name('admin.login');
-Route::post('/admin/login/do',[AuthController::class,'login'])->name('admin.login.do');
+Route::get('/admin/login',[AuthController::class,'showLoginForm'])->middleware('throttle:10,1')->name('admin.login');
+Route::post('/admin/login/do',[AuthController::class,'login'])->middleware('throttle:5,1')->name('admin.login.do');
 
 
 /***
@@ -63,8 +63,6 @@ Route::group(['prefix' => 'site'], function(){
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstream.auth_session')], function(){
     Route::get('/logout',[AuthController::class,'logout'])->name('admin.logout');
     Route::get('/dashboard',[AuthController::class,'dashboard'])->name('admin.dashboard');
-    Route::get('/register',[AuthController::class,'register'])->name('admin.register');
-    Route::post('/store',[AuthController::class,'store'])->name('admin.store');
 
     Route::post('/noticia/atualizar-status', [NoticiaController::class, 'atualizarStatus'])->name('atualizar-status');
     Route::post('/noticia/atualizar-destaque', [NoticiaController::class, 'atualizarDestaque'])->name('atualizar-destaque');
@@ -74,11 +72,13 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::post('/upload-imagem', [UploadController::class, 'store'])->name('uploadImagem');
     Route::post('/upload/tmp-upload', [UploadController::class, 'tmpUpload'])->name('tmpUpload');
     Route::delete('/upload/tmp-delete', [UploadController::class, 'tmpDelete'])->name('tmpDelete');
+    Route::post('/tinymce/upload', [UploadController::class, 'editorUpload'])->name('tinymce.upload');
 
     Route::resource('historia',HistoriaController::class);
 
     Route::resource('convencao',ConvencaoController::class);
     Route::post('/convencao/status', [ConvencaoController::class, 'status'])->name('convencao.status');
+    Route::post('/convencao/reorder', [ConvencaoController::class, 'reorder'])->name('convencao.reorder');
 
     Route::resource('homologacao',HomologacaoController::class);
     Route::post('homologacao/status',[HomologacaoController::class,'status'])->name('homologacao.status');
@@ -89,6 +89,18 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::resource('depjuridico',DepJuridicoController::class);
     Route::post('depjuridico/status',[DepJuridicoController::class,'status'])->name('depjuridico.status');
 });
+
+if (app()->environment('local')) {
+    Route::get('/storage/{path}', function ($path) {
+        $fullPath = storage_path('app/public/' . $path);
+        
+        if (!file_exists($fullPath)) {
+            abort(404);
+        }
+        
+        return response()->file($fullPath);
+    })->where('path', '.*');
+}
 
 Route::fallback(function () {
     //return view('pages.404'); // Exibe a página de erro personalizada

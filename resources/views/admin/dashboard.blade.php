@@ -58,7 +58,7 @@
             <h2 class="font-black text-lg text-slate-900 uppercase tracking-tight">Atalhos Rápidos</h2>
             <p class="text-xs text-slate-400 font-bold uppercase tracking-wider mt-1">Acesso rápido aos principais recursos do portal</p>
         </div>
-        <div class="p-8 lg:p-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="p-8 lg:p-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <a href="{{ route('noticia.index') }}" class="group p-6 rounded-3xl border-2 border-dashed border-slate-200 hover:border-blue-600 hover:bg-blue-50 transition flex flex-col items-center justify-center gap-4 text-center">
                 <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition">
                     <i data-lucide="plus" class="w-7 h-7"></i>
@@ -78,13 +78,6 @@
                     <i data-lucide="file-signature" class="w-7 h-7"></i>
                 </div>
                 <span class="font-black text-slate-900 text-sm">Convenções</span>
-            </a>
-
-            <a href="{{ route('admin.register') }}" class="group p-6 rounded-3xl border-2 border-dashed border-slate-200 hover:border-purple-600 hover:bg-purple-50 transition flex flex-col items-center justify-center gap-4 text-center">
-                <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center group-hover:scale-110 transition">
-                    <i data-lucide="user-plus" class="w-7 h-7"></i>
-                </div>
-                <span class="font-black text-slate-900 text-sm">Registrar Usuário</span>
             </a>
         </div>
     </div>

@@ -17,7 +17,7 @@
 
                 </ol>
                 <div class="left_content">
-                    <div class="contact_area">
+                    <div class="contact_area article-content">
                         @if(!empty($homologacao))
                             {!! $homologacao->conteudo !!}
                         @endif

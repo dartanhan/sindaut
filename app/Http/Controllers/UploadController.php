@@ -129,4 +129,35 @@ class UploadController extends Controller
         return response()->json(['success' => true, 'message' => 'Arquivo deletado com sucesso!']);
         }
     }
+
+    public function editorUpload()
+    {
+        if (Auth::check() === true) {
+            if ($this->request->hasFile('file')) {
+                $this->request->validate([
+                    'file' => 'required|file|mimes:jpeg,png,jpg,gif,pdf,doc,docx,xls,xlsx,txt|max:10240',
+                ]);
+
+                $file = $this->request->file('file');
+                $nome_unico = Str::uuid() . '.' . $file->getClientOriginalExtension();
+                
+                // Store file in public storage under posts/files/
+                $file->storeAs('posts/files', $nome_unico, 'public');
+
+                // Generate full public URL
+                $url = asset('storage/posts/files/' . $nome_unico);
+
+                // Register in GaleriaImagem
+                GaleriaImagem::create([
+                    'path' => $nome_unico
+                ]);
+
+                return response()->json(['location' => $url]);
+            }
+
+            return response()->json(['error' => 'Nenhum arquivo enviado.'], 400);
+        }
+        return response()->json(['error' => 'Não autorizado.'], 401);
+    }
 }
+
