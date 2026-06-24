@@ -80,7 +80,7 @@
 
         /* Sidebar Sticky */
         @media (min-width: 992px) {
-            #contentSection .row {
+            #contentSection > .row, #contentSction > .row {
                 display: flex;
                 flex-wrap: wrap;
             }
