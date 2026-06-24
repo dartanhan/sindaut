@@ -17,6 +17,7 @@ use App\Http\Controllers\site\HistoriaSiteController;
 use App\Http\Controllers\site\HomologacaoSiteController;
 use App\Http\Controllers\site\NoticiaSiteController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
 
     Route::resource('depjuridico',DepJuridicoController::class);
     Route::post('depjuridico/status',[DepJuridicoController::class,'status'])->name('depjuridico.status');
+
+    Route::resource('usuario', UsuarioController::class);
 });
 
 if (app()->environment('local')) {

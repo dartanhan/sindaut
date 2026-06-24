@@ -131,6 +131,12 @@
             </div>
 
 
+            <!-- Usuários -->
+            <a href="{{ route('usuario.index') }}"
+                class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('usuario.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                <i data-lucide="users" class="w-5 h-5 flex-shrink-0"></i>
+                <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Usuários</span>
+            </a>
         </nav>
 
         <div class="p-8 lg:p-4 lg:group-hover:p-8 border-t border-slate-800 space-y-4 transition-all duration-300">
