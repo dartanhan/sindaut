@@ -15,9 +15,35 @@
 <div class="space-y-8">
     <!-- News Table Card -->
     <div class="bg-white rounded-[2rem] shadow-sm border border-slate-100 overflow-hidden">
-        <div class="p-8 border-b border-slate-100 flex items-center justify-between">
-            <h2 class="font-black text-lg text-slate-900 uppercase tracking-tight">Lista de Notícias</h2>
-            <span class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ count($noticias) }} registradas</span>
+        <div class="p-8 border-b border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h2 class="font-black text-lg text-slate-900 uppercase tracking-tight">Lista de Notícias</h2>
+                <span class="text-xs font-black text-slate-400 uppercase tracking-widest">
+                    @if(request('search'))
+                        {{ $noticias->total() }} encontradas
+                    @else
+                        {{ $noticias->total() }} registradas
+                    @endif
+                </span>
+            </div>
+            
+            <form action="{{ route('noticia.index') }}" method="GET" class="flex items-center gap-2 max-w-md w-full">
+                <div class="relative w-full">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Pesquisar notícias..." 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-11 pr-4 py-2.5 text-sm font-bold text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:ring-0 transition">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                    </div>
+                    @if(request('search'))
+                        <a href="{{ route('noticia.index') }}" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </a>
+                    @endif
+                </div>
+                <button type="submit" class="bg-blue-600 hover:bg-slate-900 text-white font-black px-6 py-2.5 rounded-2xl text-xs uppercase tracking-widest transition">
+                    Buscar
+                </button>
+            </form>
         </div>
         
         <div class="overflow-x-auto no-scrollbar">
@@ -185,6 +211,62 @@
             customClass: {
                 popup: 'bg-transparent shadow-none border-none',
                 image: 'rounded-[2rem] max-h-[80vh] max-w-[90vw] object-contain shadow-2xl border-4 border-white'
+            }
+        });
+    }
+
+    function confirmDelete(formId) {
+        Swal.fire({
+            title: 'Atenção?',
+            text: "Deseja mesmo deletar esta notícia?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, deletar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const form = document.getElementById(formId);
+                const action = form.action;
+                const csrfToken = form.querySelector('input[name="_token"]').value;
+
+                fetch(action, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: 'Sucesso!',
+                            html: data.message,
+                            icon: 'success',
+                            timer: 2000,
+                            willClose: () => {
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Erro!',
+                            icon: 'error',
+                            html: data.message,
+                            showConfirmButton: true
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Erro!',
+                        icon: 'error',
+                        html: 'Erro ao processar a requisição.',
+                        showConfirmButton: true
+                    });
+                });
             }
         });
     }
