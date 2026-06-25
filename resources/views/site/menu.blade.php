@@ -1,6 +1,14 @@
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="padding: 9px 10px;">
+                <span class="sr-only">Toggle navigation</span>
+                <span style="float: left; color: #fff; font-weight: bold; font-size: 12px; text-transform: uppercase; margin-right: 8px; margin-top: -1px;">Menu</span>
+                <span style="float: right; margin-top: 1px;">
+                    <span class="icon-bar" style="margin-top: 0;"></span>
+                    <span class="icon-bar" style="margin-top: 4px;"></span>
+                    <span class="icon-bar" style="margin-top: 4px;"></span>
+                </span>
+            </button>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav main_nav">

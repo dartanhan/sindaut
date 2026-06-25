@@ -21,6 +21,12 @@
     <![endif]-->
     @stack("styles")
     <style>
+        /* Ajustar imagens dentro do conteudo para nao estourarem a largura */
+        .article-content img {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
         /* Colapso de conteudo longo */
         .article-content.collapsible-active {
             max-height: 500px;
@@ -106,8 +112,7 @@
                     <div class="header_top_left">
                         <ul class="top_nav">
                             <li><a href="{{route('site.home')}}">Home</a></li>
-                            <li><a href="#">Quem Somos</a></li>
-                            <li><a href="{{route('site.contato')}}">Contato</a></li>
+                            <li><a href="{{route('site.quemsomos.index')}}">Quem Somos</a></li>
                         </ul>
                     </div>
                     <div class="header_top_right text-capitalize">

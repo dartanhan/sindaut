@@ -19,6 +19,8 @@ use App\Http\Controllers\site\NoticiaSiteController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\FooterConfigController;
+use App\Http\Controllers\QuemSomosController;
+use App\Http\Controllers\site\QuemSomosSiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,9 +46,9 @@ Route::post('/admin/login/do',[AuthController::class,'login'])->middleware('thro
  */
 Route::group(['prefix' => 'site'], function(){
     Route::get('/',[SiteController::class,'index'])->name('site.home');
-    Route::get('/contato',[SiteController::class,'contato'])->name('site.contato');
     Route::get('/detalhe-noticia/{id}',[SiteController::class,'detalheNoticia'])->name('site.detalhe-noticia');
     Route::get('historia',[HistoriaSiteController::class,'index'])->name('site.historia.index');
+    Route::get('quemsomos',[QuemSomosSiteController::class,'index'])->name('site.quemsomos.index');
     Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
     Route::get('homologacao',[HomologacaoSiteController::class,'index'])->name('site.homologacao.index');
     Route::get('beneficio',[BeneficioSiteController::class,'index'])->name('site.beneficio.index');
@@ -77,6 +79,7 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::post('/tinymce/upload', [UploadController::class, 'editorUpload'])->name('tinymce.upload');
 
     Route::resource('historia',HistoriaController::class);
+    Route::resource('quemsomos',QuemSomosController::class);
 
     Route::resource('convencao',ConvencaoController::class);
     Route::post('/convencao/status', [ConvencaoController::class, 'status'])->name('convencao.status');

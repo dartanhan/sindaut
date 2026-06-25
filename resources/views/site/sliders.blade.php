@@ -15,7 +15,7 @@
         @if($hasImage)
             <div class="single_iteam">
                 <a href="{{route('site.detalhe-noticia',$noticia->id)}}">
-                    <img alt="" src="{{URL::asset("storage/posts/files/".$imagePath)}}">
+                    <img alt="" src="{{URL::asset("storage/posts/files/".$imagePath)}}" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
                 </a>
 
                 <div class="slider_article">
