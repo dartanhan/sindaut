@@ -25,7 +25,19 @@ class NoticiaController extends Controller
             $user_data = User::where("id",auth()->user()->id)->first();
 
             $images = $this->galleryImage->get();
-            $noticias = Noticia::with('imagens')->orderBy('id', 'desc')->paginate(10);
+            
+            $query = Noticia::with('imagens')->orderBy('id', 'desc');
+            
+            if ($this->request->has('search') && !empty($this->request->input('search'))) {
+                $search = $this->request->input('search');
+                $query->where(function($q) use ($search) {
+                    $q->where('titulo', 'like', "%{$search}%")
+                      ->orWhere('subtitulo', 'like', "%{$search}%")
+                      ->orWhere('conteudo', 'like', "%{$search}%");
+                });
+            }
+            
+            $noticias = $query->paginate(10)->withQueryString();
 
             return  view('admin.noticia',compact('noticias','images','user_data'));
 
