@@ -151,17 +151,17 @@
         @endphp
 
         {{-- Footer Body --}}
-        <div style="padding: 48px 0 32px;">
+        <div style="padding: 36px 0 24px;">
             <div class="row" style="margin:0 15px; align-items:flex-start;">
 
                 {{-- Logo --}}
-                <div class="col-lg-2 col-md-3 col-sm-12" style="margin-bottom:24px; padding-right:24px;">
+                <div class="col-lg-2 col-md-3 col-sm-12" style="margin-bottom:20px; padding-right:20px;">
                     @if($footerConfig->logo_path)
                         <img src="{{ asset('storage/footer/' . $footerConfig->logo_path) }}"
                              alt="{{ $footerConfig->copyright ?? 'Logo' }}"
-                             style="max-width:120px; max-height:80px; object-fit:contain;">
+                             style="max-width:100px; max-height:70px; object-fit:contain;">
                     @else
-                        <span style="font-size:18px; font-weight:900; letter-spacing:1px; color:#fff;">
+                        <span style="font-size:14px; font-weight:800; letter-spacing:.5px; color:#9ca3af;">
                             {{ $footerConfig->copyright ?? 'SINDAUT-RIO' }}
                         </span>
                     @endif
@@ -169,19 +169,19 @@
                     {{-- Redes Sociais --}}
                     @php $redesAtivas = array_filter($redesSociais); @endphp
                     @if(!empty($redesAtivas))
-                    <div style="display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;">
+                    <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
                         @if(!empty($redesSociais['facebook']))
-                            <a href="{{ $redesSociais['facebook'] }}" target="_blank" rel="noopener" style="color:#9ca3af; font-size:20px; transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">
+                            <a href="{{ $redesSociais['facebook'] }}" target="_blank" rel="noopener" style="color:#4b5563; font-size:16px; transition:color .2s;" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#4b5563'">
                                 <i class="fa fa-facebook-square"></i>
                             </a>
                         @endif
                         @if(!empty($redesSociais['instagram']))
-                            <a href="{{ $redesSociais['instagram'] }}" target="_blank" rel="noopener" style="color:#9ca3af; font-size:20px; transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">
+                            <a href="{{ $redesSociais['instagram'] }}" target="_blank" rel="noopener" style="color:#4b5563; font-size:16px; transition:color .2s;" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#4b5563'">
                                 <i class="fa fa-instagram"></i>
                             </a>
                         @endif
                         @if(!empty($redesSociais['youtube']))
-                            <a href="{{ $redesSociais['youtube'] }}" target="_blank" rel="noopener" style="color:#9ca3af; font-size:20px; transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#9ca3af'">
+                            <a href="{{ $redesSociais['youtube'] }}" target="_blank" rel="noopener" style="color:#4b5563; font-size:16px; transition:color .2s;" onmouseover="this.style.color='#9ca3af'" onmouseout="this.style.color='#4b5563'">
                                 <i class="fa fa-youtube-square"></i>
                             </a>
                         @endif
@@ -191,16 +191,16 @@
 
                 {{-- Fale Conosco --}}
                 @if($temFale)
-                <div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom:24px; padding-right:24px; border-right:1px solid #1f2937;">
-                    <p style="font-size:10px; font-weight:900; letter-spacing:.15em; text-transform:uppercase; color:#6b7280; margin-bottom:14px;">FALE CONOSCO</p>
+                <div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom:20px; padding-right:20px; border-right:1px solid #1f2937;">
+                    <p style="font-size:9px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#4b5563; margin-bottom:12px;">FALE CONOSCO</p>
                     @foreach($faleConosco as $setor)
                         @if(!empty($setor['setor']) || !empty($setor['telefone']))
-                        <div style="display:flex; align-items:baseline; gap:6px; margin-bottom:8px; flex-wrap:wrap;">
+                        <div style="display:flex; align-items:baseline; gap:5px; margin-bottom:6px; flex-wrap:wrap;">
                             @if(!empty($setor['setor']))
-                                <span style="font-size:11px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; color:#9ca3af; white-space:nowrap;">{{ $setor['setor'] }}:</span>
+                                <span style="font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:#6b7280; white-space:nowrap;">{{ $setor['setor'] }}:</span>
                             @endif
                             @if(!empty($setor['telefone']))
-                                <span style="font-size:13px; font-weight:700; color:#d1d5db;">{{ $setor['telefone'] }}</span>
+                                <span style="font-size:11px; font-weight:500; color:#9ca3af;">{{ $setor['telefone'] }}</span>
                             @endif
                         </div>
                         @endif
@@ -210,24 +210,24 @@
 
                 {{-- Sede --}}
                 @if($temSede)
-                <div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom:24px; padding-right:24px; {{ $temSubsede ? 'border-right:1px solid #1f2937;' : '' }}">
-                    <p style="font-size:10px; font-weight:900; letter-spacing:.15em; text-transform:uppercase; color:#6b7280; margin-bottom:14px;">ATENDIMENTO</p>
+                <div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom:20px; padding-right:20px; {{ $temSubsede ? 'border-right:1px solid #1f2937;' : '' }}">
+                    <p style="font-size:9px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#4b5563; margin-bottom:12px;">ATENDIMENTO</p>
                     @if($footerConfig->sede_telefone)
-                        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;">
-                            <i class="fa fa-phone" style="color:#6b7280; font-size:13px; margin-top:3px; flex-shrink:0;"></i>
-                            <span style="font-size:13px; font-weight:700; color:#d1d5db; text-transform:uppercase;">{{ $footerConfig->sede_telefone }}</span>
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+                            <i class="fa fa-phone" style="color:#4b5563; font-size:10px; margin-top:2px; flex-shrink:0;"></i>
+                            <span style="font-size:11px; font-weight:500; color:#9ca3af; text-transform:uppercase; line-height:1.5;">{{ $footerConfig->sede_telefone }}</span>
                         </div>
                     @endif
                     @if($footerConfig->sede_email)
-                        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;">
-                            <i class="fa fa-envelope" style="color:#6b7280; font-size:13px; margin-top:3px; flex-shrink:0;"></i>
-                            <span style="font-size:13px; font-weight:700; color:#d1d5db; text-transform:uppercase;">{{ $footerConfig->sede_email }}</span>
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+                            <i class="fa fa-envelope" style="color:#4b5563; font-size:10px; margin-top:2px; flex-shrink:0;"></i>
+                            <span style="font-size:11px; font-weight:500; color:#9ca3af; text-transform:uppercase; line-height:1.5;">{{ $footerConfig->sede_email }}</span>
                         </div>
                     @endif
                     @if($footerConfig->sede_endereco)
-                        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;">
-                            <i class="fa fa-map-marker" style="color:#6b7280; font-size:14px; margin-top:3px; flex-shrink:0;"></i>
-                            <span style="font-size:13px; font-weight:700; color:#d1d5db; text-transform:uppercase; line-height:1.6;">{!! nl2br(e($footerConfig->sede_endereco)) !!}</span>
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+                            <i class="fa fa-map-marker" style="color:#4b5563; font-size:11px; margin-top:2px; flex-shrink:0;"></i>
+                            <span style="font-size:11px; font-weight:500; color:#9ca3af; text-transform:uppercase; line-height:1.6;">{!! nl2br(e($footerConfig->sede_endereco)) !!}</span>
                         </div>
                     @endif
                 </div>
@@ -235,26 +235,26 @@
 
                 {{-- Subsede --}}
                 @if($temSubsede)
-                <div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom:24px;">
-                    <p style="font-size:10px; font-weight:900; letter-spacing:.15em; text-transform:uppercase; color:#6b7280; margin-bottom:14px;">SUBSEDE</p>
+                <div class="col-lg-3 col-md-3 col-sm-12" style="margin-bottom:20px;">
+                    <p style="font-size:9px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:#4b5563; margin-bottom:12px;">SUBSEDE</p>
                     @if($footerConfig->subsede_telefone)
-                        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;">
-                            <i class="fa fa-phone" style="color:#6b7280; font-size:13px; margin-top:3px; flex-shrink:0;"></i>
-                            <span style="font-size:13px; font-weight:700; color:#d1d5db; text-transform:uppercase;">{{ $footerConfig->subsede_telefone }}</span>
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+                            <i class="fa fa-phone" style="color:#4b5563; font-size:10px; margin-top:2px; flex-shrink:0;"></i>
+                            <span style="font-size:11px; font-weight:500; color:#9ca3af; text-transform:uppercase; line-height:1.5;">{{ $footerConfig->subsede_telefone }}</span>
                         </div>
                     @endif
                     @if($footerConfig->subsede_endereco)
-                        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:10px;">
-                            <i class="fa fa-map-marker" style="color:#6b7280; font-size:14px; margin-top:3px; flex-shrink:0;"></i>
-                            <span style="font-size:13px; font-weight:700; color:#d1d5db; text-transform:uppercase; line-height:1.6;">{!! nl2br(e($footerConfig->subsede_endereco)) !!}</span>
+                        <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+                            <i class="fa fa-map-marker" style="color:#4b5563; font-size:11px; margin-top:2px; flex-shrink:0;"></i>
+                            <span style="font-size:11px; font-weight:500; color:#9ca3af; text-transform:uppercase; line-height:1.6;">{!! nl2br(e($footerConfig->subsede_endereco)) !!}</span>
                         </div>
                     @endif
                 </div>
                 @endif
 
-                {{-- Fallback: se não houver nenhuma seção preenchida, mostra msg neutra --}}
+                {{-- Fallback --}}
                 @if(!$footerConfig->logo_path && !$temFale && !$temSede && !$temSubsede)
-                <div class="col-12" style="text-align:center; color:#6b7280; font-size:13px; padding:20px 0;">
+                <div class="col-12" style="text-align:center; color:#4b5563; font-size:11px; padding:20px 0;">
                     Configure as informações do rodapé no painel administrativo.
                 </div>
                 @endif
@@ -263,14 +263,16 @@
         </div>
 
         {{-- Copyright bar --}}
-        <div style="border-top:1px solid #1f2937; padding:16px 30px; text-align:center;">
-            <p style="font-size:11px; font-weight:700; letter-spacing:.1em; color:#4b5563; margin:0; text-transform:uppercase;">
+        <div style="border-top:1px solid #1f2937; padding:12px 30px; text-align:center;">
+            <p style="font-size:10px; font-weight:600; letter-spacing:.12em; color:#374151; margin:0; text-transform:uppercase;">
                 &copy; <?php echo Carbon\Carbon::now()->locale('pt_BR')->isoFormat('YYYY'); ?>
                 {{ $footerConfig->copyright ?? 'SINDAUT-RIO' }}. TODOS OS DIREITOS RESERVADOS.
             </p>
         </div>
     </footer>
+
 </div>
+
 <script src="{{URL::asset('assets/js/jquery.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/wow.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/bootstrap.min.js')}}"></script>
