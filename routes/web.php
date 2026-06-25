@@ -18,6 +18,7 @@ use App\Http\Controllers\site\HomologacaoSiteController;
 use App\Http\Controllers\site\NoticiaSiteController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\FooterConfigController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,10 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
     Route::post('depjuridico/status',[DepJuridicoController::class,'status'])->name('depjuridico.status');
 
     Route::resource('usuario', UsuarioController::class);
+
+    // Rodapé (singleton config)
+    Route::get('footer-config/edit', [FooterConfigController::class, 'edit'])->name('footer-config.edit');
+    Route::put('footer-config', [FooterConfigController::class, 'update'])->name('footer-config.update');
 });
 
 if (app()->environment('local')) {
