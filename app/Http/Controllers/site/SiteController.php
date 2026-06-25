@@ -26,7 +26,7 @@ class SiteController extends Controller
             return $this->noticia->with('imagens')
                 ->where('status',1)
                 ->orderBy('id', 'desc')
-                ->take(5)
+                ->take(15)
                 ->get();
         });
 

@@ -13,9 +13,9 @@
         @endphp
 
         @if($hasImage)
-            <div class="single_iteam">
-                <a href="{{route('site.detalhe-noticia',$noticia->id)}}">
-                    <img alt="" src="{{URL::asset("storage/posts/files/".$imagePath)}}" style="object-fit: cover; object-position: center; width: 100%; height: 100%;">
+            <div class="single_iteam" style="background: #000; overflow: hidden;">
+                <a href="{{route('site.detalhe-noticia',$noticia->id)}}" style="display: block; width: 100%; height: 100%;">
+                    <img alt="" src="{{URL::asset("storage/posts/files/".$imagePath)}}" style="object-fit: contain; object-position: center; width: 100%; height: 100%;">
                 </a>
 
                 <div class="slider_article">
