@@ -19,12 +19,28 @@
                         </ol>
                         <h1>{{$noticiaDetalhe->titulo}}</h1>
                         <div class="post_commentbox">
-                            <!--a href="#">
-                                <i class="fa fa-user"></i>Wpfreeware</a-->
+                            @php
+                                $criado = $noticiaDetalhe->getRawOriginal('created_at');
+                                $atualizado = $noticiaDetalhe->getRawOriginal('updated_at');
+                                $mostraAtualizado = $criado && $atualizado && (strtotime($atualizado) - strtotime($criado) > 60);
+                                
+                                $textoLimpo = strip_tags($noticiaDetalhe->conteudo);
+                                $palavras = count(explode(' ', preg_replace('/\s+/', ' ', trim($textoLimpo))));
+                                $tempoLeitura = max(1, ceil($palavras / 200));
+                            @endphp
                             <span>
-                                <i class="fa fa-calendar"></i>{{$noticiaDetalhe->created_at}}
+                                <i class="fa fa-calendar"></i> Publicado em: {{$noticiaDetalhe->created_at}}
                             </span>
-                            <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
+                            @if($mostraAtualizado)
+                                &nbsp;&nbsp;
+                                <span>
+                                    <i class="fa fa-history"></i> Atualizado em: {{$noticiaDetalhe->updated_at}}
+                                </span>
+                            @endif
+                            &nbsp;&nbsp;
+                            <span>
+                                <i class="fa fa-clock-o"></i> {{$tempoLeitura}} min de leitura
+                            </span>
                         </div>
                         <div class="single_page_content article-content">
                             {!! str_replace("../", "../../", $noticiaDetalhe->conteudo) !!}

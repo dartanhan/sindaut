@@ -22,18 +22,28 @@
 
                                 <h1>{{$noticias[0]->titulo}}</h1>
                                 <div class="post_commentbox">
-                                    <!--a href="#">
-                                        <i class="fa fa-user"></i>Wpfreeware</a-->
+                                    @php
+                                        $criado = $noticias[0]->getRawOriginal('created_at');
+                                        $atualizado = $noticias[0]->getRawOriginal('updated_at');
+                                        $mostraAtualizado = $criado && $atualizado && (strtotime($atualizado) - strtotime($criado) > 60);
+                                        
+                                        $textoLimpo = strip_tags($noticias[0]->conteudo);
+                                        $palavras = count(explode(' ', preg_replace('/\s+/', ' ', trim($textoLimpo))));
+                                        $tempoLeitura = max(1, ceil($palavras / 200));
+                                    @endphp
                                     <span>
-                                        <span title="criado em:" data-toggle="tooltip" data-placement="top">
-                                            <i class="fa fa-calendar"></i>{{$noticias[0]->created_at}}
-                                        </span>
-                                        &nbsp;
-                                        <span title="atualizado em:"  data-toggle="tooltip" data-placement="top">
-                                            <i class="fa fa-clock-o"></i> {{$noticias[0]->updated_at}}
-                                        </span>
+                                        <i class="fa fa-calendar"></i> Publicado em: {{$noticias[0]->created_at}}
                                     </span>
-                                    <!-- a href="#"><i class="fa fa-tags"></i>Technology</a -->
+                                    @if($mostraAtualizado)
+                                        &nbsp;&nbsp;
+                                        <span>
+                                            <i class="fa fa-history"></i> Atualizado em: {{$noticias[0]->updated_at}}
+                                        </span>
+                                    @endif
+                                    &nbsp;&nbsp;
+                                    <span>
+                                        <i class="fa fa-clock-o"></i> {{$tempoLeitura}} min de leitura
+                                    </span>
                                 </div>
                                 <div class="single_page_content">
                                     {!! str_replace("../../", "", $noticias[0]->conteudo) !!}
