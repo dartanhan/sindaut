@@ -7,6 +7,7 @@ use App\Http\Controllers\ConvencaoController;
 use App\Http\Controllers\DepJuridicoController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\NoticiaController;
+use App\Http\Controllers\HomeCardController;
 use App\Http\Controllers\site\SiteController;
 use App\Http\Controllers\HistoriaController;
 use App\Http\Controllers\HomologacaoController;
@@ -47,6 +48,7 @@ Route::post('/admin/login/do',[AuthController::class,'login'])->middleware('thro
 Route::group(['prefix' => 'site'], function(){
     Route::get('/',[SiteController::class,'index'])->name('site.home');
     Route::get('/detalhe-noticia/{id}',[SiteController::class,'detalheNoticia'])->name('site.detalhe-noticia');
+    Route::get('/detalhe-card/{id}', [SiteController::class, 'detalheCard'])->name('site.detalhe-card');
     Route::get('historia',[HistoriaSiteController::class,'index'])->name('site.historia.index');
     Route::get('quemsomos',[QuemSomosSiteController::class,'index'])->name('site.quemsomos.index');
     Route::get('convencao',[ConvencaoSiteController::class,'index'])->name('site.convencao.index');
@@ -70,6 +72,9 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
 
     Route::post('/noticia/atualizar-status', [NoticiaController::class, 'atualizarStatus'])->name('atualizar-status');
     Route::post('/noticia/atualizar-destaque', [NoticiaController::class, 'atualizarDestaque'])->name('atualizar-destaque');
+
+    Route::post('/home-card/atualizar-status', [HomeCardController::class, 'atualizarStatus'])->name('home-card.atualizar-status');
+    Route::resource('home-card', HomeCardController::class);
 
     Route::resource('noticia',NoticiaController::class);
     Route::resource('upload',  UploadController::class);

@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class HomeCard extends Model
+{
+    use HasFactory;
+
+    protected $table = 'tbl_sindaut_home_cards';
+    protected $fillable = ['titulo', 'conteudo', 'imagem_id', 'status', 'ordem', 'updated_at', 'created_at'];
+
+    public function imagens()
+    {
+        return $this->hasMany(GaleriaImagem::class, 'id', 'imagem_id');
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return date('d/m/Y H:i:s', strtotime($this->attributes['created_at']));
+    }
+
+    public function getUpdatedAtAttribute()
+    {
+        return date('d/m/Y H:i:s', strtotime($this->attributes['updated_at']));
+    }
+}

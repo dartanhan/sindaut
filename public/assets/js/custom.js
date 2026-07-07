@@ -18,13 +18,15 @@ jQuery(document).ready(function() {
         autoplaySpeed: 5000,
         cssEase: 'linear'
     });
-    // latest post slider call 
+    // latest post slider call (Desativado para deixar estatico com Ver mais)
+    /*
     $('.latest_postnav').newsTicker({
         row_height: 64,
         speed: 800,
         prevButton: $('#prev-button'),
         nextButton: $('#next-button')
     });
+    */
     jQuery(".fancybox-buttons").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',

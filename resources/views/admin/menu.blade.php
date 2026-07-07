@@ -44,6 +44,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ Request::routeIs('home-card.*') ? '' : 'collapsed' }}" href="{{route('home-card.index')}}">
+                    <i class="bi bi-card-image"></i>
+                    <span>Cards da Home</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link collapsed" id="noticias-menu-toggle" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>Noticias</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>

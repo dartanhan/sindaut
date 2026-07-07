@@ -26,14 +26,14 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        // Composer para a barra lateral de Últimas Notícias (últimos 12 meses, limite 15)
+        // Composer para a barra lateral de Últimas Notícias (últimos 12 meses, limite 30)
         view()->composer('site.ultimas-noticias', function ($view) {
             $noticias = \Illuminate\Support\Facades\Cache::remember('site:sidebar_noticias', 86400, function () {
                 return \App\Models\Noticia::with('imagens')
                     ->where('status', 1)
                     ->where('created_at', '>=', now()->subMonths(12))
                     ->orderBy('created_at', 'desc')
-                    ->take(15)
+                    ->take(30)
                     ->get();
             });
 
