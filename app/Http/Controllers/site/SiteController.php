@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\GaleriaImagem;
 use App\Models\Historia;
 use App\Models\Noticia;
+use App\Models\HomeCard;
 use Illuminate\Http\Request;
 use ReCaptcha\ReCaptcha;
 use Stevebauman\Purify\Facades\Purify;
@@ -30,7 +31,14 @@ class SiteController extends Controller
                 ->get();
         });
 
-        return view('site.home',compact('noticias'));
+        $cards = HomeCard::with('imagens')
+            ->where('status', 1)
+            ->orderBy('ordem', 'asc')
+            ->orderBy('id', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('site.home',compact('noticias', 'cards'));
     }
 
     public function contato(){
@@ -42,6 +50,13 @@ class SiteController extends Controller
             ->where('status',1)->where('id',$id)->firstOrFail();
 
         return view('site.detalhe',compact('noticiaDetalhe'));
+    }
+
+    public function detalheCard($id){
+        $card = HomeCard::with('imagens')
+            ->where('status', 1)->where('id', $id)->firstOrFail();
+
+        return view('site.detalhe_card', compact('card'));
     }
 
     public function enviaContato(){

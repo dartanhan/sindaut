@@ -19,7 +19,7 @@ services:
     container_name: sindaut-nginx
     restart: unless-stopped
     ports:
-      - "9003:80"
+      - "9001:80"
     volumes:
       - .:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
