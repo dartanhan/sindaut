@@ -36,6 +36,9 @@ class HomeCardController extends Controller
     public function create()
     {
         if (Auth::check() === true) {
+            if ($this->homeCard->count() >= 3) {
+                return redirect()->route('home-card.index')->with('danger', 'Limite máximo de 3 cards atingido. Exclua um existente para cadastrar outro.');
+            }
             $user_data = User::where("id", auth()->user()->id)->first();
             $images = $this->galleryImage->get();
             return view('admin.home_card_create', compact('images', 'user_data'));
@@ -45,6 +48,10 @@ class HomeCardController extends Controller
 
     public function store()
     {
+        if ($this->homeCard->count() >= 3) {
+            return redirect()->route('home-card.index')->with('danger', 'Limite máximo de 3 cards atingido. Exclua um existente para cadastrar outro.');
+        }
+
         $this->request->validate([
             'titulo' => 'required|max:80',
             'ordem' => 'nullable|integer',

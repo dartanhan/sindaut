@@ -5,10 +5,17 @@
 @section('header_subtitle', 'Gerencie os 3 cards da página inicial')
 
 @section('header_actions')
+@if(count($cards) < 3)
 <a href="{{ route('home-card.create') }}" class="bg-blue-600 hover:bg-slate-900 text-white font-black px-8 py-3 rounded-2xl transition flex items-center gap-2 text-sm shadow-xl shadow-blue-600/20">
     <i data-lucide="plus" class="w-5 h-5"></i>
     CADASTRAR CARD
 </a>
+@else
+<button disabled class="bg-slate-200 text-slate-400 font-black px-8 py-3 rounded-2xl flex items-center gap-2 text-sm cursor-not-allowed border border-slate-300" title="Limite máximo de 3 cards atingido">
+    <i data-lucide="plus" class="w-5 h-5"></i>
+    LIMITE DE 3 CARDS ATINGIDO
+</button>
+@endif
 @endsection
 
 @section('content')
