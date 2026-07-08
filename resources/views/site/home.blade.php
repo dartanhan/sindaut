@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-
 <style>
     .home-card-hover {
         display: flex; 
@@ -18,7 +17,7 @@
         border-radius: 4px; 
         box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         transition: transform 0.3s, box-shadow 0.3s;
-        height: 200px; /* fixed height for cards alignment */
+        height: 200px; /* fixed height on desktop */
         background-color: #fff;
     }
     .home-card-hover:hover {
@@ -28,14 +27,16 @@
     .home-card-img {
         width: 100%; 
         height: 100%; 
-        object-fit: contain; /* displays full image without cropping */
+        object-fit: cover; /* fills the card entirely */
         background-color: #fff;
     }
     @media (max-width: 767px) {
         .home-card-hover {
-            height: 100px; /* fallback */
             height: auto;
             aspect-ratio: 4/3;
+        }
+        .home-card-img {
+            object-fit: cover;
         }
     }
 </style>
