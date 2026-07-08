@@ -31,6 +31,13 @@
         object-fit: contain; /* displays full image without cropping */
         background-color: #fff;
     }
+    @media (max-width: 767px) {
+        .home-card-hover {
+            height: 100px; /* fallback */
+            height: auto;
+            aspect-ratio: 4/3;
+        }
+    }
 </style>
 
 <section id="contentSection">
