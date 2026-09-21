@@ -22,6 +22,10 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\FooterConfigController;
 use App\Http\Controllers\QuemSomosController;
 use App\Http\Controllers\site\QuemSomosSiteController;
+use App\Http\Controllers\ContribuicaoController;
+use App\Http\Controllers\EnquadramentoSindicalController;
+use App\Http\Controllers\site\ContribuicaoSiteController;
+use App\Http\Controllers\site\EnquadramentoSiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +60,8 @@ Route::group(['prefix' => 'site'], function(){
     Route::get('beneficio',[BeneficioSiteController::class,'index'])->name('site.beneficio.index');
     Route::get('noticia',[NoticiaSiteController::class,'index'])->name('site.noticia.index');
     Route::get('depjuridico',[DepJuridicoSiteController::class,'index'])->name('site.depjuridico.index');
+    Route::get('contribuicoes',[ContribuicaoSiteController::class,'index'])->name('site.contribuicoes.index');
+    Route::get('enquadramento',[EnquadramentoSiteController::class,'index'])->name('site.enquadramento.index');
 
     Route::post('/enviaContato',[SiteController::class,'enviaContato'])->name('site.enviaContato');
     Route::get('/download/{id}', [FileController::class, 'download'])->name('file.download');
@@ -98,6 +104,12 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin',config('jetstr
 
     Route::resource('depjuridico',DepJuridicoController::class);
     Route::post('depjuridico/status',[DepJuridicoController::class,'status'])->name('depjuridico.status');
+
+    Route::resource('contribuicoes',ContribuicaoController::class);
+    Route::post('contribuicoes/status',[ContribuicaoController::class,'status'])->name('contribuicoes.status');
+
+    Route::resource('enquadramento',EnquadramentoSindicalController::class);
+    Route::post('enquadramento/status',[EnquadramentoSindicalController::class,'status'])->name('enquadramento.status');
 
     Route::resource('usuario', UsuarioController::class);
 

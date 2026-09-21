@@ -37,10 +37,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Outros</a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Balcão de Empregos</a></li>
-                        <li><a href="#">Contribuições</a></li>
-                        <li><a href="#">Enquadramento Sindical</a></li>
-                        <li><a href="#">Empresas</a></li>
+                        <li><a href="{{route('site.contribuicoes.index')}}">Contribuições</a></li>
+                        <li><a href="{{route('site.enquadramento.index')}}">Enquadramento Sindical</a></li>
                     </ul>
                 </li>
                 <li><a href="{{route('site.noticia.index')}}">Notícias</a></li>
