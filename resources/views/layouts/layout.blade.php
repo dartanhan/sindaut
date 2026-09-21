@@ -27,6 +27,14 @@
             height: auto !important;
         }
 
+        /* Garantir selecao e copia de texto no conteudo do artigo */
+        .article-content {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+        }
+
         /* Colapso de conteudo longo */
         .article-content.collapsible-active {
             max-height: 500px;
@@ -35,7 +43,8 @@
             transition: max-height 0.4s ease-in-out;
         }
         .article-content.collapsible-active.expanded {
-            max-height: 20000px; /* Suficiente para qualquer texto longo */
+            max-height: none !important;
+            overflow: visible !important;
         }
         .article-content.collapsible-active::after {
             content: '';
@@ -52,6 +61,7 @@
         .article-content.collapsible-active.expanded::after {
             opacity: 0;
             pointer-events: none;
+            display: none !important;
         }
 
         /* Botao Veja Mais */
@@ -61,8 +71,13 @@
             margin-bottom: 25px;
             position: relative;
             z-index: 10;
+            clear: both !important;
+            float: left;
+            width: 100%;
+            pointer-events: none;
         }
         .btn-read-more-toggle {
+            pointer-events: auto;
             background-color: #0d6efd;
             color: #fff;
             border: none;
