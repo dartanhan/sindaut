@@ -26,7 +26,8 @@
         }
 
         @media (min-width: 1024px) {
-            #admin-sidebar:not(:hover) #menu-noticias-dropdown {
+            #admin-sidebar:not(:hover) #menu-noticias-dropdown,
+            #admin-sidebar:not(:hover) #menu-outros-dropdown {
                 display: none !important;
             }
         }
@@ -144,6 +145,35 @@
                 </div>
             </div>
 
+            <!-- Menu Outros Dropdown -->
+            @php
+                $isOutrosActive = request()->routeIs('contribuicoes.*') || request()->routeIs('enquadramento.*');
+            @endphp
+            <div class="flex flex-col">
+                <button type="button"
+                    onclick="document.getElementById('menu-outros-dropdown').classList.toggle('hidden'); document.getElementById('menu-outros-icon').classList.toggle('rotate-180');"
+                    class="flex items-center justify-between px-6 py-4 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ $isOutrosActive ? 'bg-slate-800 text-white font-bold' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                    <div class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4">
+                        <i data-lucide="more-horizontal" class="w-5 h-5 flex-shrink-0"></i>
+                        <span class="transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Outros</span>
+                    </div>
+                    <i data-lucide="chevron-down" id="menu-outros-icon"
+                        class="w-4 h-4 transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto {{ $isOutrosActive ? 'rotate-180' : '' }}"></i>
+                </button>
+                <div id="menu-outros-dropdown"
+                    class="flex flex-col gap-1 mt-2 pl-4 {{ $isOutrosActive ? '' : 'hidden' }}">
+                    <a href="{{ route('contribuicoes.index') }}"
+                        class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-3 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('contribuicoes.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                        <i data-lucide="coins" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Contribuições</span>
+                    </a>
+                    <a href="{{ route('enquadramento.index') }}"
+                        class="flex items-center gap-4 lg:gap-0 lg:group-hover:gap-4 px-6 py-3 lg:px-4 lg:group-hover:px-6 rounded-2xl transition-all duration-300 {{ request()->routeIs('enquadramento.*') ? 'bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+                        <i data-lucide="building-2" class="w-4 h-4 flex-shrink-0"></i>
+                        <span class="text-sm transition-all duration-300 lg:opacity-0 lg:group-hover:opacity-100 lg:w-0 lg:group-hover:w-auto whitespace-nowrap overflow-hidden">Enquadramento Sindical</span>
+                    </a>
+                </div>
+            </div>
 
             <!-- Usuários -->
             <a href="{{ route('usuario.index') }}"
